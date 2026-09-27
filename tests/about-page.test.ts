@@ -1,5 +1,6 @@
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import { beforeAll, describe, expect, it } from 'vitest';
+import { scriptPolicyViolations } from './helpers/script-policy';
 import AboutSection from '../src/components/AboutSection.astro';
 import AboutView from '../src/components/AboutView.astro';
 import ParishHistory from '../src/components/ParishHistory.astro';
@@ -66,6 +67,10 @@ describe.each(LOCALES)('About view — %s', (lang: Locale) => {
 
   it('marks the About nav link as the current page', () => {
     expect(doc).toMatch(new RegExp(`<a href="\\/${lang}\\/about\\/"[^>]*aria-current="page"`));
+  });
+
+  it('ships only local module scripts (no external hosts)', () => {
+    expect(scriptPolicyViolations(doc)).toEqual([]);
   });
 
   it('has no missing-translation markers or raw placeholder text', () => {

@@ -135,6 +135,16 @@ describe('clergy photo (checked through the full schema)', () => {
   });
 });
 
+describe('timeZone', () => {
+  it('is the parish time zone (Greensboro, NC)', () => {
+    expect(siteConfig.timeZone).toBe('America/New_York');
+  });
+
+  it('rejects an invalid IANA name', () => {
+    expect(() => siteConfigSchema.parse({ ...structuredClone(siteConfig), timeZone: 'Mars/Olympus' })).toThrow();
+  });
+});
+
 describe('service day (bilingual)', () => {
   function withServiceDay(day: unknown) {
     return structuredClone({
@@ -208,6 +218,7 @@ describe('content honesty', () => {
     const allowed = new Set(nonPlaceholderLeaves.map((l) => l.path.replace(/^services\.\d+/, 'services.N')));
     expect([...allowed].sort()).toEqual(
       [
+        'timeZone',
         'contact.address.city',
         'contact.address.state',
         'contact.address.country',

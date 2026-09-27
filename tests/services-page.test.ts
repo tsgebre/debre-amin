@@ -1,5 +1,6 @@
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import { beforeAll, describe, expect, it } from 'vitest';
+import { scriptPolicyViolations } from './helpers/script-policy';
 import ServicesPage from '../src/pages/[lang]/services.astro';
 import { LOCALES, type Locale } from '../src/i18n/index';
 import { siteConfig } from '../src/data/site';
@@ -62,6 +63,10 @@ describe.each(LOCALES)('services page — %s', (lang) => {
     for (let i = 0; i < siteConfig.services.length; i++) {
       expect(doc()).toContain(`title="Replace in src/data/site.ts: services.${i}.day.${lang}"`);
     }
+  });
+
+  it('ships only local module scripts (no external hosts)', () => {
+    expect(scriptPolicyViolations(doc())).toEqual([]);
   });
 
   it('has no missing-translation markers', () => {

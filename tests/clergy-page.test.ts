@@ -1,5 +1,6 @@
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import { beforeAll, describe, expect, it } from 'vitest';
+import { scriptPolicyViolations } from './helpers/script-policy';
 import ClergyPage from '../src/pages/[lang]/clergy.astro';
 import ClergyCard from '../src/components/ClergyCard.astro';
 import ClergyList from '../src/components/ClergyList.astro';
@@ -71,6 +72,10 @@ describe.each(LOCALES)('clergy page — %s', (lang) => {
     expect(doc()).toMatch(
       new RegExp(`<a href="${href.replace(/\//g, '\\/')}"[^>]*aria-current="page"`),
     );
+  });
+
+  it('ships only local module scripts (no external hosts)', () => {
+    expect(scriptPolicyViolations(doc())).toEqual([]);
   });
 
   it('has no missing-translation markers', () => {

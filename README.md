@@ -184,6 +184,14 @@ The repository includes a ready-made publishing workflow
 You can also start a publish by hand: **Actions → Deploy to GitHub Pages →
 Run workflow**.
 
+The workflow also rebuilds the site automatically **every day at 06:17 UTC**
+(just after midnight in Greensboro). This keeps the "Today" date at the top
+of every page current even for visitors whose browsers don't run scripts;
+for everyone else, the browser updates it immediately. You don't need to do
+anything for this. Note that GitHub disables scheduled workflows in public
+repositories after 60 days without activity; if the date ever looks stale,
+re-enable the workflow on the **Actions** tab, or push any change.
+
 The site works whether it is published at the root of a domain or under a
 `/<your-repo>/` sub-folder. The workflow tells the build which one to use, so
 no code changes are needed.

@@ -7,6 +7,7 @@ import { LOCALES, LOCALE_META, t, type Locale } from '../i18n/index';
 import { assetPath, localizedPath, samePath, switchLocalePath } from '../i18n/paths';
 import { NAV } from '../i18n/nav';
 import CrossMotif from '../components/CrossMotif.astro';
+import TodayDate from '../components/TodayDate.astro';
 
 interface Props {
   lang: Locale;
@@ -61,6 +62,9 @@ const currentPath = Astro.url.pathname;
         <span lang={LOCALE_META[other].htmlLang}>{t(lang, 'lang.switchTo')}</span>
       </a>
     </header>
+    <div class="today-strip">
+      <TodayDate lang={lang} />
+    </div>
     <main id="main">
       <slot />
     </main>

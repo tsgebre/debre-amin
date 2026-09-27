@@ -13,6 +13,7 @@ export {
   toEthiopian,
   toGregorian,
 } from './core';
-export { ethiopianTodayIn } from './today';
+export { ethiopianTodayIn, todayView } from './today';
+export type { TodayView } from './today';
 export { ECAL_AM_NEEDS_REVIEW, ETHIOPIAN_MONTHS_AM, ETHIOPIAN_MONTHS_EN } from './names';
 export { formatEthiopian, formatGregorian } from './format';

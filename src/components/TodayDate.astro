@@ -1,0 +1,26 @@
+---
+import { todayView } from '../lib/ecal/today';
+import { t, type Locale } from '../i18n/index';
+import { siteConfig } from '../data/site';
+
+interface Props {
+  lang: Locale;
+  /** Defaults to the build moment; the client script replaces it with the real current date. */
+  now?: Date;
+}
+
+const { lang, now = new Date() } = Astro.props;
+const timeZone = siteConfig.timeZone;
+const view = todayView(now, timeZone, lang);
+---
+
+<p class="today-date" data-today data-tz={timeZone}>
+  <span class="today-label">{t(lang, 'today.label')}:</span>
+  <time datetime={view.isoDate} data-today-e>{view.ethiopian}</time>
+  <span aria-hidden="true">·</span>
+  <time datetime={view.isoDate} data-today-g>{view.gregorian}</time>
+</p>
+
+<script>
+  import '../scripts/today';
+</script>

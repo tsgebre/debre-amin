@@ -4,6 +4,10 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Daily rebuild just after midnight US Eastern, so the build-day date shown
+  # before the browser script runs is never more than about a day old.
+  schedule:
+    - cron: '17 6 * * *'
 
 permissions:
   contents: read

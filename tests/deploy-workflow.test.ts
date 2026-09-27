@@ -28,6 +28,10 @@ describe('deploy workflow', () => {
     expect(wf.on).toHaveProperty('workflow_dispatch');
   });
 
+  it('rebuilds daily at 06:17 UTC (just after midnight US Eastern)', () => {
+    expect(wf.on.schedule).toEqual([{ cron: '17 6 * * *' }]);
+  });
+
   it('grants exactly the Pages permissions', () => {
     expect(wf.permissions).toEqual({ contents: 'read', pages: 'write', 'id-token': 'write' });
   });

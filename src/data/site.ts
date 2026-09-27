@@ -88,7 +88,20 @@ const clergySchema = z.object({
     .optional(),
 });
 
+const IANA_TIME_ZONE = z.string().refine(
+  (tz) => {
+    try {
+      new Intl.DateTimeFormat(undefined, { timeZone: tz });
+      return true;
+    } catch {
+      return false;
+    }
+  },
+  { message: 'time zone must be a valid IANA name, e.g. "America/New_York"' },
+);
+
 export const siteConfigSchema = z.object({
+  timeZone: IANA_TIME_ZONE,
   contact: z.object({
     phone: phoneOrPh,
     email: emailOrPh,
@@ -122,6 +135,8 @@ export const CONFIG_AM_NEEDS_REVIEW: readonly string[] = [
 ];
 
 const config: SiteConfig = {
+  // Real value, not a placeholder: the parish is in Greensboro, NC (US Eastern).
+  timeZone: 'America/New_York',
   contact: {
     phone: ph('contact.phone'),
     email: ph('contact.email'),

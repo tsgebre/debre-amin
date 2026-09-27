@@ -166,6 +166,33 @@ svg {
   }
 }
 
+.today-strip {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  border-bottom: 1px solid var(--color-gold);
+  padding: 0.375rem 1rem;
+  font-size: 0.9375rem;
+}
+
+/* Space for two lines is reserved on narrow screens so the client-side
+   date update never shifts the page. */
+.today-date {
+  max-width: 70ch;
+  margin: 0 auto;
+  line-height: 1.5;
+  min-height: 3em;
+}
+
+.today-label {
+  font-weight: 700;
+}
+
+@media (min-width: 600px) {
+  .today-date {
+    min-height: 1.5em;
+  }
+}
+
 main {
   padding: 1.5rem 1rem 3rem;
 }

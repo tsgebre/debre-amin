@@ -21,8 +21,8 @@ liturgical texts.
 - zod for schema validation (site config + content collections).
 - `@fontsource/noto-sans-ethiopic` + `@fontsource-variable/inter`,
   self-hosted fonts.
-- No client-side framework. The language toggle is a plain `<script>` or
-  pure links.
+- No client-side framework. The language toggle is pure links. The only
+  client JS is the small "today" updater (see Client-side today).
 
 ## Design system
 
@@ -97,6 +97,24 @@ liturgical texts.
 - Fixed feasts and the saint's 24th-of-month commemorations computed from
   the conversion module.
 
+## Client-side today
+
+- Pages are static, so "today" is shown in two layers. `TodayDate.astro`
+  (in `BaseLayout`, a slim strip under the header on every page)
+  server-renders the **build day** in both calendars. That text is readable
+  without JavaScript, and its `min-height` is reserved so the update never
+  shifts the layout.
+- `src/scripts/today.ts` then replaces the text and the `<time datetime>`
+  with the real current date via `todayView` (`src/lib/ecal/today.ts`). It
+  is bundled by Astro (inlined as a ~3 KB `type="module"` script), never
+  throws, and leaves the server markup untouched on any failure.
+- The day is the civil day in the parish time zone, `siteConfig.timeZone =
+  'America/New_York'` (a real value, validated as an IANA name).
+- `deploy.yml` rebuilds daily at 06:17 UTC (just after midnight Eastern),
+  so the no-JS fallback is never more than about a day stale.
+- **Script policy (tested):** every `<script>` is `type="module"` and is
+  either inlined or loaded from `<base>_astro/`. No external hosts.
+
 ## Content collections
 
 - `src/content/events/` (markdown, zod frontmatter: title/titleAm/date/type).
@@ -158,11 +176,13 @@ the safest shape for GitHub Pages.
   Hosanna, Siklet, Erget, Peraklitos and Tsome Hawariat as verified day
   offsets; Demera; `feastsForYear` (`movableAvailable` false outside the
   table — never guessed), `nextFeast`, `currentObservances`, and
-  `confidence` on every occurrence (P2-03).
-- **Remaining:** Phase 2 — Calendar & Feasts page (P2-04), Home page with
-  both calendars, next feast and client-side "today" (P2-05); Phase 3 —
-  Giving, Events, Gallery; Phase 4 — hardening.
-- **Build/test status:** `npm test` passes (689/689); `astro check` clean;
+  `confidence` on every occurrence (P2-03); site-wide `TodayDate` strip
+  (build-day fallback + client update in the parish time zone), daily cron
+  rebuild, tested script policy (P2-04).
+- **Remaining:** Phase 2 — Calendar & Feasts page (P2-05), Home with the
+  next feast and a service-times summary (P2-06); Phase 3 — Giving,
+  Events, Gallery; Phase 4 — hardening.
+- **Build/test status:** `npm test` passes (717/717); `astro check` clean;
   `npm run build` emits 11 pages; verified under `BASE_PATH` `''` and
   `/debre-amin`; `npm ci` in sync.
 - **Open risks:**

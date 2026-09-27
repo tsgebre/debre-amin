@@ -5,6 +5,7 @@ import RootRedirect from '../src/pages/index.astro';
 import Placeholder from '../src/components/Placeholder.astro';
 import { LOCALES, type Locale } from '../src/i18n/index';
 import { NAV } from '../src/i18n/nav';
+import { scriptPolicyViolations, scriptTags } from './helpers/script-policy';
 
 type Component = Parameters<AstroContainer['renderToString']>[0];
 // getStaticPaths pages without Props are typed `(props: never)`, which the container signature rejects.
@@ -83,8 +84,19 @@ describe.each(LOCALES)('[lang] home page — %s', (lang) => {
     expect(doc()).not.toContain('⟦missing:');
   });
 
-  it('ships no client-side script', () => {
-    expect(doc()).not.toMatch(/<script\b/);
+  it('ships only local module scripts (no external hosts)', () => {
+    expect(scriptTags(doc()).length).toBeGreaterThan(0);
+    expect(scriptPolicyViolations(doc())).toEqual([]);
+  });
+
+  it('shows today in both calendars in a strip between the header and <main>', () => {
+    const strip = doc().indexOf('class="today-strip"');
+    expect(strip).toBeGreaterThan(doc().indexOf('</header>'));
+    expect(strip).toBeLessThan(doc().indexOf('<main'));
+    expect(doc()).toMatch(/<p class="today-date"[^>]*\bdata-today\b[^>]*data-tz="America\/New_York"/);
+    expect(doc()).toMatch(/<time datetime="\d{4}-\d{2}-\d{2}"[^>]*data-today-e/);
+    expect(doc()).toMatch(/<time datetime="\d{4}-\d{2}-\d{2}"[^>]*data-today-g/);
+    expect(doc()).toContain(lang === 'en' ? 'Today:' : 'ዛሬ:');
   });
 
   it('references no external CDN', () => {

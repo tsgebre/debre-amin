@@ -1,5 +1,37 @@
 import { describe, expect, it } from 'vitest';
-import { ethiopianTodayIn, isValidEthiopianDate } from '../../src/lib/ecal';
+import { ethiopianTodayIn, isValidEthiopianDate, todayView } from '../../src/lib/ecal';
+
+describe('todayView', () => {
+  const noon = new Date('2026-09-27T12:00:00Z');
+
+  it('2026-09-27T12:00Z in New York, English', () => {
+    expect(todayView(noon, 'America/New_York', 'en')).toEqual({
+      isoDate: '2026-09-27',
+      ethiopian: 'Meskerem 17, 2019 E.C.',
+      gregorian: 'September 27, 2026',
+    });
+  });
+
+  it('2026-09-27T12:00Z in New York, Amharic', () => {
+    const v = todayView(noon, 'America/New_York', 'am');
+    expect(v.isoDate).toBe('2026-09-27');
+    expect(v.ethiopian).toContain('መስከረም 17');
+    expect(v.ethiopian).toBe('መስከረም 17 ቀን 2019 ዓ.ም.');
+    expect(v.gregorian).toBe('27 ሴፕቴምበር 2026');
+  });
+
+  it('uses the civil day in the time zone at the boundary (still Sep 10 = Pagume 5 in New York)', () => {
+    const instant = new Date('2026-09-11T03:30:00Z');
+    const ny = todayView(instant, 'America/New_York', 'en');
+    expect(ny.isoDate).toBe('2026-09-10');
+    expect(ny.ethiopian).toBe('Pagume 5, 2018 E.C.');
+    expect(todayView(instant, 'UTC', 'en').ethiopian).toBe('Meskerem 1, 2019 E.C.');
+  });
+
+  it('throws on an invalid time zone (the client script catches this)', () => {
+    expect(() => todayView(noon, 'Mars/Olympus', 'en')).toThrow(RangeError);
+  });
+});
 
 // The dated expectations below are RESEARCHER-verified: rows 4, 9 and 18
 // of the reference table plus the EDT (UTC-4) offset rule — see

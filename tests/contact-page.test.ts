@@ -1,5 +1,6 @@
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import { beforeAll, describe, expect, it } from 'vitest';
+import { scriptPolicyViolations } from './helpers/script-policy';
 import ContactPage from '../src/pages/[lang]/contact.astro';
 import ContactDetails from '../src/components/ContactDetails.astro';
 import { LOCALES, type Locale } from '../src/i18n/index';
@@ -75,6 +76,10 @@ describe.each(LOCALES)('contact page — %s', (lang) => {
   it('marks the Contact nav link as the current page', () => {
     const href = `/${lang}/contact/`;
     expect(doc()).toMatch(new RegExp(`<a href="${href.replace(/\//g, '\\/')}"[^>]*aria-current="page"`));
+  });
+
+  it('ships only local module scripts (no external hosts)', () => {
+    expect(scriptPolicyViolations(doc())).toEqual([]);
   });
 
   it('has no missing-translation markers', () => {
