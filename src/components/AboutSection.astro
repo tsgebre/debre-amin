@@ -1,0 +1,32 @@
+---
+import { t, type Locale } from '../i18n/index';
+import type { AboutEntry } from '../content/schemas';
+
+interface Props {
+  lang: Locale;
+  title: string;
+  sources: AboutEntry['sources'];
+  amReviewPending: boolean;
+}
+
+const { lang, title, sources, amReviewPending } = Astro.props;
+const showReviewNote = lang === 'am' && amReviewPending;
+---
+
+<section class="about-section">
+  <h2>{title}</h2>
+  <slot />
+  {showReviewNote && <p class="review-note">{t(lang, 'about.amReviewNote')}</p>}
+  <details class="sources">
+    <summary>{t(lang, 'about.sources')}</summary>
+    <ul>
+      {
+        sources.map((s) => (
+          <li>
+            <a href={s.url}>{s.title}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </details>
+</section>

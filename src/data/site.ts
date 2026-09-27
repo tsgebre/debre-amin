@@ -93,6 +93,9 @@ export const siteConfigSchema = z.object({
     mailingAddress: phOr(z.string().min(1)),
   }),
   livestreamUrl: urlOrPh,
+  parish: z.object({
+    history: bilingualSchema,
+  }),
 });
 
 export type SiteConfig = z.infer<typeof siteConfigSchema>;
@@ -167,6 +170,9 @@ const config: SiteConfig = {
     mailingAddress: ph('giving.mailingAddress'),
   },
   livestreamUrl: ph('livestreamUrl'),
+  parish: {
+    history: bilingualPh('parish.history'),
+  },
 };
 
 export const siteConfig: SiteConfig = siteConfigSchema.parse(config);

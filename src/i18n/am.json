@@ -24,7 +24,7 @@
   "services.table.time": "ጊዜ",
   "services.table.scrollLabel": "ሙሉውን መርሃ ግብር ለማየት ይሸብልሉ",
   "services.liturgy.heading": "ቅዳሴ",
-  "services.liturgy.body": "የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ቤተ ክርስቲያን ቅዳሴ በግእዝ፣ በቤተ ክርስቲያኒቱ ጥንታዊ የአምልኮ ቋንቋ ይከናወናል፤ ንባባትና መዝሙራትም አብዛኛውን ጊዜ በአማርኛ ይቀርባሉ። ቁርባን ለመቀበል የሚያስቡ ምእመናን በተለምዶ ከዚያ በፊት ይጾማሉ።",
+  "services.liturgy.body": "የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ቤተ ክርስቲያን ቅዳሴ በግእዝ፣ በቤተ ክርስቲያኒቱ ጥንታዊ የአምልኮ ቋንቋ ይከናወናል፤ ንባባቱና አንዳንድ የቅዳሴው ክፍሎችም በአማርኛ ይቀርባሉ። ቁርባን ለመቀበል የሚያስቡ ምእመናን በተለምዶ ከዚያ በፊት ይጾማሉ።",
   "services.sundaySchool.heading": "ሰንበት ትምህርት ቤት",
   "services.sundaySchool.body": "በኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ቤተ ክርስቲያን ትውፊት ሰንበት ትምህርት ቤት ሕፃናትና ወጣቶች የክርስትና እምነትንና የቤተ ክርስቲያኒቱን ትውፊት የሚማሩበት መርሐ ግብር ነው።",
   "services.prayerTeaching.heading": "ጸሎት እና ትምህርት",
@@ -40,5 +40,8 @@
   "clergy.heading": "ካህናት እና አመራር",
   "clergy.intro": "ደብሩን የሚያገለግሉ ካህናትን ያግኙ።",
   "clergy.photoPending": "ፎቶ በቅርቡ ይጨመራል",
-  "clergy.empty": "የካህናት መረጃ በቅርቡ እዚህ ይለጠፋል።"
+  "clergy.empty": "የካህናት መረጃ በቅርቡ እዚህ ይለጠፋል።",
+  "about.parish.heading": "የደብራችን ታሪክ",
+  "about.sources": "ምንጮች",
+  "about.amReviewNote": "ይህ ትርጉም በደብሩ እየተገመገመ ነው።"
 }

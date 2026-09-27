@@ -1,0 +1,36 @@
+---
+import { getCollection, render } from 'astro:content';
+import AboutView from '../../components/AboutView.astro';
+import { LOCALES, type Locale } from '../../i18n/index';
+import { siteConfig } from '../../data/site';
+import { ABOUT_SECTIONS } from '../../content/schemas';
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+
+const entries = (await getCollection('about', (e) => e.data.lang === lang)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+for (const section of ABOUT_SECTIONS) {
+  if (!entries.some((e) => e.data.section === section)) {
+    throw new Error(
+      `About page: no '${section}' entry for lang '${lang}' in src/content/about/ (expected ${section}.${lang}.md).`,
+    );
+  }
+}
+
+const sections = await Promise.all(
+  entries.map(async (entry) => ({
+    title: entry.data.title,
+    sources: entry.data.sources,
+    amReviewPending: entry.data.amReviewPending,
+    Content: (await render(entry)).Content,
+  })),
+);
+---
+
+<AboutView lang={lang} history={siteConfig.parish.history} sections={sections} />

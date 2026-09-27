@@ -132,13 +132,17 @@ the safest shape for GitHub Pages.
   appear once real values replace the placeholders (P1-07); the Clergy &
   Leadership page, driven by `siteConfig.clergy` via `ClergyList`/
   `ClergyCard`, with a local placeholder portrait SVG and a schema that
-  only accepts local `images/clergy/*` filenames for a real photo (P1-08).
-- **Remaining:** About page (with RESEARCHER pass), deploy workflow; then
-  calendar, content collections, remaining pages, hardening.
-- **Build/test status:** `npm test` passes (169/169); `astro check` clean;
-  `npm run build` emits `/index.html`, `/en/`, `/am/`, `/en/services/`,
-  `/am/services/`, `/en/contact/`, `/am/contact/`, `/en/clergy/`,
-  `/am/clergy/`.
+  only accepts local `images/clergy/*` filenames for a real photo (P1-08);
+  the About page — parish history as a `parish.history` placeholder, plus
+  RESEARCHER-verified EOTC and saint sections in the `about` content
+  collection (`src/content/about/*.md`, schema in `src/content/schemas.ts`),
+  each with its sources; claims register in `docs/research/about-claims.md`
+  (P1-09).
+- **Remaining:** deploy workflow + starter README (P1-10); then calendar,
+  content collections for events/gallery, remaining pages, hardening.
+- **Build/test status:** `npm test` passes (204/204); `astro check` clean;
+  `npm run build` emits 11 pages: `/`, and `/en/` + `/am/` for home,
+  services, contact, clergy and about.
 - **Open risks:**
   - Base-path link correctness on GitHub Pages.
   - Amharic authenticity — every Amharic string needs parish review;
@@ -147,6 +151,9 @@ the safest shape for GitHub Pages.
   - Every fact in `SiteConfig` is a placeholder — the parish must supply
     real contact info, service times, clergy names and giving details
     before launch (`placeholderFields(siteConfig)` enumerates them all).
+  - The saint's annual feasts (Tahsas 24, Nehase 24 high confidence;
+    Ginbot 12, Megabit 24 thinly sourced) need parish confirmation before
+    Phase 2 relies on them — see `docs/research/about-claims.md`.
   - Calendar correctness — conversion module and feast table need
     RESEARCHER/STATISTICAL verification against reference dates before
     Phase 2 sign-off.

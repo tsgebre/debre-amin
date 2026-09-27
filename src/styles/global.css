@@ -247,6 +247,25 @@ thead th {
   border-radius: 50%;
 }
 
+.about-section {
+  margin-bottom: 2.5rem;
+}
+
+.review-note {
+  color: var(--color-muted);
+  font-style: italic;
+  border-left: 3px solid var(--color-gold);
+  padding-left: 0.75rem;
+}
+
+.sources summary {
+  cursor: pointer;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  color: var(--color-muted);
+}
+
 .site-footer {
   background: var(--color-green-dark);
   color: var(--color-white);

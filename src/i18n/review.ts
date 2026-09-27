@@ -21,33 +21,33 @@ export const AM_NEEDS_REVIEW: readonly string[] = [
   'clergy.intro',
   'clergy.photoPending',
   'clergy.empty',
+  'about.parish.heading',
+  'about.amReviewNote',
 ];
 
-// Status: self-reviewed by Implementer; pending independent RESEARCHER
-// sign-off in P1-09 (About page research task).
+// Status: independently verified by RESEARCHER (P1-09). Full register with
+// sources: docs/research/about-claims.md (rows C1-C5).
 //
 // RESEARCHER: factual claims made in services.* prose (src/i18n/en.json and
-// am.json), each with a one-line justification. Claims without one of these
-// were removed rather than shipped unverified.
+// am.json), each with its verifying source.
 //
 // 1. "The Divine Liturgy ... is celebrated in Ge'ez, the Church's ancient
-//    liturgical language" (services.liturgy.body) — Ge'ez is the
-//    established liturgical language of the EOTC; standard reference:
-//    Encyclopaedia Britannica, "Ethiopian Orthodox Tewahedo Church."
-// 2. "...with readings and hymns often also given in Amharic"
-//    (services.liturgy.body) — widely documented practice of using Amharic
-//    alongside Ge'ez for readings/hymns in EOTC parishes, especially in the
-//    diaspora; consistent across EOTC parish-published service descriptions.
+//    liturgical language" (services.liturgy.body) — verified: EOTC official,
+//    https://www.ethiopianorthodox.org/english/ethiopian/worship.html; WCC,
+//    https://www.oikoumene.org/member-churches/ethiopian-orthodox-tewahedo-church
+// 2. "...with the readings and parts of the liturgy also given in Amharic"
+//    (services.liturgy.body) — verified: EOTC official worship.html. Corrected
+//    in P1-09 from "readings and hymns often", as hymns were not supported.
 // 3. "Faithful who plan to receive Holy Communion traditionally observe a
-//    fast beforehand" (services.liturgy.body) — pre-communion fasting is a
-//    standard, well-documented Oriental Orthodox (including EOTC) practice.
+//    fast beforehand" (services.liturgy.body) — verified, kept general (no
+//    hours): EOTC official worship.html (celebrants fast >= 12 hours);
+//    https://en.wikipedia.org/wiki/Ethiopian_Orthodox_Tewahedo_Church
 // 4. "In the Ethiopian Orthodox Tewahedo tradition, Sunday school is where
 //    children and youth learn the Christian faith and the traditions of the
-//    Church" (services.sundaySchool.body) — Sunday school as a form of
-//    Christian education for youth is a standard practice in EOTC parishes;
-//    definitional description consistent with tradition.
+//    Church" (services.sundaySchool.body) — verified (general): Mahibere
+//    Kidusan, EOTC Sunday School Department, https://eotcmk.org/e/; WCC.
 // 5. "Beyond the Divine Liturgy, the Ethiopian Orthodox Tewahedo Church
 //    holds prayer services and teaching grounded in the Word of God"
-//    (services.prayerTeaching.body) — prayer services and teaching (ስብከት)
-//    beyond the Divine Liturgy are established practices in EOTC tradition;
-//    documented in parish and denominational resources.
+//    (services.prayerTeaching.body) — verified (general): WCC (teaching by
+//    clergy); EOTC official site (sermons). "Grounded in the Word of God" is
+//    editorial voice.

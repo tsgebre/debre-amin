@@ -1,0 +1,19 @@
+---
+import Fact from './Fact.astro';
+import { t, type Locale } from '../i18n/index';
+import type { Bilingual } from '../data/site';
+
+interface Props {
+  lang: Locale;
+  history: Bilingual;
+}
+
+const { lang, history } = Astro.props;
+---
+
+<section class="about-section">
+  <h2>{t(lang, 'about.parish.heading')}</h2>
+  <p>
+    <Fact lang={lang} value={history[lang]} field={`parish.history.${lang}`} />
+  </p>
+</section>
