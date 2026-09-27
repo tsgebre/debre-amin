@@ -145,11 +145,16 @@ the safest shape for GitHub Pages.
   conversion with validation, `ethiopianTodayIn`, bilingual month names and
   formatting, verified by an 18-row RESEARCHER-sourced reference table
   (`docs/research/ecal-reference.md`) and an independent day-walking oracle
-  over every day of 1900–2100 (P2-01).
-- **Remaining:** Phase 2 — feast/fast data (P2-02), Calendar & Feasts page
-  (P2-03), full Home page with client-side "today" (P2-04); Phase 3 —
-  Giving, Events, Gallery; Phase 4 — hardening.
-- **Build/test status:** `npm test` passes (289/289); `astro check` clean;
+  over every day of 1900–2100 (P2-01); the fixed feast/fast layer
+  `src/lib/feasts/` — Enkutatash, Meskel, Tsome Nebiyat (to the eve of
+  Genna), Genna (Tahsas 28 in ዘመነ ዮሐንስ, else 29), Ketera, Timket, Tsome
+  Filseta, Filseta, the saint's Tahsas 24 / Nehase 24 feasts and monthly
+  24th commemorations, resolved for EC 1893–2092 and checked against dated
+  observances (`docs/research/feasts.md`) (P2-02).
+- **Remaining:** Phase 2 — movable feasts (P2-03), Calendar & Feasts page
+  (P2-04), Home page with both calendars, next feast and client-side
+  "today" (P2-05); Phase 3 — Giving, Events, Gallery; Phase 4 — hardening.
+- **Build/test status:** `npm test` passes (451/451); `astro check` clean;
   `npm run build` emits 11 pages; verified under `BASE_PATH` `''` and
   `/debre-amin`; `npm ci` in sync.
 - **Open risks:**
@@ -165,8 +170,10 @@ the safest shape for GitHub Pages.
     Phase 2 relies on them — see `docs/research/about-claims.md`.
   - Calendar correctness — the conversion core is RESEARCHER-verified
     (`docs/research/ecal-reference.md`) and oracle-tested over 1900–2100;
-    the feast/fast table (P2-02) still needs the same treatment before
-    Phase 2 sign-off.
+    fixed feasts are verified (`docs/research/feasts.md`). Tsome Nebiyat's
+    end in ዘመነ ዮሐንስ is medium confidence and needs parish confirmation;
+    its length (43/44 days) must not be displayed. The movable-feast table
+    (P2-03) still needs verification before Phase 2 sign-off.
   - **Astro dependency security:** staying on Astro 5.x (`^5.18.2`)
     despite `npm audit` advisories fixed only in 7.x. Astro 6+ requires
     Node ≥22.12, breaking the Node 20+ requirement, and the advisories
