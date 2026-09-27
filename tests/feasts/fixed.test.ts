@@ -6,6 +6,7 @@ import {
   FEAST_MIN_YEAR,
   FIXED_FEASTS,
   MONTHLY_COMMEMORATION,
+  MOVABLE_DEFS,
   gennaDay,
   resolveFixedFeasts,
 } from '../../src/lib/feasts';
@@ -60,6 +61,7 @@ function expectedEthiopian(id: string, ey: number): { start: [number, number]; e
   const johnYear = ey % 4 === 0;
   switch (id) {
     case 'enkutatash': return { start: [1, 1] };
+    case 'demera': return { start: [1, 16] };
     case 'meskel': return { start: [1, 17] };
     case 'tsome-nebiyat': return { start: [3, 15], end: [4, johnYear ? 27 : 28] };
     case 'teklehaymanot-birth': return { start: [4, 24] };
@@ -117,7 +119,7 @@ describe.each(YEARS)('resolveFixedFeasts(%i)', (ey) => {
     expect(starts).toEqual([...starts].sort((a, b) => a - b));
     expect(occ[0].id).toBe('enkutatash');
     expect(occ.map((o) => o.id)).toEqual([
-      'enkutatash', 'meskel', 'tsome-nebiyat', 'teklehaymanot-birth', 'genna',
+      'enkutatash', 'demera', 'meskel', 'tsome-nebiyat', 'teklehaymanot-birth', 'genna',
       'ketera', 'timket', 'tsome-filseta', 'filseta', 'teklehaymanot-repose',
     ]);
   });
@@ -195,8 +197,10 @@ describe('range', () => {
 });
 
 describe('data integrity', () => {
-  const all = [...FIXED_FEASTS.map((d) => ({ id: d.id, names: d.names, sourceRef: d.sourceRef })),
-    MONTHLY_COMMEMORATION];
+  const all = [
+    ...[...FIXED_FEASTS, ...MOVABLE_DEFS].map((d) => ({ id: d.id, names: d.names, sourceRef: d.sourceRef })),
+    MONTHLY_COMMEMORATION,
+  ];
 
   it('has unique ids', () => {
     const ids = all.map((d) => d.id);

@@ -42,6 +42,7 @@ describe('occurrencesBetween', () => {
       'filseta',
       'teklehaymanot-repose',
       'enkutatash',
+      'demera',
       'meskel',
     ]);
   });

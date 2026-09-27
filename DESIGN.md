@@ -92,6 +92,8 @@ liturgical texts.
   `year % 4 === 3`), invalid-date rejection.
 - Movable feasts (Fasika and dependents): RESEARCHER-verified lookup table
   for 2016–2030 EC rather than computus — lower risk, equally testable.
+  Implemented in `src/lib/feasts/` (P2-02/P2-03), which imports only from
+  `src/lib/ecal`.
 - Fixed feasts and the saint's 24th-of-month commemorations computed from
   the conversion module.
 
@@ -150,11 +152,17 @@ the safest shape for GitHub Pages.
   Genna), Genna (Tahsas 28 in ዘመነ ዮሐንስ, else 29), Ketera, Timket, Tsome
   Filseta, Filseta, the saint's Tahsas 24 / Nehase 24 feasts and monthly
   24th commemorations, resolved for EC 1893–2092 and checked against dated
-  observances (`docs/research/feasts.md`) (P2-02).
-- **Remaining:** Phase 2 — movable feasts (P2-03), Calendar & Feasts page
-  (P2-04), Home page with both calendars, next feast and client-side
-  "today" (P2-05); Phase 3 — Giving, Events, Gallery; Phase 4 — hardening.
-- **Build/test status:** `npm test` passes (451/451); `astro check` clean;
+  observances (`docs/research/feasts.md`) (P2-02); movable feasts —
+  `FASIKA_TABLE` (EC 2016–2030, three paschalion sources per row,
+  cross-checked against a Julian-computus oracle) with Nenewe, Abiy Tsom,
+  Hosanna, Siklet, Erget, Peraklitos and Tsome Hawariat as verified day
+  offsets; Demera; `feastsForYear` (`movableAvailable` false outside the
+  table — never guessed), `nextFeast`, `currentObservances`, and
+  `confidence` on every occurrence (P2-03).
+- **Remaining:** Phase 2 — Calendar & Feasts page (P2-04), Home page with
+  both calendars, next feast and client-side "today" (P2-05); Phase 3 —
+  Giving, Events, Gallery; Phase 4 — hardening.
+- **Build/test status:** `npm test` passes (689/689); `astro check` clean;
   `npm run build` emits 11 pages; verified under `BASE_PATH` `''` and
   `/debre-amin`; `npm ci` in sync.
 - **Open risks:**
@@ -172,8 +180,11 @@ the safest shape for GitHub Pages.
     (`docs/research/ecal-reference.md`) and oracle-tested over 1900–2100;
     fixed feasts are verified (`docs/research/feasts.md`). Tsome Nebiyat's
     end in ዘመነ ዮሐንስ is medium confidence and needs parish confirmation;
-    its length (43/44 days) must not be displayed. The movable-feast table
-    (P2-03) still needs verification before Phase 2 sign-off.
+    its length (43/44 days) must not be displayed. Movable feasts are
+    verified for EC 2016–2030 only; the table must be extended (with
+    sources) before EC 2031 (Sep 2038). Tsome Hawariat's Hamle 4 end is
+    medium confidence (one parish lists Hamle 5); its length must not be
+    displayed either.
   - **Astro dependency security:** staying on Astro 5.x (`^5.18.2`)
     despite `npm audit` advisories fixed only in 7.x. Astro 6+ requires
     Node ≥22.12, breaking the Node 20+ requirement, and the advisories

@@ -3,7 +3,7 @@
 RESEARCHER-verified data behind `src/lib/feasts/fixed.ts`. Each shipped
 entry has an anchor matching its `sourceRef`, with its Ethiopian date or
 rule, its Amharic name and at least two sources. Movable feasts (Fasika and
-its dependents) are not covered here; they belong to P2-03.
+its dependents, P2-03) are covered in the second half of this document.
 
 Gregorian dates in parish-calendar sources (eotc-ma) are glosses and are
 often wrong. They are never used as expected values. Only the Ethiopian
@@ -60,8 +60,24 @@ and 2020 are also rows 4 and 5 of `docs/research/ecal-reference.md`.
   Sep 28 in 2023, which is not a Gregorian leap year. It was the year after
   an *Ethiopian* leap year. ENA's Sep 27, 2023 Demera ("Eve of Meskel")
   dateline confirms this.
-- **Not shipped:** Demera (ደመራ), the eve on Meskerem 16, is well sourced
-  but awaits the Architect's approval.
+- **Eve:** Demera is shipped as its own entry. See [Demera](#demera).
+- **Confidence:** high.
+
+<a id="demera"></a>
+### Demera, the eve of Meskel (ደመራ): Meskerem 16
+
+- **Rule:** fixed, Meskerem 16. The Architect approved it in P2-03.
+- **Sources:**
+  - Wikipedia, Meskel, https://en.wikipedia.org/wiki/Meskel: Demera "takes
+    place in the early evening the day before Meskel or on the day itself".
+  - ENA, Sep 27, 2023, https://www.ena.et/web/eng/w/eng_3386146: Demera "is
+    conducted on the Eve of Meskel commemoration".
+- **Dated observances:** Sep 27, 2023 (ENA); Sep 26, 2024 (ENA, search
+  summary only); Sep 26, 2025 (Borkena,
+  https://borkena.com/2025/09/26/meskel-demera-celebrated-across-ethiopia/).
+- **Note:** the RESEARCHER found no third source, such as an EOTC or
+  Mahibere Kidusan page, naming ደመራ on Meskerem 16. Neither Debreselam
+  calendar lists it.
 - **Confidence:** high.
 
 <a id="tsome-nebiyat"></a>
@@ -234,13 +250,200 @@ and 2020 are also rows 4 and 5 of `docs/research/ecal-reference.md`.
 - **Ginbot 12:** translation of the saint's relics. Pending parish confirmation.
 - **Megabit 24:** the saint's conception (ጽንሰት). Pending parish confirmation.
 
-## Reported but not shipped (would need Architect approval)
+---
 
-- **Demera (ደመራ):** Meskerem 16, the eve of Meskel. Well sourced (Wikipedia
-  Meskel; ENA Sep 27, 2023).
+# Movable feasts and fasts (P2-03), `src/lib/feasts/movable.ts`
+
+Every movable observance is a day offset from that Ethiopian year's Fasika.
+Fasika comes from a lookup table, not a computus. `tests/feasts/movable.test.ts`
+cross-checks every row against an independent Julian computus (Meeus),
+confirms each date is a Sunday, and checks the offsets by counting days.
+For years outside the table, the module returns no movable occurrences and
+`feastsForYear` reports `movableAvailable: false`. It never guesses.
+
+**Common offset sources** (called (a) to (d) below):
+
+- **(a)** Debreselam Medhanealem EOTC (Minnesota), EC 2016 calendar,
+  https://www.debreselam.net/?p=15549. It prints Ethiopic and Gregorian
+  dates.
+- **(b)** Debreselam EC 2017 calendar, https://www.debreselam.net/?p=16337.
+  Its Gregorian dates for ጰራቅሊጦስ ("June 11, 2025"; correctly June 8) and
+  ጾመ ድኅነት are typos. It is not cited for those.
+- **(c)** Mahibere Kidusan, "የ፳፻፲፩ ዓ.ም የአጽዋማት ባሕረ ሐሳባዊ ቀመር",
+  https://eotcmk.org/a/የ፳፻፲፩-ዓ-ም-የአጽዋማት-ባሕረ-ሐሳባዊ/. It works through
+  EC 2011: Nenewe Yekatit 11, Fasika Miyazia 20, Erget Ginbot 29,
+  Peraklitos Sene 9, Tsome Hawariat Sene 10.
+- **(d)** Wikipedia, Bahre Hasab, https://en.wikipedia.org/wiki/Bahre_Hasab.
+  It counts days after Nenewe: "Abiy Tsom +14, Debre Zeit +41, Hosanna +62,
+  Siklet +67, Fasika +69", and states "The fast of Nenewe (Nineveh) begins
+  on a Monday."
+
+**ተውሳክ trap:** the ተውሳክ values given by eotc-ma and (c) (Abiy Tsom 14,
+Hosanna 2, Siklet 7, Erget 18, Peraklitos 28, Tsome Hawariat 29, …) are day
+counts mod 30 with month rollover. **They are not day offsets.** The code
+does not use them.
+
+<a id="fasika"></a>
+### Fasika (ፋሲካ / ትንሣኤ): lookup table, EC 2016–2030
+
+- **S1:** Wikipedia, List of dates for Easter,
+  https://en.wikipedia.org/wiki/List_of_dates_for_Easter. The "Julian
+  Easter" column gives Gregorian dates.
+- **S2:** Serbian Orthodox Diocese of Western America paschalion,
+  https://www.soc-wus.org/ourchurch/calendar.html. Its values are Gregorian
+  despite the "Julian Calendar" label.
+- **S3:** Bucknell University, Russian Dept., "The Dates of Orthodox Easter",
+  https://www.departments.bucknell.edu/russian/Site-prior-to-Easyweb-migration/easter.html.
+  This table gives **Julian (old-style)** dates; add 13 days. **Never read
+  S3's values as Gregorian**: doing so would shift every row by 13 days.
+
+| EC | Fasika (Gregorian) | S1 | S2 | S3 (Julian → +13) | Dated or EOTC confirmation |
+|---|---|---|---|---|---|
+| 2016 | 2024-05-05 | May 5 | 05 May | Apr 22 | ENA "Addis Ababa May 5/2024": Fasika "observed … today"; Debreselam (a) "ሚያዝያ 27, 2016 (Sunday May 5, 2024)" |
+| 2017 | 2025-04-20 | April 20 | 20 Apr | Apr 7 | Washington Times Apr 20, 2025, "Ethiopians marked Easter festivities on April 20" (search summary); Debreselam (b) "ሚያዝያ 12, 2017 (April 20, 2025)" |
+| 2018 | 2026-04-12 | April 12 | 12 Apr | Mar 30 | ENA "Addis Ababa, April 12, 2026": Fasika marked nationwide, "follows a 55-day period of fasting" |
+| 2019 | 2027-05-02 | May 2 | 02 May | Apr 19 | |
+| 2020 | 2028-04-16 | April 16 | 16 Apr | Apr 3 | |
+| 2021 | 2029-04-08 | April 8 | 08 Apr | Mar 26 | |
+| 2022 | 2030-04-28 | April 28 | 28 Apr | Apr 15 | |
+| 2023 | 2031-04-13 | April 13 | 13 Apr | Mar 31 | |
+| 2024 | 2032-05-02 | May 2 | 02 May | Apr 19 | |
+| 2025 | 2033-04-24 | April 24 | 24 Apr | Apr 11 | |
+| 2026 | 2034-04-09 | April 9 | 09 Apr | Mar 27 | |
+| 2027 | 2035-04-29 | April 29 | 29 Apr | Apr 16 | |
+| 2028 | 2036-04-20 | April 20 | 20 Apr | Apr 7 | |
+| 2029 | 2037-04-05 | April 5 | 05 Apr | Mar 23 | |
+| 2030 | 2038-04-25 | April 25 | 25 Apr | Apr 12 | |
+
+Dated sources: ENA 2024, https://www.ena.et/web/eng/w/eng_4394571;
+Washington Times 2025,
+https://www.washingtontimes.com/news/2025/apr/20/easter-ethiopia-celebrated-calls-charity-peace/;
+ENA 2026, https://www.ena.et/web/eng/w/eng_8641709.
+
+EOTC Bahire Hasab uses the same Alexandrian/Julian computus. In every year
+checked, the EOTC-computed date matched the Eastern tables: 2011 EC
+(Mahibere Kidusan (c): Miyazia 20 = Apr 28, 2019), 2016 and 2017. No year
+was found where they differ. **Confidence:** high.
+
+<a id="tsome-nenewe"></a>
+### Fast of Nineveh (ጾመ ነነዌ): Fasika −69 to −67
+
+- Monday to Wednesday, 3 days, starting two weeks before Abiy Tsom.
+- **Sources:**
+  - (a) "የካቲት 18, 2016 (Monday Feb 26, 2024)", which is 69 days before
+    May 5, 2024.
+  - (d) Fasika is +69 from Nenewe, and "begins on a Monday".
+  - (c) Yekatit 11 → Miyazia 20, 2011, is 69 days.
+  - eotc-ma, "Order of Fasts", https://www.eotc-ma.com/the-order-of-fasts:
+    "three days fast, Monday, Tuesday and Wednesday".
+- **Confidence:** high.
+
+<a id="abiy-tsom"></a>
+### Great Lent (ዐቢይ ጾም / ሁዳዴ): Fasika −55 to −1
+
+- 55 days, from a Monday through Holy Saturday.
+- **Sources:**
+  - (a) starts "Monday March 11, 2024", i.e. −55.
+  - (b) starts "Feb 24, 2025", i.e. −55.
+  - (d) starts 14 days after Nenewe.
+  - Wikipedia, Fasting and abstinence in the EOTC: "55 continuous days
+    before Easter".
+  - ENA 2026: "55-day period of fasting".
+- **Conflict:** (a) prints the range as "… – Sunday May 5, 2024", ending on
+  Fasika itself; (b) prints the same. A 55-day count from the Monday works
+  only if Holy Saturday is the last day: the fast is broken at the Easter
+  vigil, and the parish is naming the feast that ends it. The code uses
+  −55..−1. **The UI should label the range "until Fasika".**
+- **Confidence:** high.
+
+<a id="hosanna"></a>
+### Hosanna (ሆሣዕና): Fasika −7
+
+- **Sources:**
+  - (a) "ሚያዝያ 20, 2016 (Sunday April 28, 2024)".
+  - (b) "ሚያዝያ 5, 2017 (April 13, 2025)".
+  - (d) +62 from Nenewe, i.e. −7.
+- **Confidence:** high.
+
+<a id="siklet"></a>
+### Siklet, Good Friday (ስቅለት): Fasika −2
+
+- **Sources:**
+  - (a) "Friday May 3, 2024".
+  - (b) "April 18, 2025".
+  - (c) Miyazia 18 against Fasika Miyazia 20.
+  - (d) +67 from Nenewe, i.e. −2.
+- **Confidence:** high.
+
+<a id="erget"></a>
+### Erget, Ascension (ዕርገት): Fasika +39, a Thursday
+
+- **Sources:**
+  - (a) "ሰኔ 6, 2016 (Thursday June 13, 2024)".
+  - (b) "ግንቦት 21, 2017 (May 29, 2025)".
+  - (c) ግንቦት 29, 2011, which is 39 days after ሚያዝያ 20.
+- **Confidence:** high.
+
+<a id="peraklitos"></a>
+### Peraklitos, Pentecost (ጰራቅሊጦስ): Fasika +49
+
+- **Sources:**
+  - (a) "ሰኔ 16, 2016 (Sunday June 23, 2024)".
+  - (c) ሰኔ 9, 2011.
+  - Source (b) is not cited: its Gregorian date is a typo.
+- **Confidence:** high.
+
+<a id="tsome-hawariat"></a>
+### Fast of the Apostles (ጾመ ሐዋርያት): Fasika +50 to Hamle 4
+
+- **Rule:** starts at Fasika +50, the Monday after Peraklitos. Ends on
+  **Hamle 4** of the same EC year, inclusive, which is always July 11 in
+  this range. Hamle 5, the feast of Sts Peter and Paul, is the day the fast
+  is broken (its ፋሲካ).
+- **Start sources:**
+  - (a) "ከሰኔ 17, 2016 … (Monday June 24, 2024 …)".
+  - (b) "ከሰኔ 2, 2017 … (June 9, 2025 …)".
+  - (c) ሰኔ 10, 2011.
+  - Mahibere Kidusan English, https://eotcmk.org/e/the-fast-of-the-apostles-3/:
+    "begins on the Segno, after Pentecost".
+  - No +57 variant appears in any source.
+- **End sources:**
+  - Mahibere Kidusan (Amharic), https://eotcmk.org/a/ጾመ-ሐዋርያት-እና-ጾመ-ድኅነት-3/:
+    "ፋሲካው የቅዱስ ጴጥሮስና ቅዱስ ጳውሎስ በዓለ ዕረፍት ሐምሌ ፭ ቀን".
+  - Mahibere Kidusan English: "ends on 5 Hamle …, the Feast of Saints Peter
+    and Paul".
+  - Wikipedia, Fasting and abstinence in the EOTC: "ends on the 4th of
+    Hamle". Its "Gregorian 26 June" gloss is wrong; ignore it.
+- **Conflict:** Debreselam (a) lists the fast "ከሰኔ 17, 2016 እሰከ ሀምሌ 5, 2016
+  (… – Friday July 12, 2024)", i.e. through the feast day itself.
+- **No collision:** the start can never pass Hamle 4. The latest Fasika in
+  EC 2016–2030 (May 5) gives a start of June 24, an 18-day fast. The
+  latest possible Julian Pascha in 1900–2099 (May 8) still gives 15 days;
+  the earliest gives 49. No skip rule is needed, and none was found in the
+  sources.
+- **Do not display a length.** Sources say "10 to 40 days" and "sometimes
+  … beyond forty"; the arithmetic range is 15–49.
+- **Confidence:** **medium**, because of the Hamle 4 vs Hamle 5 end. A printed
+  EOTC ባሕረ ሐሳብ, or a parish priest confirming whether Hamle 5 itself is
+  fasted, would raise it.
+
+---
+
+## Candidates for future research (not in the MVP)
+
 - **Tsinset / Annunciation (ጽንሰት / በዓለ ወልድ):** Megabit 29. Medium
   confidence: one parish calendar plus a secondary list.
 - **Debre Tabor (ደብረ ታቦር / ቡሄ):** Nehase 13. Medium confidence: the parish
   calendar only, with the Mahibere Kidusan page not confirmed.
+- **Feast of Sts Peter and Paul:** Hamle 5, the day that breaks Tsome
+  Hawariat. The Mahibere Kidusan sources above give it; not yet verified as
+  a standalone entry.
+- **Bahire Hasab observances (not verified):**
+  - Debre Zeit (ደብረ ዘይት): Fasika −28.
+  - Rikbe Kahnat (ርክበ ካህናት): Fasika +24.
+  - Tsome Dihnet (ጾመ ድኅነት): the Wednesday/Friday fasts, resuming at
+    Fasika +52. They are suspended for the 50 days after Fasika.
 - **Gizret (Tir 6), Qana Ze-Galila (Tir 12), Lidete Simeon (Yekatit 8):**
   low to medium confidence. Not recommended without a second source.
+
+Phase 4 will add this list to the README's pending-review section.

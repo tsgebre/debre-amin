@@ -8,7 +8,7 @@ export interface MonthDay {
   day: number;
 }
 
-export type FeastRule =
+export type FixedRule =
   | { type: 'fixed'; month: number; day: number }
   | { type: 'fixedRange'; start: MonthDay; end: MonthDay }
   | {
@@ -18,17 +18,27 @@ export type FeastRule =
       compute: (ethiopianYear: number) => { start: MonthDay; end?: MonthDay };
     };
 
+/** Offsets are whole days from that Ethiopian year's Fasika (negative = before). */
+export type MovableRule =
+  | { type: 'relative'; offset: number }
+  | { type: 'relative'; startOffset: number; endOffset: number }
+  | { type: 'relative'; startOffset: number; end: MonthDay };
+
+export type FeastRule = FixedRule | MovableRule;
+
 export interface FeastNames {
   en: string;
   am: string;
 }
 
-export interface FeastDef {
+export type Confidence = 'high' | 'medium';
+
+export interface FeastDef<R extends FeastRule = FeastRule> {
   id: string;
   kind: FeastKind;
   names: FeastNames;
-  rule: FeastRule;
-  confidence: 'high' | 'medium';
+  rule: R;
+  confidence: Confidence;
   /** `docs/research/feasts.md#<anchor>` — where this entry's sources are recorded. */
   sourceRef: string;
 }
@@ -42,6 +52,8 @@ export interface FeastOccurrence {
   id: string;
   kind: FeastKind;
   names: FeastNames;
+  /** 'medium' entries must be shown with a "dates pending parish confirmation" note. */
+  confidence: Confidence;
   start: DatePair;
   /** Last day (inclusive) of a multi-day observance such as a fast. */
   end?: DatePair;

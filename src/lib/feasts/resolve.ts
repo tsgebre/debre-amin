@@ -9,7 +9,8 @@ import {
 } from '../ecal';
 import type { EthiopianDate, GregorianDate } from '../ecal';
 import { FIXED_FEASTS, MONTHLY_COMMEMORATION } from './fixed';
-import type { DatePair, FeastDef, FeastOccurrence, MonthDay } from './types';
+import { FASIKA_TABLE, resolveMovableFeasts } from './movable';
+import type { DatePair, FeastDef, FeastKind, FeastOccurrence, FixedRule, MonthDay } from './types';
 
 // Feasts resolve only for whole Ethiopian years inside the ecal range
 // (Gregorian 1900-01-01..2100-12-31): EC 1893 (from Sep 1900) to EC 2092
@@ -32,7 +33,7 @@ function pair(ey: number, md: MonthDay): DatePair {
   return { e, g: toGregorian(e) };
 }
 
-function bounds(def: FeastDef, ey: number): { start: MonthDay; end?: MonthDay } {
+function bounds(def: FeastDef<FixedRule>, ey: number): { start: MonthDay; end?: MonthDay } {
   switch (def.rule.type) {
     case 'fixed':
       return { start: { month: def.rule.month, day: def.rule.day } };
@@ -43,8 +44,11 @@ function bounds(def: FeastDef, ey: number): { start: MonthDay; end?: MonthDay } 
   }
 }
 
+const startJdn = (o: FeastOccurrence) => ethiopianToJdn(o.start.e);
+const endJdn = (o: FeastOccurrence) => ethiopianToJdn((o.end ?? o.start).e);
+
 function byStart(a: FeastOccurrence, b: FeastOccurrence): number {
-  return ethiopianToJdn(a.start.e) - ethiopianToJdn(b.start.e) || a.id.localeCompare(b.id);
+  return startJdn(a) - startJdn(b) || a.id.localeCompare(b.id);
 }
 
 /** Every fixed feast and fast of Ethiopian year `ey`, sorted by start date. */
@@ -56,6 +60,7 @@ export function resolveFixedFeasts(ey: number): FeastOccurrence[] {
       id: def.id,
       kind: def.kind,
       names: def.names,
+      confidence: def.confidence,
       start: pair(ey, b.start),
     };
     if (b.end) occ.end = pair(ey, b.end);
@@ -72,6 +77,7 @@ export function monthlyCommemorations(ey: number): FeastOccurrence[] {
       id: m.id,
       kind: m.kind,
       names: m.names,
+      confidence: m.confidence,
       start: pair(ey, { month: i + 1, day: m.day }),
     };
     if (m.annualMonths.includes(i + 1)) occ.annual = true;
@@ -80,8 +86,21 @@ export function monthlyCommemorations(ey: number): FeastOccurrence[] {
 }
 
 /**
- * Fixed feasts and fasts overlapping the inclusive Gregorian window
- * [fromG, toG], across Ethiopian year boundaries, sorted by start date.
+ * Fixed and movable occurrences of Ethiopian year `ey`, sorted by start date.
+ * `movableAvailable` is false when `ey` is outside FASIKA_TABLE; the movable
+ * feasts are then absent rather than guessed.
+ */
+export function feastsForYear(ey: number): { occurrences: FeastOccurrence[]; movableAvailable: boolean } {
+  const fixed = resolveFixedFeasts(ey);
+  return {
+    occurrences: [...fixed, ...resolveMovableFeasts(ey)].sort(byStart),
+    movableAvailable: ey in FASIKA_TABLE,
+  };
+}
+
+/**
+ * Fixed and (where available) movable occurrences overlapping the inclusive
+ * Gregorian window [fromG, toG], across Ethiopian year boundaries, sorted.
  */
 export function occurrencesBetween(fromG: GregorianDate, toG: GregorianDate): FeastOccurrence[] {
   const from = toEthiopian(fromG);
@@ -93,11 +112,38 @@ export function occurrencesBetween(fromG: GregorianDate, toG: GregorianDate): Fe
   }
   const result: FeastOccurrence[] = [];
   for (let ey = from.year; ey <= to.year; ey++) {
-    for (const occ of resolveFixedFeasts(ey)) {
-      const s = ethiopianToJdn(occ.start.e);
-      const e = ethiopianToJdn((occ.end ?? occ.start).e);
-      if (s <= toJdn && e >= fromJdn) result.push(occ);
+    for (const occ of feastsForYear(ey).occurrences) {
+      if (startJdn(occ) <= toJdn && endJdn(occ) >= fromJdn) result.push(occ);
     }
   }
   return result.sort(byStart);
+}
+
+/**
+ * The first occurrence of the given kinds (default: feasts) starting on or
+ * after `fromG`, searching its Ethiopian year and the next; null if none.
+ * Monthly commemorations are searched too, so kinds: ['commemoration'] works.
+ */
+export function nextFeast(
+  fromG: GregorianDate,
+  { kinds = ['feast'] }: { kinds?: FeastKind[] } = {},
+): FeastOccurrence | null {
+  const ey = toEthiopian(fromG).year;
+  const fromJdn = gregorianToJdn(fromG);
+  for (const year of [ey, ey + 1]) {
+    if (year > FEAST_MAX_YEAR) break;
+    const candidates = [...feastsForYear(year).occurrences, ...monthlyCommemorations(year)]
+      .filter((o) => kinds.includes(o.kind) && startJdn(o) >= fromJdn)
+      .sort(byStart);
+    if (candidates.length > 0) return candidates[0];
+  }
+  return null;
+}
+
+/** Fasts in progress on `g` (inclusive of their first and last days). */
+export function currentObservances(g: GregorianDate): FeastOccurrence[] {
+  const jdn = gregorianToJdn(g);
+  return feastsForYear(toEthiopian(g).year).occurrences.filter(
+    (o) => o.kind === 'fast' && startJdn(o) <= jdn && endJdn(o) >= jdn,
+  );
 }

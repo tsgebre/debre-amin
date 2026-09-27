@@ -1,4 +1,4 @@
-import type { FeastDef, FeastNames } from './types';
+import type { FeastDef, FeastNames, FixedRule } from './types';
 
 // Every entry is RESEARCHER-verified; sources, conflicts and confidence are
 // recorded under the matching anchor in docs/research/feasts.md. Do not add
@@ -21,7 +21,7 @@ export function gennaDay(ethiopianYear: number): number {
 
 const doc = (anchor: string) => `docs/research/feasts.md#${anchor}`;
 
-export const FIXED_FEASTS: readonly FeastDef[] = [
+export const FIXED_FEASTS: readonly FeastDef<FixedRule>[] = [
   {
     id: 'enkutatash',
     kind: 'feast',
@@ -29,6 +29,14 @@ export const FIXED_FEASTS: readonly FeastDef[] = [
     rule: { type: 'fixed', month: MESKEREM, day: 1 },
     confidence: 'high',
     sourceRef: doc('enkutatash'),
+  },
+  {
+    id: 'demera',
+    kind: 'feast',
+    names: { en: 'Demera (Eve of Meskel)', am: 'ደመራ' },
+    rule: { type: 'fixed', month: MESKEREM, day: 16 },
+    confidence: 'high',
+    sourceRef: doc('demera'),
   },
   {
     id: 'meskel',
