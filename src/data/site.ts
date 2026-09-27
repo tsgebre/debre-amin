@@ -1,19 +1,182 @@
 import { z } from 'zod';
+import { isPlaceholder, ph, PLACEHOLDER_PREFIX } from './placeholder';
 
-const siteConfigSchema = z.object({
-  siteName: z.object({
-    en: z.string().min(1),
-    am: z.string().min(1),
+// Every real-world fact slot is `placeholder | validRealValue`. A
+// placeholder always passes; a real value must be well-formed, so a typo
+// in a phone number or URL fails the build instead of shipping quietly.
+
+const placeholderSchema = z.string().refine(isPlaceholder, {
+  message: `placeholder strings must start with the "${PLACEHOLDER_PREFIX}" marker`,
+});
+
+function phOr<T extends z.ZodTypeAny>(real: T) {
+  return z.union([placeholderSchema, real]);
+}
+
+function normalizePhone(v: string): string {
+  return v.replace(/[\s().-]/g, '');
+}
+
+const REAL_PHONE = z.string().refine((v) => /^\+1\d{10}$/.test(normalizePhone(v)), {
+  message: 'phone must be +1 followed by 10 digits (spaces, dashes, parentheses allowed)',
+});
+
+const REAL_EMAIL = z.string().email();
+
+const REAL_HTTPS_URL = z.string().url().refine((v) => v.startsWith('https://'), {
+  message: 'URL must be absolute and https://',
+});
+
+const REAL_CASH_APP_TAG = z.string().regex(/^\$[A-Za-z0-9_-]{1,20}$/, {
+  message: 'Cash App tag must be "$" followed by 1-20 letters, digits, "_" or "-"',
+});
+
+export const phoneOrPh = phOr(REAL_PHONE);
+export const emailOrPh = phOr(REAL_EMAIL);
+export const urlOrPh = phOr(REAL_HTTPS_URL);
+const cashAppTagOrPh = phOr(REAL_CASH_APP_TAG);
+
+const bilingualSchema = z.object({
+  en: z.string().min(1),
+  am: z.string().min(1),
+});
+
+export type Bilingual = z.infer<typeof bilingualSchema>;
+
+/** A placeholder Bilingual value — same marker text in both locales. */
+function bilingualPh(location: string): Bilingual {
+  return { en: ph(location), am: ph(location) };
+}
+
+const addressSchema = z.object({
+  street: phOr(z.string().min(1)),
+  city: z.string().min(1),
+  state: z.string().min(1),
+  postalCode: phOr(z.string().regex(/^\d{5}(-\d{4})?$/)),
+  country: z.string().min(1),
+});
+
+const serviceSchema = z.object({
+  id: z.string().min(1),
+  name: bilingualSchema,
+  day: phOr(z.string().min(1)),
+  time: phOr(z.string().regex(/^\d{1,2}:\d{2}\s?(AM|PM)$/i)),
+  note: bilingualSchema.optional(),
+});
+
+const clergySchema = z.object({
+  id: z.string().min(1),
+  name: bilingualSchema,
+  role: bilingualSchema,
+  photo: z.string().min(1).optional(),
+});
+
+export const siteConfigSchema = z.object({
+  contact: z.object({
+    phone: phoneOrPh,
+    email: emailOrPh,
+    address: addressSchema,
+    mapUrl: urlOrPh,
+    directions: bilingualSchema,
   }),
+  services: z.array(serviceSchema).min(1),
+  clergy: z.array(clergySchema).min(1),
+  giving: z.object({
+    zelle: phOr(z.union([REAL_PHONE, REAL_EMAIL])),
+    paypalUrl: urlOrPh,
+    cashAppTag: cashAppTagOrPh,
+    mailingAddress: phOr(z.string().min(1)),
+  }),
+  livestreamUrl: urlOrPh,
 });
 
 export type SiteConfig = z.infer<typeof siteConfigSchema>;
 
-const siteConfig: SiteConfig = siteConfigSchema.parse({
-  siteName: {
-    en: 'Debre Amin Abune Teklehaymanot Ethiopian Orthodox Tewahedo Church',
-    am: 'ደብረ አሚን አቡነ ተክለ ሃይማኖት',
+// Amharic terms above the "TBD —" line here are real, general EOTC
+// vocabulary, but their exact wording for THIS parish's weekly schedule
+// needs the parish's own confirmation before publishing.
+export const CONFIG_AM_NEEDS_REVIEW: readonly string[] = [
+  'services.0.name.am', // ቅዳሴ — Divine Liturgy
+  'services.1.name.am', // ሰንበት ትምህርት ቤት — Sunday School
+  'services.2.name.am', // ጸሎት / ስብከት — weekly prayer/teaching service
+];
+
+const config: SiteConfig = {
+  contact: {
+    phone: ph('contact.phone'),
+    email: ph('contact.email'),
+    address: {
+      street: ph('contact.address.street'),
+      city: 'Greensboro',
+      state: 'NC',
+      postalCode: ph('contact.address.postalCode'),
+      country: 'USA',
+    },
+    mapUrl: ph('contact.mapUrl'),
+    directions: bilingualPh('contact.directions'),
   },
-});
+  services: [
+    {
+      id: 'divine-liturgy',
+      name: { en: 'Divine Liturgy', am: 'ቅዳሴ' },
+      day: ph('services.0.day'),
+      time: ph('services.0.time'),
+    },
+    {
+      id: 'sunday-school',
+      name: { en: 'Sunday School', am: 'ሰንበት ትምህርት ቤት' },
+      day: ph('services.1.day'),
+      time: ph('services.1.time'),
+    },
+    {
+      id: 'weekly-prayer-teaching',
+      name: { en: 'Weekly Prayer & Teaching Service', am: 'ጸሎት / ስብከት' },
+      day: ph('services.2.day'),
+      time: ph('services.2.time'),
+    },
+  ],
+  clergy: [
+    {
+      id: 'clergy-1',
+      name: bilingualPh('clergy.0.name'),
+      role: { en: 'TBD — e.g. Head Priest (Aleqa)', am: 'TBD — e.g. Head Priest (Aleqa)' },
+    },
+    {
+      id: 'clergy-2',
+      name: bilingualPh('clergy.1.name'),
+      role: {
+        en: 'TBD — e.g. Assistant Priest (Qomos)',
+        am: 'TBD — e.g. Assistant Priest (Qomos)',
+      },
+    },
+    {
+      id: 'clergy-3',
+      name: bilingualPh('clergy.2.name'),
+      role: { en: 'TBD — e.g. Deacon (Diyakon)', am: 'TBD — e.g. Deacon (Diyakon)' },
+    },
+  ],
+  giving: {
+    zelle: ph('giving.zelle'),
+    paypalUrl: ph('giving.paypalUrl'),
+    cashAppTag: ph('giving.cashAppTag'),
+    mailingAddress: ph('giving.mailingAddress'),
+  },
+  livestreamUrl: ph('livestreamUrl'),
+};
+
+export const siteConfig: SiteConfig = siteConfigSchema.parse(config);
+
+export function placeholderFields(value: unknown, path: string[] = []): string[] {
+  if (typeof value === 'string') {
+    return isPlaceholder(value) ? [path.join('.')] : [];
+  }
+  if (Array.isArray(value)) {
+    return value.flatMap((item, i) => placeholderFields(item, [...path, String(i)]));
+  }
+  if (value !== null && typeof value === 'object') {
+    return Object.entries(value).flatMap(([key, v]) => placeholderFields(v, [...path, key]));
+  }
+  return [];
+}
 
 export default siteConfig;

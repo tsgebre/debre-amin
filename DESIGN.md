@@ -63,14 +63,27 @@ liturgical texts.
 
 ## Central config
 
-- `src/data/site.ts` exports one typed, zod-validated `SiteConfig` holding
-  every real-world fact slot (address, phone, email, service times,
-  clergy, giving handles, map link, livestream link).
-- Placeholder values are literal strings beginning `TBD —`.
-- A test asserts the config parses against the schema.
-- (This scaffold ships a minimal slice of the config — `siteName` only —
-  to prove the pattern; the full fact-slot schema is added when the pages
-  that need those facts are built.)
+- `src/data/site.ts` exports `siteConfig`, one typed, zod-validated
+  `SiteConfig` holding every real-world fact slot: contact (phone, email,
+  address, map link, directions), services (name/day/time/note), clergy
+  (name/role/photo), giving (Zelle, PayPal, Cash App, mailing address) and
+  a livestream link.
+- Every field is `placeholder | validRealValue` (`src/data/placeholder.ts`
+  — `PLACEHOLDER_PREFIX = 'TBD —'`, `isPlaceholder`, `ph(location)`).
+  Real phone/email/URL/Cash-App-tag values are validated by regex/zod so a
+  typo fails the build instead of shipping; a placeholder always passes.
+  `placeholderFields(siteConfig)` returns the dotted path of every
+  placeholder leaf, for a future README checklist.
+- The site's display name comes from the i18n dictionaries
+  (`t(lang,'site.name')`), not from `site.ts`.
+- `CONFIG_AM_NEEDS_REVIEW` lists the Amharic service names that are
+  correct general EOTC terms but need the parish's confirmation for this
+  parish's actual schedule.
+- Tests (`tests/site-config.test.ts`) assert the schema accepts real
+  values and rejects malformed ones, that every expected field is flagged
+  by `placeholderFields`, and — the honesty guard — that no non-placeholder
+  leaf contains a phone/time-shaped digit run or an `@`, and every
+  non-placeholder Amharic value is genuine Ethiopic script.
 
 ## Ethiopian calendar
 
@@ -108,15 +121,21 @@ the safest shape for GitHub Pages.
   i18n core — dictionaries, `t()`, base-aware path helpers, nav map (P1-02);
   `[lang]` routing, root redirect, `BaseLayout`, self-hosted fonts (P1-03);
   palette + contrast-tested tokens, cross motif, responsive header/nav/
-  footer, `Placeholder` component, accessible language toggle (P1-04).
-- **Remaining:** full `SiteConfig` (P1-05), About/Services/Contact/Clergy
-  pages, deploy workflow; then calendar, content collections, remaining
-  pages, hardening.
-- **Build/test status:** `npm test` passes (86/86); `astro check` clean;
+  footer, `Placeholder` component, accessible language toggle (P1-04);
+  the full `SiteConfig` — every real-world fact slot as a validated
+  placeholder, `placeholderFields`, honesty-guard tests (P1-05).
+- **Remaining:** About/Services/Contact/Clergy pages, deploy workflow;
+  then calendar, content collections, remaining pages, hardening.
+- **Build/test status:** `npm test` passes (103/103); `astro check` clean;
   `npm run build` emits `/index.html`, `/en/index.html`, `/am/index.html`.
 - **Open risks:**
   - Base-path link correctness on GitHub Pages.
-  - Amharic authenticity — every Amharic string needs parish review.
+  - Amharic authenticity — every Amharic string needs parish review;
+    `CONFIG_AM_NEEDS_REVIEW` and the i18n `AM_NEEDS_REVIEW` list both feed
+    that checklist.
+  - Every fact in `SiteConfig` is a placeholder — the parish must supply
+    real contact info, service times, clergy names and giving details
+    before launch (`placeholderFields(siteConfig)` enumerates them all).
   - Calendar correctness — conversion module and feast table need
     RESEARCHER/STATISTICAL verification against reference dates before
     Phase 2 sign-off.
