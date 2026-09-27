@@ -1,0 +1,10 @@
+image: images/gallery/ethiopian-cross.jpg
+width: 640
+height: 640
+order: 2
+alt:
+  en: 'An Ethiopian Orthodox processional cross in pierced metalwork'
+  am: 'በብረት ሥራ የተሠራ የኢትዮጵያ ኦርቶዶክስ መስቀል'
+caption:
+  en: 'An Ethiopian Orthodox processional cross'
+  am: 'የኢትዮጵያ ኦርቶዶክስ መስቀል'

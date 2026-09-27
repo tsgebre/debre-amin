@@ -52,11 +52,15 @@ expression with the real value, in quotes.
 Every real-world fact about the parish is in **one file**:
 `src/data/site.ts`, near the bottom, inside `const config = { … }`.
 
-Two values are already real, not placeholders, because the parish provided
-them: `giving.gofundmeUrl` (the "Help Build Our New Church" GoFundMe
-campaign, shown as the Building Fund section of the Giving page) and
+Several values are already real, not placeholders, because the parish
+provided them: `giving.gofundmeUrl` (the "Help Build Our New Church"
+GoFundMe campaign, shown as the Building Fund section of the Giving page),
 `social.facebookUrl` (the Facebook link in the footer — currently a share
-link; replace it with the parish page's own URL when confirmed).
+link; replace it with the parish page's own URL when confirmed), and the
+contact facts from the parish's tabot-reception program poster of Nehase
+2018 E.C. (August 2026): `contact.phone` (+1 336-615-2910),
+`contact.address` (1311 Starr Dr, High Point, NC 27260) and
+`contact.mapUrl`.
 
 The file checks every value you enter. If a value has the wrong format, the
 build stops and tells you exactly which field is wrong and what it expects.
@@ -139,11 +143,7 @@ field.
 
 | Field path | Page |
 |---|---|
-| `contact.phone` | Contact |
 | `contact.email` | Contact |
-| `contact.address.street` | Contact |
-| `contact.address.postalCode` | Contact |
-| `contact.mapUrl` | Contact |
 | `contact.directions.en` | Contact |
 | `contact.directions.am` | Contact |
 | `services.N.day.en` | Services (Home) |
@@ -506,17 +506,21 @@ and how confident it is — see `docs/research/`.
 
 ## Image credits
 
-Two real photographs ship with the site, both freely licensed from
-Wikimedia Commons. Their licenses (CC BY-SA) **require** the visible credit
-lines that appear under them on the Home, About, and Gallery pages — keep
-the credits if you move or reuse the images:
+**Parish-provided images** (no license credit required): the icon of Abune
+Tekle Haymanot on the Home page, the Ethiopian cross photograph on the
+About page, the building-campaign icon on the Giving page, and the
+tabot-reception program poster in the Gallery.
+
+**Freely licensed photographs** from Wikimedia Commons also ship in the
+Gallery. Their licenses (CC BY-SA) **require** the visible credit lines
+that appear under them — keep the credits if you move or reuse the images:
 
 - **Ethiopian processional cross, 15th century** — photo: Walters Art
   Museum, via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Ethiopian_-_Processional_Cross_-_Walters_542894_-_Side_A.jpg),
-  CC BY-SA 3.0. Used on Home, About (EOTC section) and in the Gallery.
+  CC BY-SA 3.0.
 - **Icon of Saint Tekle Haymanot** (Ethiopian church, Jerusalem) — photo:
   Maor X, via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Icon_of_Saint_Tekle_Haymanot_of_Ethiopia.jpg),
-  CC BY-SA 4.0. Used on About (saint section) and in the Gallery.
+  CC BY-SA 4.0. Also on the About page's saint section.
 
 Everything else visual (the cross motif, the harag vine band under the
 header — the manuscript ornament of Ethiopian Orthodox books — the gallery

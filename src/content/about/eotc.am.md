@@ -4,14 +4,14 @@ lang: am
 section: eotc
 order: 1
 image:
-  src: images/gallery/ethiopian-processional-cross.jpg
-  width: 800
-  height: 1143
-  alt: "የ15ኛው መቶ ክፍለ ዘመን የነሐስ የኢትዮጵያ መስቀል፣ የተጠላለፉ ክቦች ያሉት"
-  caption: "የኢትዮጵያ መስቀል፣ 15ኛው መቶ ክፍለ ዘመን (ዋልተርስ የሥነ ጥበብ ሙዚየም)"
-  credit: "ፎቶ፦ Walters Art Museum፣ በWikimedia Commons (CC BY-SA 3.0)"
-  creditUrl: "https://commons.wikimedia.org/wiki/File:Ethiopian_-_Processional_Cross_-_Walters_542894_-_Side_A.jpg"
+  src: images/gallery/ethiopian-cross.jpg
+  width: 640
+  height: 640
+  alt: "በብረት ሥራ የተሠራ የኢትዮጵያ ኦርቶዶክስ መስቀል"
+  caption: "የኢትዮጵያ ኦርቶዶክስ መስቀል"
 sources:
+  - title: "Acts of the Apostles 8:26–39 — the baptism of the Ethiopian eunuch"
+    url: "https://www.biblegateway.com/passage/?search=Acts+8%3A26-39&version=NKJV"
   - title: "The Ethiopian Orthodox Tewahedo Church – Pre-Christian and early Christian history (official site)"
     url: "https://www.ethiopianorthodox.org/english/ethiopian/prechristian.html"
   - title: "The Ethiopian Orthodox Tewahedo Church – Hierarchy (official site)"
@@ -28,7 +28,9 @@ amReviewPending: true
 
 የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ቤተ ክርስቲያን ከኦሪየንታል ኦርቶዶክስ አብያተ ክርስቲያናት አንዷ ናት። ከግብፅ፣ ከሶርያና ከአርመን ኦርቶዶክስ አብያተ ክርስቲያናት ጋር አንድ ዓይነት እምነት ትጋራለች።
 
-የቤተ ክርስቲያኒቱ ሥረ መሠረት ወደ ጥንታዊው የአክሱም መንግሥት ይመለሳል። በዚያም በንጉሥ ኢዛና ዘመን፣ በ330 እ.ኤ.አ. ገደማ፣ ክርስትና የንጉሣዊው ቤተ መንግሥት እምነት ሆነ። ፍሬምናጦስ በእስክንድርያው አትናቴዎስ የአክሱም የመጀመሪያው ጳጳስ ሆኖ ተሾመ። ኢትዮጵያውያን እርሱን «አባ ሰላማ ከሣቴ ብርሃን» ብለው ያስታውሱታል።
+ቤተ ክርስቲያኒቱ የእምነቷን የመጀመሪያ ዘር በሐዲስ ኪዳን ገጾች ውስጥ ታገኛለች። በሐዋርያት ሥራ ምዕራፍ 8 (ቁጥር 26–39) እንደተጻፈው፣ የኢትዮጵያ ንግሥት የህንደኬ ባለሟልና የገንዘቧ ሁሉ አዛዥ የነበረው ኢትዮጵያዊው ጃንደረባ ከኢየሩሳሌም ወደ ጋዛ በሚወርደው መንገድ ላይ በቅዱስ ፊልጶስ ተጠመቀ። እርሱም ከጌታችንና ከመድኃኒታችን ከኢየሱስ ክርስቶስ ዕርገት በኋላ ወንጌልን ወደ አገሩ ያደረሰ የመጀመሪያው ኢትዮጵያዊ ክርስቲያን ተብሎ ይታወሳል።
+
+ከብዙ መቶ ዓመታት በኋላ በጥንታዊው የአክሱም መንግሥት በንጉሥ ኢዛና ዘመን፣ በ330 እ.ኤ.አ. ገደማ፣ ክርስትና የንጉሣዊው ቤተ መንግሥት እምነት ሆነ፤ ቤተ ክርስቲያኒቱም በዚያን ጊዜ የመጀመሪያ ጳጳሷን አገኘች፦ ፍሬምናጦስ በእስክንድርያው አትናቴዎስ የአክሱም የመጀመሪያው ጳጳስ ሆኖ ተሾመ። ኢትዮጵያውያን እርሱን «አባ ሰላማ ከሣቴ ብርሃን» ብለው ያስታውሱታል።
 
 በአምስተኛው መቶ ክፍለ ዘመን መገባደጃ ላይ ተስዓቱ ቅዱሳን ወደ አክሱም መጡ። እነርሱም መጻሕፍት ቅዱሳትንና ሌሎች ሃይማኖታዊ መጻሕፍትን ወደ ግእዝ ተረጐሙ። ግእዝ እስከ ዛሬ ድረስ የቤተ ክርስቲያኒቱ የአምልኮ ቋንቋ ነው፤ ንባባቱና አንዳንድ የቅዳሴው ክፍሎች ደግሞ በአማርኛም ይቀርባሉ።
 

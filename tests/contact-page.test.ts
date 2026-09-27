@@ -42,35 +42,31 @@ describe.each(LOCALES)('contact page — %s', (lang) => {
     expect(doc().match(/<h1\b/g)).toHaveLength(1);
   });
 
-  it('has an <address> element that contains "Greensboro"', () => {
+  it('has an <address> element that contains the real street address', () => {
     expect(doc()).toMatch(/<address[\s>]/);
     const address = doc().slice(doc().indexOf('<address'), doc().indexOf('</address>'));
-    expect(address).toContain('Greensboro');
+    expect(address).toContain('1311 Starr Dr');
+    expect(address).toContain('High Point');
+    expect(address).toContain('27260');
   });
 
-  it('marks phone, email, street, postal code, map and directions as placeholders with the right field', () => {
+  it('marks email and directions as the remaining placeholders with the right field', () => {
     const directionsField = `contact.directions.${lang}`;
-    for (const field of [
-      'contact.phone',
-      'contact.email',
-      'contact.address.street',
-      'contact.address.postalCode',
-      'contact.mapUrl',
-      directionsField,
-    ]) {
+    for (const field of ['contact.email', directionsField]) {
       expect(doc(), field).toContain(titleFor(field));
     }
-    expect((doc().match(/data-placeholder/g) ?? []).length).toBe(6);
+    expect((doc().match(/data-placeholder/g) ?? []).length).toBe(2);
   });
 
-  it('has no <iframe>, and no tel:/mailto:/<a> for the placeholder facts', () => {
+  it('has no <iframe>; the real phone and map link, the placeholder email does not', () => {
     expect(doc()).not.toMatch(/<iframe/i);
-    expect(doc()).not.toContain('tel:');
     expect(doc()).not.toContain('mailto:');
-    // The layout's own nav/skip-link/toggle anchors are expected; only the
-    // placeholder facts inside <main> must render with no <a> at all.
     const main = doc().slice(doc().indexOf('<main'), doc().indexOf('</main>'));
-    expect(main).not.toMatch(/<a\b/);
+    const hrefs = [...main.matchAll(/<a\b[^>]*href="([^"]*)"/g)].map((m) => m[1]);
+    expect(hrefs).toEqual([
+      'tel:+13366152910',
+      'https://maps.google.com/?q=1311+Starr+Dr,+High+Point,+NC+27260',
+    ]);
   });
 
   it('marks the Contact nav link as the current page', () => {

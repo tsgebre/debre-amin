@@ -171,10 +171,12 @@ describe('service day (bilingual)', () => {
 describe('placeholderFields', () => {
   const fields = new Set(placeholderFields(siteConfig));
 
-  it('flags every contact placeholder', () => {
-    expect(fields.has('contact.phone')).toBe(true);
+  it('flags the remaining contact placeholders, and not the parish-provided facts', () => {
     expect(fields.has('contact.email')).toBe(true);
-    expect(fields.has('contact.address.street')).toBe(true);
+    expect(fields.has('contact.directions.en')).toBe(true);
+    // Real values from the parish's tabot-reception program poster.
+    expect(fields.has('contact.phone')).toBe(false);
+    expect(fields.has('contact.address.street')).toBe(false);
   });
 
   it('flags day (en and am) and time for every service', () => {
@@ -203,7 +205,19 @@ describe('content honesty', () => {
   const nonPlaceholderLeaves = leaves(siteConfig).filter((l) => !isPlaceholder(l.value));
 
   it('has no invented real-world facts outside placeholders', () => {
-    const offenders = nonPlaceholderLeaves.filter((l) => LOOKS_LIKE_A_REAL_FACT.test(l.value));
+    // Fields whose real values came from the parish itself (the tabot
+    // program poster and the links the parish shared) — not invented.
+    const PARISH_SOURCED = new Set([
+      'contact.phone',
+      'contact.address.street',
+      'contact.address.postalCode',
+      'contact.mapUrl',
+      'giving.gofundmeUrl',
+      'social.facebookUrl',
+    ]);
+    const offenders = nonPlaceholderLeaves.filter(
+      (l) => !PARISH_SOURCED.has(l.path) && LOOKS_LIKE_A_REAL_FACT.test(l.value),
+    );
     expect(offenders).toEqual([]);
   });
 
@@ -232,6 +246,12 @@ describe('content honesty', () => {
         // Church" GoFundMe campaign and the parish's Facebook share link.
         'giving.gofundmeUrl',
         'social.facebookUrl',
+        // Real contact facts from the parish's tabot-reception program
+        // poster (Nehase 2018 EC / August 2026).
+        'contact.phone',
+        'contact.address.street',
+        'contact.address.postalCode',
+        'contact.mapUrl',
       ].sort(),
     );
   });

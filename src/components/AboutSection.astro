@@ -40,11 +40,17 @@ const sourceLang = (title: string): Locale => (ETHIOPIC.test(title) ? 'am' : 'en
               <MixedText lang={lang} text={image.caption} />
             </span>
           )}
-          <span class="image-credit">
-            <a href={image.creditUrl}>
-              <MixedText lang={lang} text={image.credit} />
-            </a>
-          </span>
+          {image.credit && (
+            <span class="image-credit">
+              {image.creditUrl ? (
+                <a href={image.creditUrl}>
+                  <MixedText lang={lang} text={image.credit} />
+                </a>
+              ) : (
+                <MixedText lang={lang} text={image.credit} />
+              )}
+            </span>
+          )}
         </figcaption>
       </figure>
     )

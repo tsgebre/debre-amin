@@ -66,3 +66,10 @@ the 24 Heavenly Priests, is not treated as one of his main feasts.
 | C3 | Faithful who plan to receive Holy Communion traditionally fast beforehand. | EOTC official – Worship (celebrants fast at least 12 hours); Wikipedia – EOTC (communicants "have fasted") | verified | Kept general, with no hours stated. |
 | C4 | Sunday school (ሰንበት ትምህርት ቤት) is where children and youth learn the Christian faith and the traditions of the Church. | [Mahibere Kidusan](https://eotcmk.org/e/) (EOTC Sunday School Department); WCC (Sunday school "very active") | verified | The source support is general, but the claim is definitional and low-risk. |
 | C5 | Beyond the Divine Liturgy, the Church holds prayer services and teaching (ስብከት) grounded in the Word of God. | WCC (teaching by clergy); EOTC official site (sermons section) | verified | Generic. "Grounded in the Word of God" is editorial voice. |
+
+## Correction, 2026-09-27 (parish-directed)
+
+| # | Claim (as stated) | Source(s) | Status | Shipped | Note |
+|---|---|---|---|---|---|
+| A0 | The Ethiopian eunuch, court official and treasurer of the Kandake, queen of the Ethiopians, was baptized by Saint Philip on the Jerusalem–Gaza road, and is remembered as the first Ethiopian Christian, who carried the gospel home after the Ascension. | Acts 8:26–39; [EOTC official – Pre-Christian](https://www.ethiopianorthodox.org/english/ethiopian/prechristian.html) | verified | yes | Requested by the parish. Scripture names him "Philip"; Acts 21:8 calls him "Philip the evangelist" — the prose says "Saint Philip" and takes no side between apostle/deacon. |
+| A2b | The Ezana-era paragraph now frames c. 330 as when the Church received her FIRST BISHOP (Frumentius), per the parish's correction; the underlying facts are unchanged claims A2/A3. | (same as A2/A3) | verified | yes | Reworded, not new facts. |

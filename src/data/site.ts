@@ -142,16 +142,18 @@ const config: SiteConfig = {
   // Real value, not a placeholder: the parish is in Greensboro, NC (US Eastern).
   timeZone: 'America/New_York',
   contact: {
-    phone: ph('contact.phone'),
+    // Real values from the parish's own tabot-reception program poster
+    // (Nehase 2018 EC / August 2026): phone and worship address.
+    phone: '+1 336-615-2910',
     email: ph('contact.email'),
     address: {
-      street: ph('contact.address.street'),
-      city: 'Greensboro',
+      street: '1311 Starr Dr',
+      city: 'High Point',
       state: 'NC',
-      postalCode: ph('contact.address.postalCode'),
+      postalCode: '27260',
       country: 'USA',
     },
-    mapUrl: ph('contact.mapUrl'),
+    mapUrl: 'https://maps.google.com/?q=1311+Starr+Dr,+High+Point,+NC+27260',
     directions: bilingualPh('contact.directions'),
   },
   services: [

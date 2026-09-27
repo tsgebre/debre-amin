@@ -63,7 +63,6 @@ export const AM_NEEDS_REVIEW: readonly string[] = [
   'home.announcements.empty',
   'home.hero.alt',
   'home.hero.caption',
-  'home.hero.credit',
   'footer.facebook',
   'giving.intro',
   'giving.gofundme.heading',

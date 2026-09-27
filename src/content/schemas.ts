@@ -3,8 +3,9 @@ import { isValidGregorianDate } from '../lib/ecal';
 
 // Plain zod (no `astro:content`) so vitest can import it directly.
 // An illustration for an About section: a local file only, with required
-// dimensions (no layout shift) and a visible credit, since the two shipped
-// photographs are CC BY-SA and attribution is a license condition.
+// dimensions (no layout shift). `credit`/`creditUrl` are required for any
+// externally licensed photograph (CC BY-SA attribution is a license
+// condition) and omitted for the parish's own images.
 const aboutImageSchema = z
   .object({
     src: z
@@ -17,13 +18,17 @@ const aboutImageSchema = z
     height: z.number().int().positive(),
     alt: z.string().min(1),
     caption: z.string().min(1).optional(),
-    credit: z.string().min(1),
+    credit: z.string().min(1).optional(),
     creditUrl: z
       .string()
       .url()
-      .refine((u) => u.startsWith('https://'), { message: 'credit URL must be https://' }),
+      .refine((u) => u.startsWith('https://'), { message: 'credit URL must be https://' })
+      .optional(),
   })
-  .strict();
+  .strict()
+  .refine((img) => img.creditUrl === undefined || img.credit !== undefined, {
+    message: 'creditUrl requires credit',
+  });
 
 export const aboutSchema = z.object({
   title: z.string().min(1),
@@ -128,4 +133,7 @@ export const GALLERY_AM_NEEDS_REVIEW: readonly string[] = [
   'processional-cross',
   'saint-icon',
   'building-campaign',
+  'abune-teklehaymanot',
+  'ethiopian-cross',
+  'tabot-reception-poster',
 ];
