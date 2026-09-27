@@ -81,6 +81,19 @@ describe('dictionaries', () => {
     expect(AM_NEEDS_REVIEW).toContain('site.tagline');
     expect(AM_NEEDS_REVIEW).toContain('placeholder.notice');
   });
+
+  it('am.json contains no known misspellings', () => {
+    const AM_KNOWN_MISSPELLINGS = ['ቅርስቲያን', 'ይጠናክራሉ', 'ትውፋት'];
+    const offenders = Object.entries(am)
+      .filter(([, value]) =>
+        AM_KNOWN_MISSPELLINGS.some((misspelling) => value.includes(misspelling)),
+      )
+      .map(([key, value]) => {
+        const found = AM_KNOWN_MISSPELLINGS.find((m) => value.includes(m))!;
+        return `${key}: contains "${found}"`;
+      });
+    expect(offenders, offenders.join('; ')).toEqual([]);
+  });
 });
 
 describe('NAV', () => {
