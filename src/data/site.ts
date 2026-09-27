@@ -68,7 +68,10 @@ const addressSchema = z.object({
 const serviceSchema = z.object({
   id: z.string().min(1),
   name: bilingualSchema,
-  day: phOr(z.string().min(1)),
+  day: z.object({
+    en: phOr(z.string().min(1)),
+    am: phOr(z.string().min(1)),
+  }),
   time: phOr(z.string().regex(/^\d{1,2}:\d{2}\s?(AM|PM)$/i)),
   note: bilingualSchema.optional(),
 });
@@ -136,19 +139,19 @@ const config: SiteConfig = {
     {
       id: 'divine-liturgy',
       name: { en: 'Divine Liturgy', am: 'ቅዳሴ' },
-      day: ph('services.0.day'),
+      day: bilingualPh('services.0.day'),
       time: ph('services.0.time'),
     },
     {
       id: 'sunday-school',
       name: { en: 'Sunday School', am: 'ሰንበት ትምህርት ቤት' },
-      day: ph('services.1.day'),
+      day: bilingualPh('services.1.day'),
       time: ph('services.1.time'),
     },
     {
       id: 'weekly-prayer-teaching',
       name: { en: 'Prayer & Teaching Service', am: 'ጸሎት / ስብከት' },
-      day: ph('services.2.day'),
+      day: bilingualPh('services.2.day'),
       time: ph('services.2.time'),
     },
   ],

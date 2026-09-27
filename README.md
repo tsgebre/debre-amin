@@ -87,13 +87,10 @@ Each service has a `name` (already filled in), a `day` and a `time`.
 
 | Field | Accepted format | Example |
 |---|---|---|
-| `services.N.day` | any text | `'Sunday'` |
+| `services.N.day` | text in both languages | `{ en: 'Sunday', am: 'እሑድ' }` |
 | `services.N.time` | hour:minutes followed by AM or PM | `'9:00 AM'` |
 
 `N` is the service's position in the list, starting at 0.
-
-Note: `day` and `time` are currently single values shown on **both** the
-English and the Amharic pages.
 
 #### Clergy (shown on the Clergy page)
 
@@ -236,8 +233,6 @@ built for the root of the domain.
   images. The advisories will be re-checked in Phase 4.
 - **The Home page is interim.** It shows the parish name and tagline; the
   full Home page arrives with the calendar in Phase 2.
-- **Service days and times are single values** shared by both languages (see
-  above).
 
 ---
 

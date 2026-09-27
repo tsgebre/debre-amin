@@ -8,7 +8,7 @@ import {
   siteConfigSchema,
   urlOrPh,
 } from '../src/data/site';
-import { isPlaceholder } from '../src/data/placeholder';
+import { isPlaceholder, ph } from '../src/data/placeholder';
 
 const ETHIOPIC = /[ሀ-፿]/;
 // Digit sequences that look like a phone number or a clock time, or an "@".
@@ -135,6 +135,29 @@ describe('clergy photo (checked through the full schema)', () => {
   });
 });
 
+describe('service day (bilingual)', () => {
+  function withServiceDay(day: unknown) {
+    return structuredClone({
+      ...siteConfig,
+      services: [{ ...siteConfig.services[0], day }, ...siteConfig.services.slice(1)],
+    });
+  }
+
+  it('accepts a real bilingual day value', () => {
+    expect(() => siteConfigSchema.parse(withServiceDay({ en: 'Sunday', am: 'እሑድ' }))).not.toThrow();
+  });
+
+  it('accepts a bilingual day with placeholders in one or both languages', () => {
+    expect(() =>
+      siteConfigSchema.parse(withServiceDay({ en: 'Sunday', am: ph('services.0.day.am') })),
+    ).not.toThrow();
+  });
+
+  it('rejects a day that is not bilingual', () => {
+    expect(() => siteConfigSchema.parse(withServiceDay('Sunday'))).toThrow();
+  });
+});
+
 describe('placeholderFields', () => {
   const fields = new Set(placeholderFields(siteConfig));
 
@@ -144,9 +167,10 @@ describe('placeholderFields', () => {
     expect(fields.has('contact.address.street')).toBe(true);
   });
 
-  it('flags day and time for every service', () => {
+  it('flags day (en and am) and time for every service', () => {
     for (let i = 0; i < siteConfig.services.length; i++) {
-      expect(fields.has(`services.${i}.day`)).toBe(true);
+      expect(fields.has(`services.${i}.day.en`)).toBe(true);
+      expect(fields.has(`services.${i}.day.am`)).toBe(true);
       expect(fields.has(`services.${i}.time`)).toBe(true);
     }
   });
