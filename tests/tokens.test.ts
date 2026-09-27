@@ -77,3 +77,20 @@ describe('global.css token sync', () => {
     }
   });
 });
+
+describe('focus styles (global.css)', () => {
+  const css = readFileSync(resolve(__dirname, '../src/styles/global.css'), 'utf-8');
+
+  it('gives every focusable element a visible :focus-visible outline', () => {
+    expect(css).toMatch(/(^|\n):focus-visible\s*\{[^}]*outline:\s*3px solid currentColor/);
+  });
+
+  it('never removes an outline', () => {
+    expect(css).not.toMatch(/outline:\s*(none|0)\b/);
+  });
+
+  it('draws the skip-link ring in gold, the tested 3:1 pair on the header band', () => {
+    expect(css).toMatch(/\.skip-link:focus-visible\s*\{[^}]*outline-color:\s*var\(--color-gold\)/);
+    expect(TEXT_PAIRS).toContainEqual([tokens.gold, tokens.green, 3]);
+  });
+});

@@ -106,6 +106,10 @@ describe('HomeView — services list', () => {
     doc = await render('en', { year: 2026, month: 9, day: 27 });
   });
 
+  it('headings the services card plainly, with no cadence claim', () => {
+    expect(doc).toMatch(/<h2[^>]*>Services<\/h2>/);
+  });
+
   it('lists all 3 services with placeholder day and time, and a link to /en/services/', () => {
     const placeholders = doc.match(/data-placeholder/g) ?? [];
     // 3 services × 2 placeholders (day, time) = 6, plus other placeholder use elsewhere is none on Home.

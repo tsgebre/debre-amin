@@ -18,8 +18,8 @@
   "today.label": "ዛሬ",
   "placeholder.notice": "ጊዜያዊ ይዘት — ደብሩ ይተካዋል።",
   "placeholder.tba": "ወደፊት ይገለጻል",
-  "services.intro": "የአምልኮና የትምህርት ሳምንታዊ መርሃ ግብራችን።",
-  "services.table.caption": "ሳምንታዊ የአገልግሎት መርሃ ግብር",
+  "services.intro": "የአምልኮና የትምህርት መደበኛ መርሃ ግብራችን።",
+  "services.table.caption": "የአገልግሎት መርሐ ግብር",
   "services.table.service": "አገልግሎት",
   "services.table.day": "ቀን",
   "services.table.time": "ጊዜ",
@@ -71,7 +71,7 @@
   "calendar.saint.noteHeader": "ማስታወሻ",
   "calendar.saint.annualMarker": "ዓመታዊ በዓል",
   "home.welcome": "ካለፈው ጀርባዎ ወይም ስንት ጊዜ ርቀው እንደቆዩ ሳይለይ ሁሉም ከእኛ ጋር ለማምለክ ተጋብዘዋል። እንዳሉ ይምጡ።",
-  "home.services.heading": "የዚህ ሳምንት አገልግሎቶች",
+  "home.services.heading": "አገልግሎቶች",
   "home.services.viewAll": "ሙሉውን መርሃ ግብር ይመልከቱ",
   "home.nextFeast.heading": "የሚቀጥለው በዓል",
   "home.nextFeast.none": "እስካሁን የሚቀጥለው በዓል አልተዘጋጀም።",
@@ -101,5 +101,8 @@
   "events.bodyLanguageNote.am": "ዝርዝሮቹ በአማርኛ ይገኛሉ።",
   "gallery.intro": "ከደብሩ ሕይወት የተቀነጨቡ ፎቶዎች።",
   "gallery.empty": "እስካሁን ፎቶ የለም — ቆየት ብለው ይመልከቱ።",
-  "gallery.viewFullSize": "ሙሉ መጠን ይመልከቱ"
+  "gallery.viewFullSize": "ሙሉ መጠን ይመልከቱ",
+  "notFound.title": "ገጹ አልተገኘም",
+  "notFound.body": "ይቅርታ — የፈለጉት ገጽ የለም ወይም ወደ ሌላ ቦታ ተዛውሮ ሊሆን ይችላል።",
+  "notFound.homeLink": "ወደ አማርኛ ዋና ገጽ ይሂዱ"
 }

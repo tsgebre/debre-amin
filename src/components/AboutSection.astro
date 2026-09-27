@@ -11,6 +11,11 @@ interface Props {
 
 const { lang, title, sources, amReviewPending } = Astro.props;
 const showReviewNote = lang === 'am' && amReviewPending;
+
+// Source titles keep their original language (currently all English). Mark
+// each link whose script differs from the page language.
+const ETHIOPIC = /[\u1200-\u137F]/;
+const sourceLang = (title: string): Locale => (ETHIOPIC.test(title) ? 'am' : 'en');
 ---
 
 <section class="about-section">
@@ -23,7 +28,9 @@ const showReviewNote = lang === 'am' && amReviewPending;
       {
         sources.map((s) => (
           <li>
-            <a href={s.url}>{s.title}</a>
+            <a href={s.url} lang={sourceLang(s.title) === lang ? undefined : sourceLang(s.title)}>
+              {s.title}
+            </a>
           </li>
         ))
       }

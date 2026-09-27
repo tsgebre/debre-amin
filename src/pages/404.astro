@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { t } from '../i18n/index';
+import { localizedPath } from '../i18n/paths';
+
+// GitHub Pages serves this for any unknown path, in either language, so the
+// page is English with a parallel Amharic block rather than per-locale.
+---
+
+<BaseLayout lang="en" title={t('en', 'notFound.title')} showLangToggle={false}>
+  <h1>{t('en', 'notFound.title')}</h1>
+  <p>{t('en', 'notFound.body')}</p>
+  <p><a href={localizedPath('en', '')}>{t('en', 'notFound.homeLink')}</a></p>
+
+  <section lang="am">
+    <h2>{t('am', 'notFound.title')}</h2>
+    <p>{t('am', 'notFound.body')}</p>
+    <p><a href={localizedPath('am', '')} hreflang="am">{t('am', 'notFound.homeLink')}</a></p>
+  </section>
+</BaseLayout>

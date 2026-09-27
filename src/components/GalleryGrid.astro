@@ -52,7 +52,7 @@ const photos = items.map((item) => {
         photos.map((photo) => (
           <li class="gallery-item">
             <figure>
-              <a href={photo.src} aria-label={`${t(lang, 'gallery.viewFullSize')}: ${photo.alt}`}>
+              {photo.placeholder ? (
                 <img
                   src={photo.src}
                   width={photo.width}
@@ -61,7 +61,18 @@ const photos = items.map((item) => {
                   loading="lazy"
                   decoding="async"
                 />
-              </a>
+              ) : (
+                <a href={photo.src} aria-label={`${t(lang, 'gallery.viewFullSize')}: ${photo.alt}`}>
+                  <img
+                    src={photo.src}
+                    width={photo.width}
+                    height={photo.height}
+                    alt={photo.alt}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </a>
+              )}
               {
                 (photo.caption || photo.date || photo.placeholder) && (
                   <figcaption>

@@ -80,6 +80,10 @@ export const AM_NEEDS_REVIEW: readonly string[] = [
   'gallery.intro',
   'gallery.empty',
   'gallery.viewFullSize',
+  'services.table.caption',
+  'notFound.title',
+  'notFound.body',
+  'notFound.homeLink',
 ];
 
 // RESEARCHER: the factual claims in calendar.intro (13 months; twelve of 30

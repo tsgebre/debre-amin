@@ -19,7 +19,7 @@
   "placeholder.notice": "Placeholder — the parish will replace this.",
   "placeholder.tba": "To be announced",
   "services.intro": "Our regular schedule of worship and teaching.",
-  "services.table.caption": "Weekly schedule of services",
+  "services.table.caption": "Schedule of services",
   "services.table.service": "Service",
   "services.table.day": "Day",
   "services.table.time": "Time",
@@ -71,7 +71,7 @@
   "calendar.saint.noteHeader": "Note",
   "calendar.saint.annualMarker": "Annual feast",
   "home.welcome": "All are welcome to worship with us, whatever your background or how long you've been away. Come as you are.",
-  "home.services.heading": "Services this week",
+  "home.services.heading": "Services",
   "home.services.viewAll": "View the full schedule",
   "home.nextFeast.heading": "Next feast",
   "home.nextFeast.none": "No upcoming feast is available yet.",
@@ -101,5 +101,8 @@
   "events.bodyLanguageNote.am": "Details available in Amharic.",
   "gallery.intro": "Photos from parish life.",
   "gallery.empty": "No photos yet — check back soon.",
-  "gallery.viewFullSize": "View full size"
+  "gallery.viewFullSize": "View full size",
+  "notFound.title": "Page not found",
+  "notFound.body": "Sorry — the page you were looking for does not exist or may have moved.",
+  "notFound.homeLink": "Go to the English home page"
 }

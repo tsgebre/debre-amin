@@ -81,6 +81,12 @@ svg {
   transform: none;
 }
 
+/* The skip link appears over the green header band, where the default
+   currentColor (ink) ring would be 1.47:1. Gold on green is 4.03:1. */
+.skip-link:focus-visible {
+  outline-color: var(--color-gold);
+}
+
 /* Header, nav and footer — mobile-first, no JS, no hamburger. */
 .site-header {
   background: var(--color-green);
@@ -354,6 +360,11 @@ thead th {
 
 .gallery-item figure {
   margin: 0;
+}
+
+/* Block-level so the focus ring wraps the whole image, not a text line. */
+.gallery-item a {
+  display: block;
 }
 
 .gallery-item img {

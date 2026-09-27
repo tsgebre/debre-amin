@@ -82,6 +82,13 @@ describe('dictionaries', () => {
     expect(AM_NEEDS_REVIEW).toContain('placeholder.notice');
   });
 
+  it('makes no claim of a weekly cadence (unverified parish fact)', () => {
+    for (const dict of [en, am]) {
+      const offenders = Object.entries(dict).filter(([, v]) => /week|ሳምንት/i.test(v));
+      expect(offenders).toEqual([]);
+    }
+  });
+
   it('am.json contains no known misspellings', () => {
     const AM_KNOWN_MISSPELLINGS = ['ቅርስቲያን', 'ይጠናክራሉ', 'ትውፋት'];
     const offenders = Object.entries(am)

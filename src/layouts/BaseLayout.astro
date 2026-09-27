@@ -13,9 +13,11 @@ interface Props {
   lang: Locale;
   title: string;
   description?: string;
+  /** False on pages with no per-locale counterpart (the 404). */
+  showLangToggle?: boolean;
 }
 
-const { lang, title, description } = Astro.props;
+const { lang, title, description, showLangToggle = true } = Astro.props;
 const other = LOCALES.find((l) => l !== lang)!;
 const siteName = t(lang, 'site.name');
 const currentPath = Astro.url.pathname;
@@ -53,14 +55,18 @@ const currentPath = Astro.url.pathname;
           }
         </ul>
       </nav>
-      <a
-        class="lang-toggle"
-        href={switchLocalePath(currentPath, other)}
-        hreflang={LOCALE_META[other].htmlLang}
-      >
-        <span class="visually-hidden">{t(lang, 'a11y.langToggle')}: </span>
-        <span lang={LOCALE_META[other].htmlLang}>{t(lang, 'lang.switchTo')}</span>
-      </a>
+      {
+        showLangToggle && (
+          <a
+            class="lang-toggle"
+            href={switchLocalePath(currentPath, other)}
+            hreflang={LOCALE_META[other].htmlLang}
+          >
+            <span class="visually-hidden">{t(lang, 'a11y.langToggle')}: </span>
+            <span lang={LOCALE_META[other].htmlLang}>{t(lang, 'lang.switchTo')}</span>
+          </a>
+        )
+      }
     </header>
     <div class="today-strip">
       <TodayDate lang={lang} />

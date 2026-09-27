@@ -11,19 +11,24 @@ interface Props {
 }
 
 const { lang, contact } = Astro.props;
+
+// The postal address is English/Latin text; on Amharic pages real values are
+// marked lang="en". Placeholders stay unmarked: their badge is Amharic.
+const en = lang === 'en' ? undefined : 'en';
+const enFor = (value: string) => (isPlaceholder(value) ? undefined : en);
 ---
 
 <section>
   <h2>{t(lang, 'contact.address.heading')}</h2>
   <address>
-    <Fact lang={lang} value={contact.address.street} field="contact.address.street" /><br />
-    {contact.address.city}, {contact.address.state}{' '}
-    <Fact
-      lang={lang}
-      value={contact.address.postalCode}
-      field="contact.address.postalCode"
-    /><br />
-    {contact.address.country}
+    <span lang={enFor(contact.address.street)}>
+      <Fact lang={lang} value={contact.address.street} field="contact.address.street" />
+    </span><br />
+    <span lang={en}>{contact.address.city}, {contact.address.state}</span>{' '}
+    <span lang={enFor(contact.address.postalCode)}>
+      <Fact lang={lang} value={contact.address.postalCode} field="contact.address.postalCode" />
+    </span><br />
+    <span lang={en}>{contact.address.country}</span>
   </address>
 </section>
 
@@ -42,7 +47,7 @@ const { lang, contact } = Astro.props;
 
 <section>
   <h2>{t(lang, 'contact.email.label')}</h2>
-  <p>
+  <p lang={enFor(contact.email)}>
     <Fact
       lang={lang}
       value={contact.email}

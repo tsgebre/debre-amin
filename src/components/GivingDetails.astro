@@ -1,5 +1,6 @@
 ---
 import Fact from './Fact.astro';
+import MixedText from './MixedText.astro';
 import { isPlaceholder } from '../data/placeholder';
 import { cashAppHref } from '../data/links';
 import { t, type Locale } from '../i18n/index';
@@ -11,26 +12,30 @@ interface Props {
 }
 
 const { lang, giving } = Astro.props;
+
+// Real handles and addresses are English/Latin text; on Amharic pages they
+// are marked lang="en". Placeholders stay unmarked: their badge is Amharic.
+const enFor = (value: string) => (lang !== 'en' && !isPlaceholder(value) ? 'en' : undefined);
 ---
 
 <section>
-  <h2>{t(lang, 'giving.zelle.heading')}</h2>
-  <p>{t(lang, 'giving.zelle.body')}</p>
-  <p>
+  <h2><MixedText lang={lang} text={t(lang, 'giving.zelle.heading')} /></h2>
+  <p><MixedText lang={lang} text={t(lang, 'giving.zelle.body')} /></p>
+  <p lang={enFor(giving.zelle)}>
     <Fact lang={lang} value={giving.zelle} field="giving.zelle" />
   </p>
 </section>
 
 <section>
-  <h2>{t(lang, 'giving.paypal.heading')}</h2>
-  <p>
+  <h2><MixedText lang={lang} text={t(lang, 'giving.paypal.heading')} /></h2>
+  <p lang={enFor(giving.paypalUrl)}>
     <Fact lang={lang} value={giving.paypalUrl} field="giving.paypalUrl" as="link" />
   </p>
 </section>
 
 <section>
-  <h2>{t(lang, 'giving.cashApp.heading')}</h2>
-  <p>
+  <h2><MixedText lang={lang} text={t(lang, 'giving.cashApp.heading')} /></h2>
+  <p lang={enFor(giving.cashAppTag)}>
     <Fact
       lang={lang}
       value={giving.cashAppTag}
@@ -43,7 +48,7 @@ const { lang, giving } = Astro.props;
 
 <section>
   <h2>{t(lang, 'giving.mail.heading')}</h2>
-  <address>
+  <address lang={enFor(giving.mailingAddress)}>
     <Fact lang={lang} value={giving.mailingAddress} field="giving.mailingAddress" />
   </address>
 </section>

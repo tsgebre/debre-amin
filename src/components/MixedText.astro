@@ -1,0 +1,18 @@
+---
+import type { Locale } from '../i18n/index';
+
+interface Props {
+  lang: Locale;
+  text: string;
+}
+
+const { lang, text } = Astro.props;
+
+// On Amharic pages, Latin-script runs inside a dictionary string are English
+// brand names kept for recognition (e.g. "ካሽ አፕ (Cash App)"); mark them
+// lang="en" so screen readers and fonts switch language. The capture group
+// makes split() keep the matches at odd indices.
+const parts = lang === 'am' ? text.split(/([A-Za-z]+(?:[ '-][A-Za-z]+)*)/) : [text];
+---
+
+{parts.map((part, i) => (i % 2 === 1 ? <span lang="en">{part}</span> : part))}

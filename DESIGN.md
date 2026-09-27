@@ -18,6 +18,10 @@ liturgical texts.
   so `.astro` components render in tests via the Container API.
 - Type checking: `npm run check` (`astro check`), which covers `.astro`
   files as well as `.ts`.
+- Accessibility gate: `axe-core` in `jsdom` (both devDependencies; jsdom
+  pinned to 26.x, which supports the Node ≥20.3 floor — 29.x needs 20.19),
+  run from `tests/a11y.test.ts` over every page type via
+  `tests/helpers/pages.ts`.
 - zod for schema validation (site config + content collections).
 - `@fontsource/noto-sans-ethiopic` + `@fontsource-variable/inter`,
   self-hosted fonts.
@@ -166,7 +170,7 @@ the safest shape for GitHub Pages.
 
 ## Snapshot
 
-- **Phase:** 3 (Giving, Events, Gallery) — complete; Phases 1–2 complete.
+- **Phase:** 4 (Hardening) — in progress; Phases 1–3 complete.
 - **Complete:** project scaffold (Astro + TypeScript strict + vitest +
   zod), env-driven `site`/`base` config, smoke test (P1-01 passed);
   i18n core — dictionaries, `t()`, base-aware path helpers, nav map (P1-02);
@@ -242,11 +246,18 @@ the safest shape for GitHub Pages.
   both-calendar dates when present, an honest empty state, and a build-time
   check that fails loudly on any missing image file. Ships six original,
   locally generated abstract SVG placeholders — no photographs, no
-  hotlinking (P3-03). **Phase 3 complete.**
-- **Remaining:** Phase 4 — accessibility audit, SEO, README, content
-  polish pass.
-- **Build/test status:** `npm test` passes (877/877); `astro check` clean;
-  `npm run build` emits 19 pages with the shipped (empty) events
+  hotlinking (P3-03). **Phase 3 complete.** Accessibility audit (P4-01):
+  axe-core (WCAG 2.1 A/AA, contrast via `tokens.test.ts`) over all 28 page
+  renders in both locales, a heading/landmark/element structure test, a
+  mixed-language test (English fragments on Amharic pages carry
+  `lang="en"`, via `MixedText` and explicit spans on real config values),
+  a bilingual `404.astro`, a fixed skip-link focus ring (was 1.47:1 on the
+  header band, now gold 4.03:1), cadence wording removed, and placeholder
+  gallery images no longer linked.
+- **Remaining:** Phase 4 — SEO (P4-02), README/maintenance/audit (P4-03),
+  final sweep (P4-04).
+- **Build/test status:** `npm test` passes (1159/1159); `astro check` clean;
+  `npm run build` emits 20 pages (incl. `404.html`) with the shipped (empty) events
   collection and the six shipped gallery placeholders; verified under
   `BASE_PATH` `''` and `/debre-amin`; `npm ci` in sync.
 - **Open risks:**

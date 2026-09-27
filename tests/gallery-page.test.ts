@@ -87,6 +87,14 @@ describe('GalleryGrid', () => {
     expect(doc).toMatch(/<a href="\/images\/gallery\/a\.jpg" aria-label="View full size: Alt a">/);
   });
 
+  it('does not link placeholder images (the full-size file adds nothing)', async () => {
+    const items = [item('ph', { placeholder: true }), item('real')];
+    const doc = await render(GalleryGrid, { props: { lang: 'en', items } });
+    expect(doc).not.toContain('href="/images/gallery/ph.jpg"');
+    expect(doc).toContain('href="/images/gallery/real.jpg"');
+    expect((doc.match(/<a\b/g) ?? []).length).toBe(1);
+  });
+
   it('renders Amharic alt text and captions on the am locale, with no missing markers', async () => {
     const items = [item('a', { caption: { en: 'Cap', am: 'መግለጫ' } })];
     const doc = await render(GalleryGrid, { props: { lang: 'am', items } });

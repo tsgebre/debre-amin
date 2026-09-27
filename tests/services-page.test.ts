@@ -39,6 +39,7 @@ describe.each(LOCALES)('services page — %s', (lang) => {
 
   it('has a table caption and three scoped column headers', () => {
     expect(doc()).toMatch(/<caption[\s>]/);
+    expect(doc()).toMatch(lang === 'en' ? />Schedule of services<\/caption>/ : />የአገልግሎት መርሐ ግብር<\/caption>/);
     const headers = doc().match(/<th\b[^>]*scope="col"[^>]*>/g) ?? [];
     expect(headers).toHaveLength(3);
   });

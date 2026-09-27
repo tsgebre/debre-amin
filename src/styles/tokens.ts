@@ -24,4 +24,6 @@ export const TEXT_PAIRS: readonly TextPair[] = [
   [white, greenDark, 4.5], // footer text on the footer band
   [ink, gold, 4.5], // placeholder badge text on its gold background
   [white, green, 3], // focus ring (outline: currentColor) on the header band
+  [muted, cream, 4.5], // secondary text: review notes, captions, empty states
+  [gold, green, 3], // skip-link focus ring, drawn over the header band
 ];
