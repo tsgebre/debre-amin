@@ -13,7 +13,8 @@
     "astro": "astro",
     "check": "astro check",
     "gallery:placeholders": "node scripts/generate-gallery-placeholders.mjs",
-    "og:image": "node scripts/generate-og-image.mjs"
+    "og:image": "node scripts/generate-og-image.mjs",
+    "check:links": "node scripts/check-links.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

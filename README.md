@@ -409,10 +409,14 @@ built for the root of the domain.
   `saint.am.md` each start with `amReviewPending: true`; change it to
   `false` once the parish has read them (see **The About page texts**
   above).
-- **Two fasting periods with a single reliable source for their end date**:
-  the Fast of the Prophets/Advent (ጾመ ነቢያት, Tsome Nebiyat) and the Fast of
-  the Apostles (ጾመ ሐዋርያት, Tsome Hawariat). Both show a "dates pending parish
-  confirmation" note on the Calendar page. Details and sources are in
+- **Two fasting periods where published sources disagree**: the Fast of
+  the Prophets/Advent (ጾመ ነቢያት, Tsome Nebiyat) — sources give its length as
+  40, 43, 44 or "approximately 45" days — and the Fast of the Apostles
+  (ጾመ ሐዋርያት, Tsome Hawariat), where one parish calendar ends it on Hamle 5
+  instead of Hamle 4. The site shows a specific date for each (never a day
+  count), with a visible "dates pending parish confirmation" note on the
+  Calendar page. A printed EOTC ባሕረ ሐሳብ, or the parish's own confirmation,
+  would resolve either. Details and sources are in
   `docs/research/feasts.md`.
 - **Two of the saint's feast days that are not shown on the site at all**,
   because each rests on a single source: Ginbot 12 (translation of his
@@ -466,14 +470,22 @@ and how confident it is — see `docs/research/`.
   means one of the values you typed doesn't match the expected format; see
   **Where the facts live** above for a worked example of the error message,
   and the field's row in the tables there for the exact format expected.
-- **Amharic text looks like empty boxes after regenerating the social-share
-  image** (`npm run og:image`). That script needs your computer's
-  font system (fontconfig) to find the Ethiopic font bundled with the
-  project; on some setups it can only find your system's default fonts.
-  Confirm by opening the resulting `public/og-image.png` and checking the
-  Amharic parish name is legible, not boxes. If it isn't, the image can
-  fall back to the English name and the cross motif only — check with
-  whoever last regenerated it before assuming your computer is at fault.
+- **Amharic text looks like empty boxes after regenerating the
+  social-share image** (`npm run og:image`).
+  1. You only need to run this script if the parish name changes — the
+     committed `public/og-image.png` is already correct, so most people
+     never need to touch it.
+  2. If you do run it and the Amharic shows as boxes, your computer's font
+     system (fontconfig) couldn't find the Ethiopic font. Install
+     **Noto Sans Ethiopic** system-wide (the font files are also right
+     here in the repo, at
+     `node_modules/@fontsource/noto-sans-ethiopic/files/`, if you'd rather
+     install from those than download them again), then run
+     `npm run og:image` again.
+  3. Open the resulting `public/og-image.png` and check the Amharic parish
+     name is legible before committing it. **Never commit a version where
+     the Amharic shows as boxes** — keep the previously committed one
+     instead and ask someone else to regenerate it on their machine.
 - **A test fails after editing Amharic text.** Two automatic checks exist
   specifically for this:
   - A short list of known misspellings (`AM_KNOWN_MISSPELLINGS` in
@@ -516,8 +528,9 @@ and how confident it is — see `docs/research/`.
 - **Movable feasts are verified only through Ethiopian year 2030
   (Gregorian 2038)**, and the Ethiopian↔Gregorian conversion only covers
   Gregorian 1900–2100. See **Maintenance** above.
-- **Two fasting periods and two of the saint's feast days need a second
-  source or parish confirmation** before they can be shown with full
+- **Two fasting periods where published sources disagree on the exact end
+  date or length, and two of the saint's feast days resting on a single
+  source**, need parish confirmation before they can be shown with full
   confidence. See **What still needs parish review** above.
 
 ---

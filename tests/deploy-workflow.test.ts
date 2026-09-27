@@ -48,11 +48,14 @@ describe('deploy workflow', () => {
     const ci = indexOf((s) => s.run === 'npm ci', 'npm ci');
     const test = indexOf((s) => s.run === 'npm test', 'npm test');
     const build = indexOf((s) => s.run === 'npm run build', 'npm run build');
+    const checkLinks = indexOf((s) => s.run === 'npm run check:links', 'npm run check:links');
     const upload = indexOf((s) => s.uses === 'actions/upload-pages-artifact@v3', 'upload');
-    expect([checkout, node, pages, ci, test, build, upload]).toEqual(
-      [checkout, node, pages, ci, test, build, upload].slice().sort((a, b) => a - b),
+    expect([checkout, node, pages, ci, test, build, checkLinks, upload]).toEqual(
+      [checkout, node, pages, ci, test, build, checkLinks, upload].slice().sort((a, b) => a - b),
     );
     expect(test).toBeLessThan(build);
+    expect(build).toBeLessThan(checkLinks);
+    expect(checkLinks).toBeLessThan(upload);
 
     expect(buildSteps[node].with).toMatchObject({ 'node-version': 20, cache: 'npm' });
     expect(buildSteps[pages].id).toBe('pages');
@@ -61,6 +64,14 @@ describe('deploy workflow', () => {
   it('feeds the Pages outputs into the build', () => {
     const build = buildSteps.find((s) => s.run === 'npm run build')!;
     expect(build.env).toEqual({
+      SITE_URL: '${{ steps.pages.outputs.origin }}',
+      BASE_PATH: '${{ steps.pages.outputs.base_path }}',
+    });
+  });
+
+  it('checks links with the same Pages outputs as the build, after building', () => {
+    const checkLinks = buildSteps.find((s) => s.run === 'npm run check:links')!;
+    expect(checkLinks.env).toEqual({
       SITE_URL: '${{ steps.pages.outputs.origin }}',
       BASE_PATH: '${{ steps.pages.outputs.base_path }}',
     });
