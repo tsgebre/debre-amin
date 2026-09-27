@@ -63,6 +63,28 @@ describe('client-side today script', () => {
     expect(document.body.innerHTML).toBe(before);
   });
 
+  it('on am pages, if Intl silently gives English Gregorian output, leaves the markup unchanged', async () => {
+    staleMarkup('am', 'America/New_York');
+    const before = document.body.innerHTML;
+    const RealDateTimeFormat = Intl.DateTimeFormat;
+    function StubbedDateTimeFormat(
+      this: unknown,
+      locale?: string | string[],
+      opts?: Intl.DateTimeFormatOptions,
+    ) {
+      // Simulates a browser whose ICU data has no Amharic locale, so am-ET
+      // silently falls back to English formatting instead of throwing.
+      return new RealDateTimeFormat(locale === 'am-ET' ? 'en-US' : locale, opts);
+    }
+    vi.stubGlobal('Intl', { ...Intl, DateTimeFormat: StubbedDateTimeFormat });
+    try {
+      await runScript();
+      expect(document.body.innerHTML).toBe(before);
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
+
   it('leaves the markup unchanged when data-tz is missing', async () => {
     staleMarkup('en', 'America/New_York');
     document.querySelector('[data-today]')!.removeAttribute('data-tz');

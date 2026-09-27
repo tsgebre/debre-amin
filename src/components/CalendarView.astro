@@ -1,0 +1,284 @@
+---
+import { t, type Locale } from '../i18n/index';
+import {
+  ETHIOPIAN_MONTHS_AM,
+  ETHIOPIAN_MONTHS_EN,
+  formatEthiopian,
+  formatGregorian,
+  toGregorian,
+} from '../lib/ecal';
+import type { DatePair, FeastOccurrence } from '../lib/feasts';
+import { feastsForYear, monthlyCommemorations } from '../lib/feasts';
+import TodayDate from './TodayDate.astro';
+
+interface Props {
+  lang: Locale;
+  years: number[];
+  /** The site has one supported time zone; TodayDate reads it from siteConfig itself. */
+  timeZone: string;
+}
+
+const { lang, years } = Astro.props;
+
+function iso(d: { year: number; month: number; day: number }): string {
+  const pad = (n: number, w = 2) => String(n).padStart(w, '0');
+  return `${pad(d.year, 4)}-${pad(d.month)}-${pad(d.day)}`;
+}
+
+function yearHeading(ey: number): string {
+  const g1 = toGregorian({ year: ey, month: 1, day: 1 }).year;
+  return lang === 'am' ? `${ey} ዓ.ም. (${g1}–${g1 + 1} እ.ኤ.አ.)` : `${ey} E.C. (${g1}–${g1 + 1})`;
+}
+
+const monthNames = lang === 'am' ? ETHIOPIAN_MONTHS_AM : ETHIOPIAN_MONTHS_EN;
+
+interface MonthRow {
+  name: string;
+  isoDate: string;
+  gregorian: string;
+}
+
+interface FastRow {
+  id: string;
+  name: string;
+  pending: boolean;
+  fromIso: string;
+  fromText: string;
+  toIso: string;
+  toText: string;
+  untilFasika: boolean;
+}
+
+function fastRow(o: FeastOccurrence, fasika: DatePair | undefined): FastRow {
+  const untilFasika = o.id === 'abiy-tsom' && fasika !== undefined;
+  const toPair = untilFasika && fasika ? fasika : (o.end ?? o.start);
+  return {
+    id: o.id,
+    name: o.names[lang],
+    pending: o.confidence === 'medium',
+    fromIso: iso(o.start.g),
+    fromText: formatGregorian(o.start.g, lang),
+    toIso: iso(toPair.g),
+    toText: formatGregorian(toPair.g, lang),
+    untilFasika,
+  };
+}
+
+interface YearData {
+  ey: number;
+  heading: string;
+  months: MonthRow[];
+  feasts: FeastOccurrence[];
+  fastRows: FastRow[];
+  movableAvailable: boolean;
+  annualFeasts: FeastOccurrence[];
+  monthly: FeastOccurrence[];
+}
+
+function yearData(ey: number): YearData {
+  const months = monthNames.map((name, i) => {
+    const g = toGregorian({ year: ey, month: i + 1, day: 1 });
+    return { name, isoDate: iso(g), gregorian: formatGregorian(g, lang) };
+  });
+
+  const { occurrences, movableAvailable } = feastsForYear(ey);
+  const feasts = occurrences.filter((o) => o.kind === 'feast');
+  const fasts = occurrences.filter((o) => o.kind === 'fast');
+  const fasika = feasts.find((o) => o.id === 'fasika')?.start;
+  const annualFeasts = feasts.filter(
+    (o) => o.id === 'teklehaymanot-birth' || o.id === 'teklehaymanot-repose',
+  );
+
+  return {
+    ey,
+    heading: yearHeading(ey),
+    months,
+    feasts,
+    fastRows: fasts.map((f) => fastRow(f, fasika)),
+    movableAvailable,
+    annualFeasts,
+    monthly: monthlyCommemorations(ey),
+  };
+}
+
+const yearsData = years.map(yearData);
+---
+
+<h1>{t(lang, 'nav.calendar')}</h1>
+<p>{t(lang, 'calendar.intro')}</p>
+
+<TodayDate lang={lang} />
+
+{
+  yearsData.map((y) => (
+    <section>
+      <h2>{y.heading}</h2>
+
+      <div
+        class="table-scroll"
+        role="region"
+        aria-label={t(lang, 'calendar.months.scrollLabel')}
+        tabindex="0"
+      >
+        <table>
+          <caption>{t(lang, 'calendar.months.caption')}</caption>
+          <thead>
+            <tr>
+              <th scope="col">{t(lang, 'calendar.months.month')}</th>
+              <th scope="col">{t(lang, 'calendar.months.begins')}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {y.months.map((m) => (
+              <tr>
+                <td>{m.name}</td>
+                <td>
+                  <time datetime={m.isoDate}>{m.gregorian}</time>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div
+        class="table-scroll"
+        role="region"
+        aria-label={t(lang, 'calendar.feasts.scrollLabel')}
+        tabindex="0"
+      >
+        <table>
+          <caption>{t(lang, 'calendar.feasts.caption')}</caption>
+          <thead>
+            <tr>
+              <th scope="col">{t(lang, 'calendar.feasts.feast')}</th>
+              <th scope="col">{t(lang, 'calendar.feasts.ethiopianDate')}</th>
+              <th scope="col">{t(lang, 'calendar.feasts.gregorianDate')}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {y.feasts.map((f) => (
+              <tr>
+                <td>
+                  {f.names[lang]}
+                  {f.confidence === 'medium' && (
+                    <span class="pending-note">{t(lang, 'calendar.pendingConfirmation')}</span>
+                  )}
+                </td>
+                <td>
+                  <time datetime={iso(f.start.g)}>{formatEthiopian(f.start.e, lang)}</time>
+                </td>
+                <td>
+                  <time datetime={iso(f.start.g)}>{formatGregorian(f.start.g, lang)}</time>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div
+        class="table-scroll"
+        role="region"
+        aria-label={t(lang, 'calendar.fasts.scrollLabel')}
+        tabindex="0"
+      >
+        <table>
+          <caption>{t(lang, 'calendar.fasts.caption')}</caption>
+          <thead>
+            <tr>
+              <th scope="col">{t(lang, 'calendar.fasts.fast')}</th>
+              <th scope="col">{t(lang, 'calendar.fasts.from')}</th>
+              <th scope="col">{t(lang, 'calendar.fasts.to')}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {y.fastRows.map((r) => (
+              <tr>
+                <td>
+                  {r.name}
+                  {r.pending && (
+                    <span class="pending-note">{t(lang, 'calendar.pendingConfirmation')}</span>
+                  )}
+                </td>
+                <td>
+                  <time datetime={r.fromIso}>{r.fromText}</time>
+                </td>
+                <td>
+                  {r.untilFasika && <>{t(lang, 'calendar.untilFasika')}{' '}</>}
+                  <time datetime={r.toIso}>{r.toText}</time>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {!y.movableAvailable && <p class="calendar-note">{t(lang, 'calendar.movableUnavailable')}</p>}
+
+      <h3>{t(lang, 'calendar.saint.heading')}</h3>
+
+      <div
+        class="table-scroll"
+        role="region"
+        aria-label={t(lang, 'calendar.saint.annualScrollLabel')}
+        tabindex="0"
+      >
+        <table>
+          <caption>{t(lang, 'calendar.saint.annualCaption')}</caption>
+          <thead>
+            <tr>
+              <th scope="col">{t(lang, 'calendar.feasts.feast')}</th>
+              <th scope="col">{t(lang, 'calendar.feasts.ethiopianDate')}</th>
+              <th scope="col">{t(lang, 'calendar.feasts.gregorianDate')}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {y.annualFeasts.map((f) => (
+              <tr>
+                <td>{f.names[lang]}</td>
+                <td>
+                  <time datetime={iso(f.start.g)}>{formatEthiopian(f.start.e, lang)}</time>
+                </td>
+                <td>
+                  <time datetime={iso(f.start.g)}>{formatGregorian(f.start.g, lang)}</time>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div
+        class="table-scroll"
+        role="region"
+        aria-label={t(lang, 'calendar.saint.monthlyScrollLabel')}
+        tabindex="0"
+      >
+        <table>
+          <caption>{t(lang, 'calendar.saint.monthlyCaption')}</caption>
+          <thead>
+            <tr>
+              <th scope="col">{t(lang, 'calendar.feasts.ethiopianDate')}</th>
+              <th scope="col">{t(lang, 'calendar.feasts.gregorianDate')}</th>
+              <th scope="col">{t(lang, 'calendar.saint.noteHeader')}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {y.monthly.map((m) => (
+              <tr>
+                <td>
+                  <time datetime={iso(m.start.g)}>{formatEthiopian(m.start.e, lang)}</time>
+                </td>
+                <td>
+                  <time datetime={iso(m.start.g)}>{formatGregorian(m.start.g, lang)}</time>
+                </td>
+                <td>{m.annual ? t(lang, 'calendar.saint.annualMarker') : ''}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  ))
+}

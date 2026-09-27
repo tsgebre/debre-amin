@@ -285,6 +285,21 @@ thead th {
   padding-left: 0.75rem;
 }
 
+.calendar-note {
+  color: var(--color-muted);
+  font-style: italic;
+  border-left: 3px solid var(--color-gold);
+  padding-left: 0.75rem;
+}
+
+.pending-note {
+  display: inline-block;
+  margin-left: 0.5rem;
+  color: var(--color-muted);
+  font-style: italic;
+  font-size: 0.875rem;
+}
+
 .sources summary {
   cursor: pointer;
   min-height: 44px;

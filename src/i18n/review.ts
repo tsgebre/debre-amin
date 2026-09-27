@@ -23,7 +23,39 @@ export const AM_NEEDS_REVIEW: readonly string[] = [
   'clergy.empty',
   'about.parish.heading',
   'about.amReviewNote',
+  'calendar.intro',
+  'calendar.months.caption',
+  'calendar.months.month',
+  'calendar.months.begins',
+  'calendar.months.scrollLabel',
+  'calendar.feasts.caption',
+  'calendar.feasts.feast',
+  'calendar.feasts.ethiopianDate',
+  'calendar.feasts.gregorianDate',
+  'calendar.feasts.scrollLabel',
+  'calendar.fasts.caption',
+  'calendar.fasts.fast',
+  'calendar.fasts.from',
+  'calendar.fasts.to',
+  'calendar.fasts.scrollLabel',
+  'calendar.untilFasika',
+  'calendar.pendingConfirmation',
+  'calendar.movableUnavailable',
+  'calendar.saint.heading',
+  'calendar.saint.annualCaption',
+  'calendar.saint.annualScrollLabel',
+  'calendar.saint.monthlyCaption',
+  'calendar.saint.monthlyScrollLabel',
+  'calendar.saint.noteHeader',
+  'calendar.saint.annualMarker',
 ];
+
+// RESEARCHER: the factual claims in calendar.intro (13 months; twelve of 30
+// days; Pagume 5, or 6 in a leap year; the year begins on Meskerem 1, near
+// September 11; seven to eight years behind the Gregorian calendar) are the
+// general facts already verified for the calendar core — see
+// docs/research/ecal-reference.md. No new claims are made here; only the
+// Amharic wording (calendar.* above) is unreviewed and needs parish sign-off.
 
 // Status: independently verified by RESEARCHER (P1-09). Full register with
 // sources: docs/research/about-claims.md (rows C1-C5).

@@ -177,13 +177,19 @@ the safest shape for GitHub Pages.
   offsets; Demera; `feastsForYear` (`movableAvailable` false outside the
   table — never guessed), `nextFeast`, `currentObservances`, and
   `confidence` on every occurrence (P2-03); site-wide `TodayDate` strip
-  (build-day fallback + client update in the parish time zone), daily cron
-  rebuild, tested script policy (P2-04).
-- **Remaining:** Phase 2 — Calendar & Feasts page (P2-05), Home with the
-  next feast and a service-times summary (P2-06); Phase 3 — Giving,
-  Events, Gallery; Phase 4 — hardening.
-- **Build/test status:** `npm test` passes (717/717); `astro check` clean;
-  `npm run build` emits 11 pages; verified under `BASE_PATH` `''` and
+  (build-day fallback + client update in the parish time zone, with an
+  Intl-fallback guard on `am` pages), daily cron rebuild, tested script
+  policy (P2-04); the Calendar & Feasts page (`CalendarView.astro` +
+  `src/pages/[lang]/calendar.astro`) — the 13 months, major feasts,
+  fasting periods (never a day count; Abiy Tsom shown as "until Fasika"),
+  a visible pending-confirmation note on medium-confidence entries, the
+  saint's two annual feasts plus the 12 monthly 24th commemorations, and a
+  visible note (never a silent gap) when a year falls outside
+  `FASIKA_TABLE` (P2-05).
+- **Remaining:** Phase 2 — Home with the next feast and a service-times
+  summary (P2-06); Phase 3 — Giving, Events, Gallery; Phase 4 — hardening.
+- **Build/test status:** `npm test` passes (743/743); `astro check` clean;
+  `npm run build` emits 13 pages; verified under `BASE_PATH` `''` and
   `/debre-amin`; `npm ci` in sync.
 - **Open risks:**
   - Base-path link correctness on GitHub Pages.
