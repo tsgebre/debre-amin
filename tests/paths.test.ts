@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { localizedPath, switchLocalePath } from '../src/i18n/paths';
+import { assetPath, localizedPath, samePath, switchLocalePath } from '../src/i18n/paths';
 import type { Locale } from '../src/i18n/index';
 
 const BASES = ['/', '/debre-amin', '/debre-amin/'] as const;
@@ -55,6 +55,26 @@ describe('switchLocalePath', () => {
       expect(there).toBe(localizedPath('am', slug, base));
       expect(switchLocalePath(there, 'en', base)).toBe(original);
     }
+  });
+});
+
+describe('assetPath', () => {
+  it.each([
+    ['favicon.svg', '/', '/favicon.svg'],
+    ['favicon.svg', '/debre-amin', '/debre-amin/favicon.svg'],
+    ['/favicon.svg', '/debre-amin/', '/debre-amin/favicon.svg'],
+    ['img/a.svg', '', '/img/a.svg'],
+  ])('(%j, %j) -> %s', (file, base, expected) => {
+    expect(assetPath(file, base)).toBe(expected);
+  });
+});
+
+describe('samePath', () => {
+  it('ignores trailing and doubled slashes', () => {
+    expect(samePath('/en/', '/en')).toBe(true);
+    expect(samePath('/debre-amin/en/about/', '/debre-amin//en/about')).toBe(true);
+    expect(samePath('/en/', '/en/about/')).toBe(false);
+    expect(samePath('/', '')).toBe(true);
   });
 });
 

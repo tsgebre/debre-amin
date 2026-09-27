@@ -21,6 +21,15 @@ export function localizedPath(lang: Locale, slug: string, base: string = DEFAULT
   return join(base, [lang, ...segments(slug)]);
 }
 
+export function assetPath(file: string, base: string = DEFAULT_BASE): string {
+  return `${normalizeBase(base)}/${segments(file).join('/')}`;
+}
+
+export function samePath(a: string, b: string): boolean {
+  const norm = (p: string) => `/${segments(p).join('/')}`;
+  return norm(a) === norm(b);
+}
+
 export function switchLocalePath(
   pathname: string,
   targetLang: Locale,

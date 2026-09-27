@@ -1,17 +1,25 @@
 ---
+import { DEFAULT_LOCALE, LOCALE_META, t } from '../i18n/index';
+import { assetPath, localizedPath } from '../i18n/paths';
 
+const target = localizedPath(DEFAULT_LOCALE, '');
+const canonical = Astro.site ? new URL(target, Astro.site).href : target;
+const amTarget = localizedPath('am', '');
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+<!doctype html>
+<html lang={LOCALE_META[DEFAULT_LOCALE].htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{t(DEFAULT_LOCALE, 'site.name')}</title>
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/svg+xml" href={assetPath('favicon.svg')} />
+  </head>
+  <body>
+    <p><a href={target}>{t(DEFAULT_LOCALE, 'site.name')} — English</a></p>
+    <p lang="am"><a href={amTarget} hreflang="am">{t('am', 'site.name')} — አማርኛ</a></p>
+  </body>
 </html>

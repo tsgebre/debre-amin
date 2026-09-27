@@ -1,0 +1,62 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  line-height: 1.6;
+  font-family:
+    'Inter Variable', 'Noto Sans Ethiopic', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+:lang(am) {
+  font-family:
+    'Noto Sans Ethiopic', 'Inter Variable', system-ui, sans-serif;
+  line-height: 1.8;
+}
+
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 0.5rem;
+  top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #fff;
+  color: #000;
+  z-index: 100;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: none;
+}
+
+.site-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+}
+
+.site-nav a[aria-current='page'] {
+  font-weight: 700;
+}

@@ -1,0 +1,68 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource/noto-sans-ethiopic/400.css';
+import '@fontsource/noto-sans-ethiopic/700.css';
+import '../styles/global.css';
+import { LOCALES, LOCALE_META, t, type Locale } from '../i18n/index';
+import { assetPath, localizedPath, samePath, switchLocalePath } from '../i18n/paths';
+import { NAV } from '../i18n/nav';
+
+interface Props {
+  lang: Locale;
+  title: string;
+  description?: string;
+}
+
+const { lang, title, description } = Astro.props;
+const other = LOCALES.find((l) => l !== lang)!;
+const siteName = t(lang, 'site.name');
+const currentPath = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang={LOCALE_META[lang].htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{`${title} — ${siteName}`}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="icon" type="image/svg+xml" href={assetPath('favicon.svg')} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{t(lang, 'a11y.skipToContent')}</a>
+    <header>
+      <a class="site-name" href={localizedPath(lang, '')}>{siteName}</a>
+      <nav class="site-nav" aria-label={t(lang, 'a11y.mainNav')}>
+        <ul>
+          {
+            NAV.map((item) => {
+              const href = localizedPath(lang, item.slug);
+              return (
+                <li>
+                  <a href={href} aria-current={samePath(href, currentPath) ? 'page' : undefined}>
+                    {t(lang, item.key)}
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </nav>
+      <a
+        class="lang-toggle"
+        href={switchLocalePath(currentPath, other)}
+        hreflang={LOCALE_META[other].htmlLang}
+        lang={LOCALE_META[other].htmlLang}
+        aria-label={`${t(lang, 'a11y.langToggle')}: ${LOCALE_META[other].label}`}
+      >
+        {t(lang, 'lang.switchTo')}
+      </a>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <footer>
+      <p>{t(lang, 'footer.rights')}</p>
+    </footer>
+  </body>
+</html>

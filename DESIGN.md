@@ -13,7 +13,11 @@ liturgical texts.
 ## Stack
 
 - Astro (static output), TypeScript strict.
-- vitest, run offline via `vitest run` — no network, no live fetches.
+- vitest 3 (matches Astro 5's Vite 6), run offline via `vitest run` — no
+  network, no live fetches. `vitest.config.ts` uses Astro's `getViteConfig`
+  so `.astro` components render in tests via the Container API.
+- Type checking: `npm run check` (`astro check`), which covers `.astro`
+  files as well as `.ts`.
 - zod for schema validation (site config + content collections).
 - `@fontsource/noto-sans-ethiopic` + `@fontsource-variable/inter`,
   self-hosted fonts.
@@ -76,11 +80,13 @@ the safest shape for GitHub Pages.
 - **Phase:** 1 (Foundation).
 - **Complete:** project scaffold (Astro + TypeScript strict + vitest +
   zod), env-driven `site`/`base` config, smoke test (P1-01 passed);
-  i18n core — dictionaries, `t()`, base-aware path helpers, nav map (P1-02).
-- **Remaining:** layout + locale routing, 9 pages, calendar module, content
-  collections, deploy workflow, hardening pass.
-- **Build/test status:** `npm test` passes (45/45); `npm run build`
-  succeeds, emits `dist/index.html` (scaffold placeholder page).
+  i18n core — dictionaries, `t()`, base-aware path helpers, nav map (P1-02);
+  `[lang]` routing, root redirect, `BaseLayout`, self-hosted fonts (P1-03).
+- **Remaining:** design system + motif (P1-04), full `SiteConfig` (P1-05),
+  About/Services/Contact/Clergy pages, deploy workflow; then calendar,
+  content collections, remaining pages, hardening.
+- **Build/test status:** `npm test` passes (65/65); `astro check` clean;
+  `npm run build` emits `/index.html`, `/en/index.html`, `/am/index.html`.
 - **Open risks:**
   - Base-path link correctness on GitHub Pages.
   - Amharic authenticity — every Amharic string needs parish review.
