@@ -11,3 +11,8 @@ export function telHref(phone: string): string {
 export function mailtoHref(email: string): string {
   return `mailto:${email}`;
 }
+
+/** Callers must never pass a placeholder string. `tag` includes the leading "$". */
+export function cashAppHref(tag: string): string {
+  return `https://cash.app/${tag}`;
+}

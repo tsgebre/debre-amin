@@ -135,7 +135,7 @@ the safest shape for GitHub Pages.
 
 ## Snapshot
 
-- **Phase:** 2 (Calendar) — complete; Phase 1 (Foundation) complete.
+- **Phase:** 3 (Giving, Events, Gallery) — in progress; Phases 1–2 complete.
 - **Complete:** project scaffold (Astro + TypeScript strict + vitest +
   zod), env-driven `site`/`base` config, smoke test (P1-01 passed);
   i18n core — dictionaries, `t()`, base-aware path helpers, nav map (P1-02);
@@ -194,10 +194,16 @@ the safest shape for GitHub Pages.
   commemoration via `nextFeast({kinds:['commemoration']})`, and a latest-
   announcements section with an honest empty state and an `announcements`
   prop ready for Phase 3's events collection (P2-06). **Phase 2 complete.**
-- **Remaining:** Phase 3 — Giving, Events & Announcements, Gallery;
-  Phase 4 — hardening.
-- **Build/test status:** `npm test` passes (766/766); `astro check` clean;
-  `npm run build` emits 13 pages; verified under `BASE_PATH` `''` and
+  the Giving page (`GivingDetails.astro` + `src/pages/[lang]/giving.astro`)
+  — Zelle shown as copyable text (never a link), PayPal and Cash App as
+  `Fact as="link"` (`cashAppHref` in `src/data/links.ts` builds the
+  `cash.app/$tag` URL), the mailing address in `<address>`, no payment
+  processed on the site, and no tax/deductibility claim — that's a
+  real-world fact this project doesn't have (P3-01).
+- **Remaining:** Phase 3 — Events & Announcements, Gallery; Phase 4 —
+  hardening.
+- **Build/test status:** `npm test` passes (792/792); `astro check` clean;
+  `npm run build` emits 15 pages; verified under `BASE_PATH` `''` and
   `/debre-amin`; `npm ci` in sync.
 - **Open risks:**
   - Base-path link correctness on GitHub Pages.

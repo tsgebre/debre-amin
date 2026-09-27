@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { mailtoHref, telHref } from '../src/data/links';
+import { cashAppHref, mailtoHref, telHref } from '../src/data/links';
 
 describe('telHref', () => {
   it('normalises a formatted phone number to tel:+1XXXXXXXXXX', () => {
@@ -19,5 +19,11 @@ describe('telHref', () => {
 describe('mailtoHref', () => {
   it('prefixes the email with mailto:', () => {
     expect(mailtoHref('parish@example.org')).toBe('mailto:parish@example.org');
+  });
+});
+
+describe('cashAppHref', () => {
+  it('builds a cash.app URL, keeping the leading "$"', () => {
+    expect(cashAppHref('$DebreAmin123')).toBe('https://cash.app/$DebreAmin123');
   });
 });

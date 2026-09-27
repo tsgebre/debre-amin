@@ -82,5 +82,14 @@
   "home.monthly.heading": "Abune Teklehaymanot's next commemoration",
   "home.monthly.none": "No upcoming commemoration is available yet.",
   "home.announcements.heading": "Latest announcements",
-  "home.announcements.empty": "No announcements yet — check back soon."
+  "home.announcements.empty": "No announcements yet — check back soon.",
+  "giving.intro": "Your offerings support the life and ministry of the parish.",
+  "giving.zelle.heading": "Zelle",
+  "giving.zelle.body": "Send to the phone number or email address below using your own bank's Zelle feature.",
+  "giving.paypal.heading": "PayPal",
+  "giving.cashApp.heading": "Cash App",
+  "giving.mail.heading": "By Mail",
+  "giving.notes.heading": "Please note",
+  "giving.notes.noPayment": "This website does not process payments; each option opens or refers to the service's own app or website.",
+  "giving.notes.confirm": "Before giving, please confirm these details with the parish."
 }

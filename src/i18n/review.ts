@@ -61,6 +61,15 @@ export const AM_NEEDS_REVIEW: readonly string[] = [
   'home.monthly.none',
   'home.announcements.heading',
   'home.announcements.empty',
+  'giving.intro',
+  'giving.zelle.heading',
+  'giving.zelle.body',
+  'giving.paypal.heading',
+  'giving.cashApp.heading',
+  'giving.mail.heading',
+  'giving.notes.heading',
+  'giving.notes.noPayment',
+  'giving.notes.confirm',
 ];
 
 // RESEARCHER: the factual claims in calendar.intro (13 months; twelve of 30

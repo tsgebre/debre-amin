@@ -1,0 +1,49 @@
+---
+import Fact from './Fact.astro';
+import { isPlaceholder } from '../data/placeholder';
+import { cashAppHref } from '../data/links';
+import { t, type Locale } from '../i18n/index';
+import type { SiteConfig } from '../data/site';
+
+interface Props {
+  lang: Locale;
+  giving: SiteConfig['giving'];
+}
+
+const { lang, giving } = Astro.props;
+---
+
+<section>
+  <h2>{t(lang, 'giving.zelle.heading')}</h2>
+  <p>{t(lang, 'giving.zelle.body')}</p>
+  <p>
+    <Fact lang={lang} value={giving.zelle} field="giving.zelle" />
+  </p>
+</section>
+
+<section>
+  <h2>{t(lang, 'giving.paypal.heading')}</h2>
+  <p>
+    <Fact lang={lang} value={giving.paypalUrl} field="giving.paypalUrl" as="link" />
+  </p>
+</section>
+
+<section>
+  <h2>{t(lang, 'giving.cashApp.heading')}</h2>
+  <p>
+    <Fact
+      lang={lang}
+      value={giving.cashAppTag}
+      field="giving.cashAppTag"
+      as="link"
+      href={isPlaceholder(giving.cashAppTag) ? undefined : cashAppHref(giving.cashAppTag)}
+    />
+  </p>
+</section>
+
+<section>
+  <h2>{t(lang, 'giving.mail.heading')}</h2>
+  <address>
+    <Fact lang={lang} value={giving.mailingAddress} field="giving.mailingAddress" />
+  </address>
+</section>

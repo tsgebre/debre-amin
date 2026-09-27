@@ -82,5 +82,14 @@
   "home.monthly.heading": "የአቡነ ተክለ ሃይማኖት የሚቀጥለው ወርሃዊ በዓል",
   "home.monthly.none": "እስካሁን የሚቀጥለው ወርሃዊ በዓል አልተዘጋጀም።",
   "home.announcements.heading": "የቅርብ ጊዜ ማስታወቂያዎች",
-  "home.announcements.empty": "እስካሁን ማስታወቂያ የለም — ቆየት ብለው ይመልከቱ።"
+  "home.announcements.empty": "እስካሁን ማስታወቂያ የለም — ቆየት ብለው ይመልከቱ።",
+  "giving.intro": "መባዎ የደብሩን ሕይወትና አገልግሎት ይደግፋል።",
+  "giving.zelle.heading": "ዜል (Zelle)",
+  "giving.zelle.body": "ከዚህ በታች ያለውን ስልክ ቁጥር ወይም ኢሜይል በራስዎ ባንክ የዜል (Zelle) አገልግሎት በመጠቀም ይላኩ።",
+  "giving.paypal.heading": "ፔይፓል (PayPal)",
+  "giving.cashApp.heading": "ካሽ አፕ (Cash App)",
+  "giving.mail.heading": "በፖስታ",
+  "giving.notes.heading": "እባክዎ ልብ ይበሉ",
+  "giving.notes.noPayment": "ይህ ድረ ገጽ ክፍያ አያስፈጽምም፤ እያንዳንዱ ዘዴ ወደ ራሱ አገልግሎት መተግበሪያ ወይም ድረ ገጽ ይመራል ወይም ያመላክታል።",
+  "giving.notes.confirm": "ከመስጠትዎ በፊት እነዚህን ዝርዝሮች ከደብሩ ጋር እንዲያረጋግጡ እባክዎ።"
 }
