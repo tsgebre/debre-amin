@@ -38,6 +38,10 @@ export interface RenderedPage {
   lang: Locale | null;
   /** Full-document pages without the site chrome (header/nav/main/footer). */
   bare: boolean;
+  /** True only for the noindex pages (root redirect, 404): no hreflang alternates expected. */
+  noindex: boolean;
+  /** og:type the page should declare. */
+  ogType: 'website' | 'article';
   html: string;
 }
 
@@ -111,15 +115,22 @@ async function renderAll(): Promise<RenderedPage[]> {
       ...options,
     });
 
-  const inLayout = async (lang: Locale, path: string, title: string, body: string) =>
+  const inLayout = async (
+    lang: Locale,
+    path: string,
+    title: string,
+    body: string,
+    extra: { description?: string; ogType?: 'website' | 'article' } = {},
+  ) =>
     container.renderToString(BaseLayout, {
-      props: { lang, title },
+      props: { lang, title, ...extra },
       slots: { default: body },
       request: new Request(`http://localhost/${lang}/${path}`),
     });
 
   for (const lang of LOCALES) {
-    const add = (name: string, html: string) => out.push({ name: `${name} — ${lang}`, lang, bare: false, html });
+    const add = (name: string, html: string, ogType: 'website' | 'article' = 'website') =>
+      out.push({ name: `${name} — ${lang}`, lang, bare: false, noindex: false, ogType, html });
 
     add('home', await render(page(HomePage), lang, ''));
     add(
@@ -139,6 +150,7 @@ async function renderAll(): Promise<RenderedPage[]> {
             })),
           },
         }),
+        { description: t(lang, 'meta.home.description') },
       ),
     );
     add(
@@ -177,6 +189,7 @@ async function renderAll(): Promise<RenderedPage[]> {
         t(lang, 'nav.events'),
         `<h1>${t(lang, 'nav.events')}</h1>` +
           (await container.renderToString(EventsList, { props: { lang, items: eventFixtures() } })),
+        { description: t(lang, 'meta.events.description') },
       ),
     );
     const detail = eventFixtures()[0];
@@ -200,7 +213,9 @@ async function renderAll(): Promise<RenderedPage[]> {
           },
           slots: { default: '<p>Fixture body in English.</p>' },
         }),
+        { description: detail.data.summary[lang], ogType: 'article' },
       ),
+      'article',
     );
 
     add('gallery (empty)', await render(page(GalleryPage), lang, 'gallery/'));
@@ -212,6 +227,7 @@ async function renderAll(): Promise<RenderedPage[]> {
         t(lang, 'nav.gallery'),
         `<h1>${t(lang, 'nav.gallery')}</h1>` +
           (await container.renderToString(GalleryGrid, { props: { lang, items: galleryFixtures() } })),
+        { description: t(lang, 'meta.gallery.description') },
       ),
     );
   }
@@ -220,12 +236,16 @@ async function renderAll(): Promise<RenderedPage[]> {
     name: 'root redirect',
     lang: null,
     bare: true,
+    noindex: true,
+    ogType: 'website',
     html: await container.renderToString(page(RootRedirect), { request: new Request('http://localhost/') }),
   });
   out.push({
     name: '404',
     lang: 'en',
     bare: false,
+    noindex: true,
+    ogType: 'website',
     html: await container.renderToString(page(NotFoundPage), {
       request: new Request('http://localhost/no/such/page/'),
     }),

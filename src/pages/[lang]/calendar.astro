@@ -14,6 +14,6 @@ const timeZone = siteConfig.timeZone;
 const ey = ethiopianTodayIn(timeZone).year;
 ---
 
-<BaseLayout lang={lang} title={t(lang, 'nav.calendar')} description={t(lang, 'calendar.intro')}>
+<BaseLayout lang={lang} title={t(lang, 'nav.calendar')} description={t(lang, 'meta.calendar.description')}>
   <CalendarView lang={lang} years={[ey, ey + 1]} timeZone={timeZone} />
 </BaseLayout>

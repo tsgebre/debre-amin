@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { assetPath, localizedPath, samePath, switchLocalePath } from '../src/i18n/paths';
+import { absoluteUrl, assetPath, localizedPath, samePath, switchLocalePath } from '../src/i18n/paths';
 import type { Locale } from '../src/i18n/index';
 
 const BASES = ['/', '/debre-amin', '/debre-amin/'] as const;
@@ -94,5 +94,21 @@ describe('path invariants', () => {
       expect(out.endsWith('/'), out).toBe(true);
       expect(out.startsWith('/'), out).toBe(true);
     }
+  });
+});
+
+describe('absoluteUrl', () => {
+  it.each([
+    ['/en/about/', 'https://example.github.io', 'https://example.github.io/en/about/'],
+    ['/debre-amin/en/about/', 'https://org.github.io', 'https://org.github.io/debre-amin/en/about/'],
+    ['/', 'https://example.github.io', 'https://example.github.io/'],
+    ['/debre-amin/', 'https://org.github.io', 'https://org.github.io/debre-amin/'],
+    ['/og-image.png', 'https://example.github.io', 'https://example.github.io/og-image.png'],
+  ])('(%j, %j) -> %s', (path, site, expected) => {
+    expect(absoluteUrl(path, site)).toBe(expected);
+  });
+
+  it('does not double a trailing slash on the site origin', () => {
+    expect(absoluteUrl('/en/', 'https://example.github.io/')).toBe('https://example.github.io/en/');
   });
 });

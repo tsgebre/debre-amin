@@ -32,7 +32,7 @@ const { data } = entry;
 const { Content } = await render(entry);
 ---
 
-<BaseLayout lang={lang} title={data.title[lang]} description={data.summary[lang]}>
+<BaseLayout lang={lang} title={data.title[lang]} description={data.summary[lang]} ogType="article">
   <EventDetail
     lang={lang}
     type={data.type}

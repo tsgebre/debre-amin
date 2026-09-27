@@ -4,8 +4,9 @@ import '@fontsource/noto-sans-ethiopic/400.css';
 import '@fontsource/noto-sans-ethiopic/700.css';
 import '../styles/global.css';
 import { LOCALES, LOCALE_META, t, type Locale } from '../i18n/index';
-import { assetPath, localizedPath, samePath, switchLocalePath } from '../i18n/paths';
+import { absoluteUrl, assetPath, localizedPath, samePath, switchLocalePath } from '../i18n/paths';
 import { NAV } from '../i18n/nav';
+import { DEFAULT_SITE } from '../config/deploy';
 import CrossMotif from '../components/CrossMotif.astro';
 import TodayDate from '../components/TodayDate.astro';
 
@@ -15,12 +16,27 @@ interface Props {
   description?: string;
   /** False on pages with no per-locale counterpart (the 404). */
   showLangToggle?: boolean;
+  /** True for the 404: adds noindex, omits hreflang alternates. */
+  noindex?: boolean;
+  /** 'article' for an event detail page; every other page is 'website'. */
+  ogType?: 'website' | 'article';
 }
 
-const { lang, title, description, showLangToggle = true } = Astro.props;
+const { lang, title, description, showLangToggle = true, noindex = false, ogType = 'website' } =
+  Astro.props;
 const other = LOCALES.find((l) => l !== lang)!;
 const siteName = t(lang, 'site.name');
 const currentPath = Astro.url.pathname;
+
+// Astro.site is always configured (see astro.config.mjs / src/config/deploy.ts)
+// but the Container API used in tests doesn't set it, hence the fallback.
+const site = Astro.site?.href ?? DEFAULT_SITE;
+const canonical = absoluteUrl(currentPath, site);
+const enHref = absoluteUrl(switchLocalePath(currentPath, 'en'), site);
+const amHref = absoluteUrl(switchLocalePath(currentPath, 'am'), site);
+const ogImage = absoluteUrl(assetPath('og-image.png'), site);
+const pageTitle = `${title} — ${siteName}`;
+const ogLocale: Record<Locale, string> = { en: 'en_US', am: 'am_ET' };
 ---
 
 <!doctype html>
@@ -28,9 +44,33 @@ const currentPath = Astro.url.pathname;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{`${title} — ${siteName}`}</title>
+    <title>{pageTitle}</title>
     {description && <meta name="description" content={description} />}
+    <link rel="canonical" href={canonical} />
+    {
+      noindex ? (
+        <meta name="robots" content="noindex" />
+      ) : (
+        <>
+          <link rel="alternate" hreflang="en" href={enHref} />
+          <link rel="alternate" hreflang="am" href={amHref} />
+          <link rel="alternate" hreflang="x-default" href={enHref} />
+        </>
+      )
+    }
     <link rel="icon" type="image/svg+xml" href={assetPath('favicon.svg')} />
+    <meta property="og:title" content={pageTitle} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:locale" content={ogLocale[lang]} />
+    <meta property="og:locale:alternate" content={ogLocale[other]} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={t(lang, 'meta.ogImageAlt')} />
+    <meta name="twitter:card" content="summary_large_image" />
   </head>
   <body>
     <a class="skip-link" href="#main">{t(lang, 'a11y.skipToContent')}</a>

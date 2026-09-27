@@ -7,7 +7,13 @@ import { localizedPath } from '../i18n/paths';
 // page is English with a parallel Amharic block rather than per-locale.
 ---
 
-<BaseLayout lang="en" title={t('en', 'notFound.title')} showLangToggle={false}>
+<BaseLayout
+  lang="en"
+  title={t('en', 'notFound.title')}
+  description={t('en', 'notFound.body')}
+  showLangToggle={false}
+  noindex
+>
   <h1>{t('en', 'notFound.title')}</h1>
   <p>{t('en', 'notFound.body')}</p>
   <p><a href={localizedPath('en', '')}>{t('en', 'notFound.homeLink')}</a></p>

@@ -16,7 +16,7 @@ const items: EventItem[] = entries.map((e) => ({ slug: e.id, data: e.data }));
 const list = sortNewestFirst(publishable(items));
 ---
 
-<BaseLayout lang={lang} title={t(lang, 'nav.events')} description={t(lang, 'events.intro')}>
+<BaseLayout lang={lang} title={t(lang, 'nav.events')} description={t(lang, 'meta.events.description')}>
   <h1>{t(lang, 'nav.events')}</h1>
   <p>{t(lang, 'events.intro')}</p>
   <EventsList lang={lang} items={list} />

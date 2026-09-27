@@ -25,6 +25,11 @@ export function assetPath(file: string, base: string = DEFAULT_BASE): string {
   return `${normalizeBase(base)}/${segments(file).join('/')}`;
 }
 
+/** Resolves a site-relative path (already base-prefixed) against the deployed origin. */
+export function absoluteUrl(path: string, site: string): string {
+  return new URL(path, site).href;
+}
+
 export function samePath(a: string, b: string): boolean {
   const norm = (p: string) => `/${segments(p).join('/')}`;
   return norm(a) === norm(b);

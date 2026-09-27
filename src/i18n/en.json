@@ -104,5 +104,15 @@
   "gallery.viewFullSize": "View full size",
   "notFound.title": "Page not found",
   "notFound.body": "Sorry — the page you were looking for does not exist or may have moved.",
-  "notFound.homeLink": "Go to the English home page"
+  "notFound.homeLink": "Go to the English home page",
+  "meta.home.description": "Debre Amin Abune Teklehaymanot Ethiopian Orthodox Tewahedo Church in Greensboro, North Carolina: worship times, the Ethiopian calendar and parish life.",
+  "meta.about.description": "The history of Debre Amin Abune Teklehaymanot Ethiopian Orthodox Tewahedo Church, with sourced background on the EOTC and its patron saint.",
+  "meta.services.description": "Divine Liturgy, Sunday school and prayer services at Debre Amin Abune Teklehaymanot Ethiopian Orthodox Tewahedo Church.",
+  "meta.calendar.description": "The Ethiopian calendar, its months, feasts and fasting periods, and the commemorations of Abune Teklehaymanot, in both Ethiopian and Gregorian dates.",
+  "meta.giving.description": "Ways to support Debre Amin Abune Teklehaymanot Ethiopian Orthodox Tewahedo Church, including Zelle, PayPal, Cash App and mail.",
+  "meta.contact.description": "Contact details and directions for Debre Amin Abune Teklehaymanot Ethiopian Orthodox Tewahedo Church in Greensboro, North Carolina.",
+  "meta.clergy.description": "Meet the clergy and leadership serving Debre Amin Abune Teklehaymanot Ethiopian Orthodox Tewahedo Church.",
+  "meta.events.description": "Upcoming events and announcements from Debre Amin Abune Teklehaymanot Ethiopian Orthodox Tewahedo Church.",
+  "meta.gallery.description": "Photos from the life of Debre Amin Abune Teklehaymanot Ethiopian Orthodox Tewahedo Church.",
+  "meta.ogImageAlt": "The Debre Amin cross motif with the parish name in English and Amharic."
 }

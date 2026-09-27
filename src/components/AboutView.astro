@@ -24,7 +24,7 @@ interface Props {
 const { lang, history, sections } = Astro.props;
 ---
 
-<BaseLayout lang={lang} title={t(lang, 'nav.about')}>
+<BaseLayout lang={lang} title={t(lang, 'nav.about')} description={t(lang, 'meta.about.description')}>
   <h1>{t(lang, 'nav.about')}</h1>
   <ParishHistory lang={lang} history={history} />
   {

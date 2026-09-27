@@ -90,7 +90,7 @@ describe('dictionaries', () => {
   });
 
   it('am.json contains no known misspellings', () => {
-    const AM_KNOWN_MISSPELLINGS = ['ቅርስቲያን', 'ይጠናክራሉ', 'ትውፋት'];
+    const AM_KNOWN_MISSPELLINGS = ['ቅርስቲያን', 'ይጠናክራሉ', 'ትውፋት', 'መርሃ ግብር'];
     const offenders = Object.entries(am)
       .filter(([, value]) =>
         AM_KNOWN_MISSPELLINGS.some((misspelling) => value.includes(misspelling)),
