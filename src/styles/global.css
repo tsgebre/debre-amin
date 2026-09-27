@@ -278,6 +278,39 @@ thead th {
   margin-bottom: 2.5rem;
 }
 
+.home-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .home-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.home-card {
+  border: 1px solid var(--color-gold);
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.home-today-label {
+  display: inline-block;
+  margin-left: 0.5rem;
+  color: var(--color-ink);
+  background: var(--color-gold);
+  border-radius: 0.25rem;
+  padding: 0.1rem 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.home-service-name {
+  font-weight: 700;
+}
+
 .review-note {
   color: var(--color-muted);
   font-style: italic;

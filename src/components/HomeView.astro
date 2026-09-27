@@ -1,0 +1,166 @@
+---
+import { t, type Locale } from '../i18n/index';
+import { localizedPath } from '../i18n/paths';
+import { formatEthiopian, formatGregorian, toEthiopian, type GregorianDate } from '../lib/ecal';
+import { currentObservances, feastsForYear, nextFeast, type FeastOccurrence } from '../lib/feasts';
+import { siteConfig } from '../data/site';
+import Fact from './Fact.astro';
+import CrossMotif from './CrossMotif.astro';
+
+export interface AnnouncementItem {
+  title: string;
+  date: GregorianDate;
+  href: string;
+}
+
+interface Props {
+  lang: Locale;
+  today: GregorianDate;
+  announcements?: AnnouncementItem[];
+}
+
+const { lang, today, announcements = [] } = Astro.props;
+
+function iso(d: GregorianDate): string {
+  const pad = (n: number, w = 2) => String(n).padStart(w, '0');
+  return `${pad(d.year, 4)}-${pad(d.month)}-${pad(d.day)}`;
+}
+
+const todayIso = iso(today);
+
+const feast = nextFeast(today);
+const isFeastToday = feast !== null && iso(feast.start.g) === todayIso;
+
+const fasts = currentObservances(today);
+
+function describeFast(f: FeastOccurrence) {
+  const untilFasika = f.id === 'abiy-tsom';
+  const fasika = untilFasika
+    ? feastsForYear(f.start.e.year).occurrences.find((o) => o.id === 'fasika')?.start
+    : undefined;
+  const endPair = untilFasika && fasika ? fasika : (f.end ?? f.start);
+  return {
+    id: f.id,
+    name: f.names[lang],
+    pending: f.confidence === 'medium',
+    showUntilFasika: untilFasika && fasika !== undefined,
+    endIso: iso(endPair.g),
+    endEthiopian: formatEthiopian(endPair.e, lang),
+    endGregorian: formatGregorian(endPair.g, lang),
+  };
+}
+
+const fastRows = fasts.map(describeFast);
+
+const monthly = nextFeast(today, { kinds: ['commemoration'] });
+
+const shownAnnouncements = announcements.slice(0, 3);
+---
+
+<h1>{t(lang, 'site.name')}</h1>
+<p>{t(lang, 'site.tagline')}</p>
+<div class="divider"><CrossMotif size={24} /></div>
+<p>{t(lang, 'home.welcome')}</p>
+
+<div class="home-grid">
+  <section class="home-card">
+    <h2>{t(lang, 'home.services.heading')}</h2>
+    <ul class="home-services-list">
+      {
+        siteConfig.services.map((service, i) => (
+          <li>
+            <span class="home-service-name">{service.name[lang]}</span>{' '}
+            <Fact lang={lang} value={service.day[lang]} field={`services.${i}.day.${lang}`} />
+            {' — '}
+            <Fact lang={lang} value={service.time} field={`services.${i}.time`} />
+          </li>
+        ))
+      }
+    </ul>
+    <a href={localizedPath(lang, 'services')}>{t(lang, 'home.services.viewAll')}</a>
+  </section>
+
+  <section class="home-card">
+    <h2>{t(lang, 'home.nextFeast.heading')}</h2>
+    {
+      feast ? (
+        <>
+          <p>
+            {feast.names[lang]}
+            {isFeastToday && <span class="home-today-label">{t(lang, 'home.feastToday')}</span>}
+          </p>
+          <p>
+            <time datetime={iso(feast.start.g)}>{formatEthiopian(feast.start.e, lang)}</time>
+            <br />
+            <time datetime={iso(feast.start.g)}>{formatGregorian(feast.start.g, lang)}</time>
+          </p>
+        </>
+      ) : (
+        <p>{t(lang, 'home.nextFeast.none')}</p>
+      )
+    }
+    <a href={localizedPath(lang, 'calendar')}>{t(lang, 'home.viewCalendar')}</a>
+  </section>
+
+  {fastRows.length > 0 && (
+    <section class="home-card">
+      <h2>{t(lang, 'home.currentFast.heading')}</h2>
+      <ul>
+        {
+          fastRows.map((r) => (
+            <li>
+              {r.name}
+              {r.pending && <span class="pending-note">{t(lang, 'calendar.pendingConfirmation')}</span>}
+              <br />
+              {t(lang, 'home.currentFast.until')}{' '}
+              {r.showUntilFasika && <>{t(lang, 'calendar.untilFasika')}{' '}</>}
+              <time datetime={r.endIso}>{r.endEthiopian}</time>
+              <br />
+              <time datetime={r.endIso}>{r.endGregorian}</time>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  )}
+
+  <section class="home-card">
+    <h2>{t(lang, 'home.monthly.heading')}</h2>
+    {
+      monthly ? (
+        <p>
+          {monthly.names[lang]}
+          <br />
+          <time datetime={iso(monthly.start.g)}>{formatEthiopian(monthly.start.e, lang)}</time>
+          <br />
+          <time datetime={iso(monthly.start.g)}>{formatGregorian(monthly.start.g, lang)}</time>
+        </p>
+      ) : (
+        <p>{t(lang, 'home.monthly.none')}</p>
+      )
+    }
+  </section>
+
+  <section class="home-card">
+    <h2>{t(lang, 'home.announcements.heading')}</h2>
+    {
+      shownAnnouncements.length === 0 ? (
+        <p>{t(lang, 'home.announcements.empty')}</p>
+      ) : (
+        <ul>
+          {
+            shownAnnouncements.map((a) => (
+              <li>
+                <a href={a.href}>{a.title}</a>
+                <br />
+                <time datetime={iso(a.date)}>{formatEthiopian(toEthiopian(a.date), lang)}</time>
+                <br />
+                <time datetime={iso(a.date)}>{formatGregorian(a.date, lang)}</time>
+              </li>
+            ))
+          }
+        </ul>
+      )
+    }
+  </section>
+</div>

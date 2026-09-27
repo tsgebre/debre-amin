@@ -69,5 +69,18 @@
   "calendar.saint.monthlyCaption": "ወርሃዊ መታሰቢያ፣ በየወሩ 24",
   "calendar.saint.monthlyScrollLabel": "ሁሉንም 12 ወርሃዊ መታሰቢያዎች ለማየት ይሸብልሉ",
   "calendar.saint.noteHeader": "ማስታወሻ",
-  "calendar.saint.annualMarker": "ዓመታዊ በዓል"
+  "calendar.saint.annualMarker": "ዓመታዊ በዓል",
+  "home.welcome": "ካለፈው ጀርባዎ ወይም ስንት ጊዜ ርቀው እንደቆዩ ሳይለይ ሁሉም ከእኛ ጋር ለማምለክ ተጋብዘዋል። እንዳሉ ይምጡ።",
+  "home.services.heading": "የዚህ ሳምንት አገልግሎቶች",
+  "home.services.viewAll": "ሙሉውን መርሃ ግብር ይመልከቱ",
+  "home.nextFeast.heading": "የሚቀጥለው በዓል",
+  "home.nextFeast.none": "እስካሁን የሚቀጥለው በዓል አልተዘጋጀም።",
+  "home.feastToday": "ዛሬ",
+  "home.viewCalendar": "ሙሉውን ቀን መቁጠሪያ ይመልከቱ",
+  "home.currentFast.heading": "በመካሄድ ላይ ያለ ጾም",
+  "home.currentFast.until": "እስከ",
+  "home.monthly.heading": "የአቡነ ተክለ ሃይማኖት የሚቀጥለው ወርሃዊ በዓል",
+  "home.monthly.none": "እስካሁን የሚቀጥለው ወርሃዊ በዓል አልተዘጋጀም።",
+  "home.announcements.heading": "የቅርብ ጊዜ ማስታወቂያዎች",
+  "home.announcements.empty": "እስካሁን ማስታወቂያ የለም — ቆየት ብለው ይመልከቱ።"
 }

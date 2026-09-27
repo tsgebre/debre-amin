@@ -1,17 +1,18 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import CrossMotif from '../../components/CrossMotif.astro';
+import HomeView from '../../components/HomeView.astro';
 import { LOCALES, t, type Locale } from '../../i18n/index';
+import { ethiopianTodayIn, toGregorian } from '../../lib/ecal';
+import { siteConfig } from '../../data/site';
 
 export function getStaticPaths() {
   return LOCALES.map((lang) => ({ params: { lang } }));
 }
 
 const lang = Astro.params.lang as Locale;
+const today = toGregorian(ethiopianTodayIn(siteConfig.timeZone));
 ---
 
 <BaseLayout lang={lang} title={t(lang, 'nav.home')} description={t(lang, 'site.tagline')}>
-  <h1>{t(lang, 'site.name')}</h1>
-  <p>{t(lang, 'site.tagline')}</p>
-  <div class="divider"><CrossMotif size={24} /></div>
+  <HomeView lang={lang} today={today} />
 </BaseLayout>

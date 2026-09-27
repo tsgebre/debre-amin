@@ -135,7 +135,7 @@ the safest shape for GitHub Pages.
 
 ## Snapshot
 
-- **Phase:** 2 (Calendar) — in progress; Phase 1 (Foundation) complete.
+- **Phase:** 2 (Calendar) — complete; Phase 1 (Foundation) complete.
 - **Complete:** project scaffold (Astro + TypeScript strict + vitest +
   zod), env-driven `site`/`base` config, smoke test (P1-01 passed);
   i18n core — dictionaries, `t()`, base-aware path helpers, nav map (P1-02);
@@ -185,10 +185,18 @@ the safest shape for GitHub Pages.
   a visible pending-confirmation note on medium-confidence entries, the
   saint's two annual feasts plus the 12 monthly 24th commemorations, and a
   visible note (never a silent gap) when a year falls outside
-  `FASIKA_TABLE` (P2-05).
-- **Remaining:** Phase 2 — Home with the next feast and a service-times
-  summary (P2-06); Phase 3 — Giving, Events, Gallery; Phase 4 — hardening.
-- **Build/test status:** `npm test` passes (743/743); `astro check` clean;
+  `FASIKA_TABLE`, both calendars shown for every fast's From/To (P2-05);
+  the Home page (`HomeView.astro`) — a general welcome (no parish facts),
+  a services summary via `Fact` linking to the Services page, the next
+  feast via `nextFeast` (with a "Today" label when it falls today), any
+  fast in progress via `currentObservances` (rendered only when non-empty;
+  Abiy Tsom shown as "until Fasika"), the saint's next monthly
+  commemoration via `nextFeast({kinds:['commemoration']})`, and a latest-
+  announcements section with an honest empty state and an `announcements`
+  prop ready for Phase 3's events collection (P2-06). **Phase 2 complete.**
+- **Remaining:** Phase 3 — Giving, Events & Announcements, Gallery;
+  Phase 4 — hardening.
+- **Build/test status:** `npm test` passes (766/766); `astro check` clean;
   `npm run build` emits 13 pages; verified under `BASE_PATH` `''` and
   `/debre-amin`; `npm ci` in sync.
 - **Open risks:**

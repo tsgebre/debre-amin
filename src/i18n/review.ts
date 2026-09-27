@@ -48,6 +48,19 @@ export const AM_NEEDS_REVIEW: readonly string[] = [
   'calendar.saint.monthlyScrollLabel',
   'calendar.saint.noteHeader',
   'calendar.saint.annualMarker',
+  'home.welcome',
+  'home.services.heading',
+  'home.services.viewAll',
+  'home.nextFeast.heading',
+  'home.nextFeast.none',
+  'home.feastToday',
+  'home.viewCalendar',
+  'home.currentFast.heading',
+  'home.currentFast.until',
+  'home.monthly.heading',
+  'home.monthly.none',
+  'home.announcements.heading',
+  'home.announcements.empty',
 ];
 
 // RESEARCHER: the factual claims in calendar.intro (13 months; twelve of 30
