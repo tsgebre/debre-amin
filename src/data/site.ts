@@ -130,7 +130,7 @@ const config: SiteConfig = {
     },
     {
       id: 'weekly-prayer-teaching',
-      name: { en: 'Weekly Prayer & Teaching Service', am: 'ጸሎት / ስብከት' },
+      name: { en: 'Prayer & Teaching Service', am: 'ጸሎት / ስብከት' },
       day: ph('services.2.day'),
       time: ph('services.2.time'),
     },
