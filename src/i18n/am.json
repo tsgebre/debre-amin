@@ -1,0 +1,19 @@
+{
+  "site.name": "ደብረ አሚን አቡነ ተክለ ሃይማኖት የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ቤተ ክርስቲያን",
+  "site.tagline": "በግሪንስቦሮ፣ ሰሜን ካሮላይና የምትገኝ የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ቤተ ክርስቲያን",
+  "nav.home": "ዋና ገጽ",
+  "nav.about": "ስለ እኛ",
+  "nav.services": "አገልግሎቶች",
+  "nav.calendar": "ቀን መቁጠሪያ",
+  "nav.giving": "መባ",
+  "nav.events": "ዝግጅቶች እና ማስታወቂያዎች",
+  "nav.gallery": "የፎቶ ማዕከል",
+  "nav.contact": "ያግኙን",
+  "nav.clergy": "ካህናት",
+  "a11y.skipToContent": "ወደ ዋናው ይዘት ይለፉ",
+  "a11y.mainNav": "ዋና ማውጫ",
+  "a11y.langToggle": "ቋንቋ ይቀይሩ",
+  "lang.switchTo": "English",
+  "footer.rights": "መብቱ በሕግ የተጠበቀ ነው።",
+  "placeholder.notice": "ጊዜያዊ ይዘት — ደብሩ ይተካዋል።"
+}

@@ -1,0 +1,19 @@
+{
+  "site.name": "Debre Amin Abune Teklehaymanot Ethiopian Orthodox Tewahedo Church",
+  "site.tagline": "An Ethiopian Orthodox Tewahedo parish in Greensboro, North Carolina",
+  "nav.home": "Home",
+  "nav.about": "About Us",
+  "nav.services": "Services",
+  "nav.calendar": "Calendar",
+  "nav.giving": "Giving",
+  "nav.events": "Events & Announcements",
+  "nav.gallery": "Gallery",
+  "nav.contact": "Contact",
+  "nav.clergy": "Clergy",
+  "a11y.skipToContent": "Skip to main content",
+  "a11y.mainNav": "Main navigation",
+  "a11y.langToggle": "Change language",
+  "lang.switchTo": "አማርኛ",
+  "footer.rights": "All rights reserved.",
+  "placeholder.notice": "Placeholder — the parish will replace this."
+}

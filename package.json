@@ -1,9 +1,9 @@
 {
-  "name": "project",
+  "name": "debre-amin-website",
   "type": "module",
   "version": "0.0.1",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=20.3.0"
   },
   "scripts": {
     "dev": "astro dev",

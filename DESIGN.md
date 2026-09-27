@@ -68,26 +68,29 @@ liturgical texts.
 `astro.config.mjs` reads `site` from `SITE_URL` (default
 `https://example.github.io`) and `base` from `BASE_PATH` (default `/`) so
 the same build works locally and on Pages without code changes.
+`trailingSlash: 'always'` — directory-style URLs (`/en/about/`) throughout,
+the safest shape for GitHub Pages.
 
 ## Snapshot
 
 - **Phase:** 1 (Foundation).
 - **Complete:** project scaffold (Astro + TypeScript strict + vitest +
-  zod), env-driven `site`/`base` config, smoke test.
-- **Remaining:** 9 pages, i18n plumbing, calendar module, content
+  zod), env-driven `site`/`base` config, smoke test (P1-01 passed);
+  i18n core — dictionaries, `t()`, base-aware path helpers, nav map (P1-02).
+- **Remaining:** layout + locale routing, 9 pages, calendar module, content
   collections, deploy workflow, hardening pass.
-- **Build/test status:** `npm test` passes (1/1); `npm run build` succeeds,
-  emits `dist/index.html` (scaffold placeholder page).
+- **Build/test status:** `npm test` passes (45/45); `npm run build`
+  succeeds, emits `dist/index.html` (scaffold placeholder page).
 - **Open risks:**
   - Base-path link correctness on GitHub Pages.
   - Amharic authenticity — every Amharic string needs parish review.
   - Calendar correctness — conversion module and feast table need
     RESEARCHER/STATISTICAL verification against reference dates before
     Phase 2 sign-off.
-  - **Astro dependency security:** the latest available Astro 5.x release
-    (5.18.2, the newest 5.x on npm as of this writing) carries `npm audit`
-    findings rated critical (XSS via several vectors, an authorization
-    bypass in base-path stripping, and an RCE report in AVIF image
-    optimization) that are only fixed upstream in Astro 7.x. Flagged to
-    the Architect for a decision — see task response QUESTIONS.
+  - **Astro dependency security:** staying on Astro 5.x (`^5.18.2`)
+    despite `npm audit` advisories fixed only in 7.x. Astro 6+ requires
+    Node ≥22.12, breaking the Node 20+ requirement, and the advisories
+    target SSR/middleware, untrusted-input rendering and image processing —
+    surfaces a static, repo-authored site does not have. Mitigation: no
+    SSR/adapters/user-supplied images; re-check `npm audit` in Phase 4.
 - **MVP confidence:** high.
