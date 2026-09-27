@@ -1,0 +1,86 @@
+---
+import Placeholder from './Placeholder.astro';
+import { t, type Locale } from '../i18n/index';
+import { assetPath } from '../i18n/paths';
+import { formatEthiopian, formatGregorian, toEthiopian } from '../lib/ecal';
+import type { GalleryItem } from '../lib/gallery';
+
+interface Props {
+  lang: Locale;
+  items: GalleryItem[];
+}
+
+const { lang, items } = Astro.props;
+
+function iso(s: string): string {
+  return s;
+}
+
+function parseDateString(s: string): { year: number; month: number; day: number } {
+  const [year, month, day] = s.split('-').map(Number);
+  return { year, month, day };
+}
+
+const photos = items.map((item) => {
+  const d = item.data;
+  const date = d.date
+    ? {
+        isoDate: iso(d.date),
+        ethiopian: formatEthiopian(toEthiopian(parseDateString(d.date)), lang),
+        gregorian: formatGregorian(parseDateString(d.date), lang),
+      }
+    : undefined;
+  return {
+    slug: item.slug,
+    src: assetPath(d.image),
+    width: d.width,
+    height: d.height,
+    alt: d.alt[lang],
+    caption: d.caption?.[lang],
+    placeholder: d.placeholder,
+    date,
+  };
+});
+---
+
+{
+  photos.length === 0 ? (
+    <p class="gallery-empty">{t(lang, 'gallery.empty')}</p>
+  ) : (
+    <ul class="gallery-grid">
+      {
+        photos.map((photo) => (
+          <li class="gallery-item">
+            <figure>
+              <a href={photo.src} aria-label={`${t(lang, 'gallery.viewFullSize')}: ${photo.alt}`}>
+                <img
+                  src={photo.src}
+                  width={photo.width}
+                  height={photo.height}
+                  alt={photo.alt}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+              {
+                (photo.caption || photo.date || photo.placeholder) && (
+                  <figcaption>
+                    {photo.placeholder && <Placeholder lang={lang} />}
+                    {photo.caption && <span class="gallery-caption">{photo.caption}</span>}
+                    {photo.date && (
+                      <span class="gallery-date">
+                        <time datetime={photo.date.isoDate}>{photo.date.ethiopian}</time>
+                        <br />
+                        <time datetime={photo.date.isoDate}>{photo.date.gregorian}</time>
+                      </span>
+                    )}
+                  </figcaption>
+                )
+              }
+            </figure>
+          </li>
+        ))
+      }
+    </ul>
+  )
+}

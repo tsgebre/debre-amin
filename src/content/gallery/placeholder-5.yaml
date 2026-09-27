@@ -1,0 +1,11 @@
+image: images/gallery/placeholder-5.svg
+width: 800
+height: 600
+order: 5
+placeholder: true
+alt:
+  en: 'Placeholder image — parish photos will be added'
+  am: 'ጊዜያዊ ምስል — የደብሩ ፎቶዎች ይጨመራሉ'
+caption:
+  en: 'Deep gradient placeholder'
+  am: 'ጥልቅ ደረጃ ያለው ጊዜያዊ ምስል'

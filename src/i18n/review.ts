@@ -77,6 +77,9 @@ export const AM_NEEDS_REVIEW: readonly string[] = [
   'events.backToList',
   'events.bodyLanguageNote.en',
   'events.bodyLanguageNote.am',
+  'gallery.intro',
+  'gallery.empty',
+  'gallery.viewFullSize',
 ];
 
 // RESEARCHER: the factual claims in calendar.intro (13 months; twelve of 30

@@ -1,0 +1,38 @@
+# Template for one gallery photo. Copy this file, rename it without the
+# leading underscore (e.g. "2027-01-15-parish-picnic.yaml"), and fill in
+# real values. Files whose name starts with "_" are never published.
+#
+# Add the matching image file under public/images/gallery/ first — the
+# build fails loudly if this path doesn't exist on disk.
+
+# Required. Local file under images/gallery/, lowercase letters, digits and
+# hyphens only, no path traversal, no external URL.
+image: images/gallery/EXAMPLE-parish-picnic.jpg
+
+# Required. The real pixel dimensions of that file — the browser reserves
+# this space before the image loads, so a wrong value causes layout shift.
+width: 800
+height: 600
+
+# Required, both languages required. Describes what the photo shows (not
+# "photo of" — screen readers already announce it as an image).
+alt:
+  en: 'EXAMPLE — Parishioners sharing a meal after Divine Liturgy'
+  am: 'ምሳሌ — ምእመናን ከቅዳሴ በኋላ ምሳ ላይ'
+
+# Optional, both languages required if present at all.
+# caption:
+#   en: 'EXAMPLE — The 2027 parish picnic'
+#   am: 'ምሳሌ — የ2027 የደብር ፒክኒክ'
+
+# Optional. Plain YYYY-MM-DD text, not a date field — this avoids any
+# time-zone shift. Must be a real Gregorian calendar date.
+# date: '2027-01-15'
+
+# Optional. Controls display order (ascending); entries without one sort
+# last, then by date (newest first), then by filename.
+# order: 10
+
+# Leave this false (or omit it) for a real parish photo. It is only true
+# for the six shipped placeholder-N.yaml entries.
+placeholder: false

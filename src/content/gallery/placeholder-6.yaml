@@ -1,0 +1,11 @@
+image: images/gallery/placeholder-6.svg
+width: 800
+height: 600
+order: 6
+placeholder: true
+alt:
+  en: 'Placeholder image — parish photos will be added'
+  am: 'ጊዜያዊ ምስል — የደብሩ ፎቶዎች ይጨመራሉ'
+caption:
+  en: 'Subdued cross motif study'
+  am: 'ለስላሳ የመስቀል ጥልፍ ጥናት'

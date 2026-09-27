@@ -1,0 +1,11 @@
+image: images/gallery/placeholder-2.svg
+width: 800
+height: 600
+order: 2
+placeholder: true
+alt:
+  en: 'Placeholder image — parish photos will be added'
+  am: 'ጊዜያዊ ምስል — የደብሩ ፎቶዎች ይጨመራሉ'
+caption:
+  en: 'Cross motif tile study'
+  am: 'የመስቀል ጥልፍ ንድፍ ጥናት'

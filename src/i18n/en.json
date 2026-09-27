@@ -98,5 +98,8 @@
   "events.type.announcement": "Announcement",
   "events.backToList": "Back to Events & Announcements",
   "events.bodyLanguageNote.en": "Details available in English.",
-  "events.bodyLanguageNote.am": "Details available in Amharic."
+  "events.bodyLanguageNote.am": "Details available in Amharic.",
+  "gallery.intro": "Photos from parish life.",
+  "gallery.empty": "No photos yet — check back soon.",
+  "gallery.viewFullSize": "View full size"
 }

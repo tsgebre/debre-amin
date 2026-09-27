@@ -1,0 +1,11 @@
+image: images/gallery/placeholder-1.svg
+width: 800
+height: 600
+order: 1
+placeholder: true
+alt:
+  en: 'Placeholder image — parish photos will be added'
+  am: 'ጊዜያዊ ምስል — የደብሩ ፎቶዎች ይጨመራሉ'
+caption:
+  en: 'Geometric pattern in the parish colors'
+  am: 'በደብሩ ቀለማት የተሠራ ጂዮሜትሪክ ንድፍ'

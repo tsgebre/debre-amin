@@ -98,5 +98,8 @@
   "events.type.announcement": "ማስታወቂያ",
   "events.backToList": "ወደ ዝግጅቶች እና ማስታወቂያዎች ተመለስ",
   "events.bodyLanguageNote.en": "ዝርዝሮቹ በእንግሊዝኛ ይገኛሉ።",
-  "events.bodyLanguageNote.am": "ዝርዝሮቹ በአማርኛ ይገኛሉ።"
+  "events.bodyLanguageNote.am": "ዝርዝሮቹ በአማርኛ ይገኛሉ።",
+  "gallery.intro": "ከደብሩ ሕይወት የተቀነጨቡ ፎቶዎች።",
+  "gallery.empty": "እስካሁን ፎቶ የለም — ቆየት ብለው ይመልከቱ።",
+  "gallery.viewFullSize": "ሙሉ መጠን ይመልከቱ"
 }

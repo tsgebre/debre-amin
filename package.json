@@ -11,7 +11,8 @@
     "preview": "astro preview",
     "test": "vitest run",
     "astro": "astro",
-    "check": "astro check"
+    "check": "astro check",
+    "gallery:placeholders": "node scripts/generate-gallery-placeholders.mjs"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.3.0",

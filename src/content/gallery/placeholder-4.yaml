@@ -1,0 +1,11 @@
+image: images/gallery/placeholder-4.svg
+width: 800
+height: 600
+order: 4
+placeholder: true
+alt:
+  en: 'Placeholder image — parish photos will be added'
+  am: 'ጊዜያዊ ምስል — የደብሩ ፎቶዎች ይጨመራሉ'
+caption:
+  en: 'Rotated cross motif detail'
+  am: 'የተዞረ የመስቀል ጥልፍ ዝርዝር'

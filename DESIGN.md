@@ -128,9 +128,29 @@ liturgical texts.
   sort/filter/mapping helpers (no `astro:content` import, so tests import
   it directly). Malformed frontmatter fails the build loudly
   (`InvalidContentEntryDataError`, naming the file and field) (P3-02).
-- `src/content/gallery/` (planned, P3-03) — entries pointing at local SVG
-  placeholders.
+- `src/content/gallery/` (YAML, zod frontmatter: `image` under
+  `images/gallery/`, required `width`/`height` to prevent layout shift,
+  bilingual `alt`/optional `caption`, optional `date`/`order`,
+  `placeholder`). `src/lib/gallery.ts` holds `sortGallery` and
+  `missingImages` (pure, no `astro:content` import); the gallery page calls
+  `missingImages` at build time and throws, naming the YAML file and the
+  missing path, so a typo in a filename fails the build loudly. Ships six
+  original placeholder-*.yaml entries pointing at six original,
+  algorithmically generated SVGs (`scripts/generate-gallery-placeholders.mjs`
+  / `npm run gallery:placeholders`, output committed) — abstract, in the
+  site palette, echoing the cross motif, no photographs (P3-03).
 - Adding content = adding one file.
+
+**Astro-compiler gotcha:** a template literal nested inside another
+template literal's `${...}` in a page's frontmatter (e.g. building an
+error message from a `.map()` of formatted strings) makes the Astro→esbuild
+pipeline misparse the *template* section that follows, failing with a
+confusing `Expected ">" but found "..."` error blamed on an unrelated line.
+Split into two statements (build the inner string first, assign it to a
+variable, then use that variable in the outer template literal) instead of
+nesting backticks. Hit and fixed in `src/pages/[lang]/gallery.astro`
+(P3-03); worth remembering for any future build-time error message built
+from formatted list items.
 
 ## Deploy
 
@@ -146,7 +166,7 @@ the safest shape for GitHub Pages.
 
 ## Snapshot
 
-- **Phase:** 3 (Giving, Events, Gallery) — in progress; Phases 1–2 complete.
+- **Phase:** 3 (Giving, Events, Gallery) — complete; Phases 1–2 complete.
 - **Complete:** project scaffold (Astro + TypeScript strict + vitest +
   zod), env-driven `site`/`base` config, smoke test (P1-01 passed);
   i18n core — dictionaries, `t()`, base-aware path helpers, nav map (P1-02);
@@ -215,13 +235,20 @@ the safest shape for GitHub Pages.
   newest-first list page and a detail page per item in both locales,
   dates always shown in both calendars, a friendly empty state, and the
   latest items wired into Home via `toAnnouncementItems`. No real events
-  ship — only the template and an honest empty state (P3-02).
-- **Remaining:** Phase 3 — Gallery; Phase 4 —
-  hardening.
-- **Build/test status:** `npm test` passes (830/830); `astro check` clean;
-  `npm run build` emits 17 pages with the shipped (empty) events
-  collection; verified under `BASE_PATH` `''` and
-  `/debre-amin`; `npm ci` in sync.
+  ship — only the template and an honest empty state (P3-02); the Gallery
+  (`GalleryGrid.astro` + `src/pages/[lang]/gallery.astro`) — a responsive
+  2/3/4-column grid, `width`/`height` on every `<img>`, a full-size link
+  with an accessible name, the `Placeholder` badge on placeholder entries,
+  both-calendar dates when present, an honest empty state, and a build-time
+  check that fails loudly on any missing image file. Ships six original,
+  locally generated abstract SVG placeholders — no photographs, no
+  hotlinking (P3-03). **Phase 3 complete.**
+- **Remaining:** Phase 4 — accessibility audit, SEO, README, content
+  polish pass.
+- **Build/test status:** `npm test` passes (877/877); `astro check` clean;
+  `npm run build` emits 19 pages with the shipped (empty) events
+  collection and the six shipped gallery placeholders; verified under
+  `BASE_PATH` `''` and `/debre-amin`; `npm ci` in sync.
 - **Open risks:**
   - Base-path link correctness on GitHub Pages.
   - Amharic authenticity — every Amharic string needs parish review;

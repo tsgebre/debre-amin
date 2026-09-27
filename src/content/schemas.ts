@@ -68,3 +68,37 @@ export const eventSchema = z
   });
 
 export type EventEntry = z.infer<typeof eventSchema>;
+
+export const gallerySchema = z
+  .object({
+    image: z
+      .string()
+      .regex(
+        /^images\/gallery\/[a-z0-9-]+\.(jpg|jpeg|png|webp|svg)$/,
+        'image must be a local file under images/gallery/, lowercase, no path traversal',
+      ),
+    // Required (not inferred from the file) so the browser reserves space
+    // before the image loads, preventing layout shift.
+    width: z.number().int().positive(),
+    height: z.number().int().positive(),
+    alt: bilingualTextSchema,
+    caption: bilingualTextSchema.optional(),
+    date: dateStringSchema.optional(),
+    order: z.number().int().optional(),
+    placeholder: z.boolean().default(false),
+  })
+  .strict();
+
+export type GalleryEntry = z.infer<typeof gallerySchema>;
+
+// The Amharic alt/caption text on the six shipped placeholder-N.yaml
+// entries is original wording, not yet confirmed by the parish — the
+// content-collection equivalent of src/i18n/review.ts's AM_NEEDS_REVIEW.
+export const GALLERY_AM_NEEDS_REVIEW: readonly string[] = [
+  'placeholder-1',
+  'placeholder-2',
+  'placeholder-3',
+  'placeholder-4',
+  'placeholder-5',
+  'placeholder-6',
+];

@@ -1,0 +1,11 @@
+image: images/gallery/placeholder-3.svg
+width: 800
+height: 600
+order: 3
+placeholder: true
+alt:
+  en: 'Placeholder image — parish photos will be added'
+  am: 'ጊዜያዊ ምስል — የደብሩ ፎቶዎች ይጨመራሉ'
+caption:
+  en: 'Warm color field placeholder'
+  am: 'ሞቅ ያለ የቀለም ዘርፍ ጊዜያዊ ምስል'

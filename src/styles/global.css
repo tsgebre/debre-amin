@@ -332,6 +332,55 @@ thead th {
   color: var(--color-muted);
 }
 
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+}
+
+@media (min-width: 640px) {
+  .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .gallery-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.gallery-item figure {
+  margin: 0;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 0.375rem;
+}
+
+.gallery-item figcaption {
+  margin-top: 0.375rem;
+  font-size: 0.875rem;
+  color: var(--color-muted);
+}
+
+.gallery-caption {
+  display: block;
+}
+
+.gallery-date {
+  display: block;
+}
+
+.gallery-empty {
+  color: var(--color-muted);
+}
+
 .review-note {
   color: var(--color-muted);
   font-style: italic;

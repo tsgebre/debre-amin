@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="g6" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2a2a28" />
+      <stop offset="1" stop-color="#1e4d2b" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#g6)" />
+  <path d="M 82 44 L 118 44 L 118 82 L 156 82 L 156 118 L 118 118 L 118 156 L 82 156 L 82 118 L 44 118 L 44 82 L 82 82 Z" fill="#c9a227" opacity="0.12" transform="rotate(10 100 100)" />
+  <path d="M 282 44 L 318 44 L 318 82 L 356 82 L 356 118 L 318 118 L 318 156 L 282 156 L 282 118 L 244 118 L 244 82 L 282 82 Z" fill="#c9a227" opacity="0.18" transform="rotate(10 300 100)" />
+  <path d="M 482 44 L 518 44 L 518 82 L 556 82 L 556 118 L 518 118 L 518 156 L 482 156 L 482 118 L 444 118 L 444 82 L 482 82 Z" fill="#c9a227" opacity="0.24" transform="rotate(10 500 100)" />
+  <path d="M 682 44 L 718 44 L 718 82 L 756 82 L 756 118 L 718 118 L 718 156 L 682 156 L 682 118 L 644 118 L 644 82 L 682 82 Z" fill="#c9a227" opacity="0.12" transform="rotate(10 700 100)" />
+  <path d="M 82 244 L 118 244 L 118 282 L 156 282 L 156 318 L 118 318 L 118 356 L 82 356 L 82 318 L 44 318 L 44 282 L 82 282 Z" fill="#c9a227" opacity="0.18" transform="rotate(10 100 300)" />
+  <path d="M 282 244 L 318 244 L 318 282 L 356 282 L 356 318 L 318 318 L 318 356 L 282 356 L 282 318 L 244 318 L 244 282 L 282 282 Z" fill="#c9a227" opacity="0.24" transform="rotate(10 300 300)" />
+  <path d="M 482 244 L 518 244 L 518 282 L 556 282 L 556 318 L 518 318 L 518 356 L 482 356 L 482 318 L 444 318 L 444 282 L 482 282 Z" fill="#c9a227" opacity="0.12" transform="rotate(10 500 300)" />
+  <path d="M 682 244 L 718 244 L 718 282 L 756 282 L 756 318 L 718 318 L 718 356 L 682 356 L 682 318 L 644 318 L 644 282 L 682 282 Z" fill="#c9a227" opacity="0.18" transform="rotate(10 700 300)" />
+  <path d="M 82 444 L 118 444 L 118 482 L 156 482 L 156 518 L 118 518 L 118 556 L 82 556 L 82 518 L 44 518 L 44 482 L 82 482 Z" fill="#c9a227" opacity="0.24" transform="rotate(10 100 500)" />
+  <path d="M 282 444 L 318 444 L 318 482 L 356 482 L 356 518 L 318 518 L 318 556 L 282 556 L 282 518 L 244 518 L 244 482 L 282 482 Z" fill="#c9a227" opacity="0.12" transform="rotate(10 300 500)" />
+  <path d="M 482 444 L 518 444 L 518 482 L 556 482 L 556 518 L 518 518 L 518 556 L 482 556 L 482 518 L 444 518 L 444 482 L 482 482 Z" fill="#c9a227" opacity="0.18" transform="rotate(10 500 500)" />
+  <path d="M 682 444 L 718 444 L 718 482 L 756 482 L 756 518 L 718 518 L 718 556 L 682 556 L 682 518 L 644 518 L 644 482 L 682 482 Z" fill="#c9a227" opacity="0.24" transform="rotate(10 700 500)" />
+</svg>
