@@ -25,8 +25,8 @@ const WIDTH = 800;
 const HEIGHT = 600;
 
 // Site palette, src/styles/tokens.ts.
-const GREEN = '#1e4d2b';
-const GREEN_DARK = '#163a20';
+const BROWN = '#5b3a1e';
+const BROWN_DARK = '#3e2712';
 const GOLD = '#c9a227';
 const GOLD_DARK = '#7a5e12';
 const RED = '#9b1c1c';
@@ -37,12 +37,12 @@ const INK = '#2a2a28';
 // plus-shapes (the cross motif, simplified) at varying density, size and
 // rotation, so each placeholder reads as visually distinct.
 const VARIANTS = [
-  { from: GREEN, to: GOLD, motif: GOLD_DARK, cols: 5, rows: 3, rotate: 0 },
-  { from: GOLD_DARK, to: CREAM, motif: GREEN, cols: 4, rows: 3, rotate: 15 },
-  { from: GREEN_DARK, to: RED, motif: CREAM, cols: 5, rows: 4, rotate: 0 },
-  { from: GOLD, to: GREEN, motif: INK, cols: 4, rows: 3, rotate: 30 },
+  { from: BROWN, to: GOLD, motif: GOLD_DARK, cols: 5, rows: 3, rotate: 0 },
+  { from: GOLD_DARK, to: CREAM, motif: BROWN, cols: 4, rows: 3, rotate: 15 },
+  { from: BROWN_DARK, to: RED, motif: CREAM, cols: 5, rows: 4, rotate: 0 },
+  { from: GOLD, to: BROWN, motif: INK, cols: 4, rows: 3, rotate: 30 },
   { from: RED, to: GOLD_DARK, motif: CREAM, cols: 4, rows: 4, rotate: -15 },
-  { from: INK, to: GREEN, motif: GOLD, cols: 4, rows: 3, rotate: 10 },
+  { from: INK, to: BROWN, motif: GOLD, cols: 4, rows: 3, rotate: 10 },
 ];
 
 /** A plus/cross outline centered at (cx, cy): arm half-width `half`, tip distance `tip`. */

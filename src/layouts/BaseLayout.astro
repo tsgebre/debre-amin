@@ -7,7 +7,7 @@ import { LOCALES, LOCALE_META, t, type Locale } from '../i18n/index';
 import { absoluteUrl, assetPath, localizedPath, samePath, switchLocalePath } from '../i18n/paths';
 import { NAV } from '../i18n/nav';
 import { DEFAULT_SITE } from '../config/deploy';
-import AksumFrieze from '../components/AksumFrieze.astro';
+import HaragFrieze from '../components/HaragFrieze.astro';
 import CrossMotif from '../components/CrossMotif.astro';
 import Fact from '../components/Fact.astro';
 import TodayDate from '../components/TodayDate.astro';
@@ -111,8 +111,8 @@ const ogLocale: Record<Locale, string> = { en: 'en_US', am: 'am_ET' };
         )
       }
     </header>
-    <div class="aksum-band">
-      <AksumFrieze />
+    <div class="harag-band">
+      <HaragFrieze />
     </div>
     <div class="today-strip">
       <TodayDate lang={lang} />

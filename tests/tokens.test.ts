@@ -51,8 +51,8 @@ describe('global.css token sync', () => {
   const css = readFileSync(resolve(__dirname, '../src/styles/global.css'), 'utf-8');
 
   const tokenToVar: Record<string, string> = {
-    green: '--color-green',
-    greenDark: '--color-green-dark',
+    brown: '--color-brown',
+    brownDark: '--color-brown-dark',
     gold: '--color-gold',
     goldDark: '--color-gold-dark',
     red: '--color-red',
@@ -91,6 +91,6 @@ describe('focus styles (global.css)', () => {
 
   it('draws the skip-link ring in gold, the tested 3:1 pair on the header band', () => {
     expect(css).toMatch(/\.skip-link:focus-visible\s*\{[^}]*outline-color:\s*var\(--color-gold\)/);
-    expect(TEXT_PAIRS).toContainEqual([tokens.gold, tokens.green, 3]);
+    expect(TEXT_PAIRS).toContainEqual([tokens.gold, tokens.brown, 3]);
   });
 });

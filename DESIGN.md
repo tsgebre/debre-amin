@@ -35,7 +35,7 @@ liturgical texts.
 ## Design system
 
 - `src/styles/tokens.ts` is the single source of truth for the palette
-  (deep liturgical green, gold for decoration/backgrounds only, a darker
+  (deep manuscript brown, gold for decoration/backgrounds only, a darker
   text-safe gold, red for sparing emphasis, cream page background, ink
   body text, muted secondary text, white) and for `TEXT_PAIRS`, the
   foreground/background combinations the CSS uses for text, each with a
@@ -52,7 +52,7 @@ liturgical texts.
   with small lattice piercings at the crossing, a ring terminal at each
   arm tip), `aria-hidden`/`focusable="false"`, `fill="currentColor"`,
   used in the header and as a Home divider. `public/favicon.svg` is a
-  simplified green/gold rendering of the same geometry.
+  simplified brown/gold rendering of the same geometry.
 - `src/components/Placeholder.astro` wraps placeholder content in a
   visible badge (`placeholder.notice`) and a `data-placeholder` marker,
   with an optional `field` prop pointing at the `site.ts` slot to fill in.

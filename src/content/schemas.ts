@@ -127,4 +127,5 @@ export const GALLERY_AM_NEEDS_REVIEW: readonly string[] = [
   'placeholder-6',
   'processional-cross',
   'saint-icon',
+  'building-campaign',
 ];

@@ -1,7 +1,7 @@
 image: images/gallery/placeholder-5.svg
 width: 800
 height: 600
-order: 7
+order: 8
 placeholder: true
 alt:
   en: 'Placeholder image — parish photos will be added'

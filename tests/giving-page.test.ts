@@ -87,6 +87,7 @@ describe('GivingDetails with a real (fictional) config', () => {
     paypalUrl: 'https://www.paypal.com/donate/?hosted_button_id=TEST',
     cashAppTag: '$DebreAmin123',
     mailingAddress: '123 Example Ave, Greensboro, NC 27401',
+    gofundmeUrl: 'https://www.gofundme.com/f/help-build-our-new-church-7tjhd',
   };
 
   let doc = '';

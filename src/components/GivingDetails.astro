@@ -4,6 +4,7 @@ import MixedText from './MixedText.astro';
 import { isPlaceholder } from '../data/placeholder';
 import { cashAppHref } from '../data/links';
 import { t, type Locale } from '../i18n/index';
+import { assetPath } from '../i18n/paths';
 import type { SiteConfig } from '../data/site';
 
 interface Props {
@@ -20,6 +21,16 @@ const enFor = (value: string) => (lang !== 'en' && !isPlaceholder(value) ? 'en' 
 
 <section>
   <h2><MixedText lang={lang} text={t(lang, 'giving.gofundme.heading')} /></h2>
+  <figure class="giving-figure">
+    <img
+      src={assetPath('images/gallery/building-campaign-icon.jpg')}
+      alt={t(lang, 'giving.gofundme.imageAlt')}
+      width="800"
+      height="452"
+      loading="lazy"
+      decoding="async"
+    />
+  </figure>
   <p><MixedText lang={lang} text={t(lang, 'giving.gofundme.body')} /></p>
   <p>
     <Fact lang={lang} value={giving.gofundmeUrl} field="giving.gofundmeUrl" as="link">

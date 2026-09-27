@@ -39,7 +39,7 @@ const WIDTH = 1200;
 const HEIGHT = 630;
 
 // Site palette, src/styles/tokens.ts.
-const GREEN = '#1e4d2b';
+const BROWN = '#5b3a1e';
 const GOLD = '#c9a227';
 const WHITE = '#ffffff';
 
@@ -131,7 +131,7 @@ const taglineTspans = taglineLines
   .join('');
 
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${WIDTH}" height="${HEIGHT}" viewBox="0 0 ${WIDTH} ${HEIGHT}">
-  <rect width="${WIDTH}" height="${HEIGHT}" fill="${GREEN}" />
+  <rect width="${WIDTH}" height="${HEIGHT}" fill="${BROWN}" />
   <rect width="${WIDTH}" height="10" y="${HEIGHT - 10}" fill="${GOLD}" />
   <rect width="${WIDTH}" height="10" fill="${GOLD}" />
   ${crossMotif(crossCx, crossCy, 1.6)}

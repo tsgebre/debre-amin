@@ -518,9 +518,10 @@ the credits if you move or reuse the images:
   Maor X, via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Icon_of_Saint_Tekle_Haymanot_of_Ethiopia.jpg),
   CC BY-SA 4.0. Used on About (saint section) and in the Gallery.
 
-Everything else visual (the cross motif, the Aksumite header frieze, the
-gallery placeholders, the Open Graph image) is original artwork drawn
-in-repo as SVG.
+Everything else visual (the cross motif, the harag vine band under the
+header — the manuscript ornament of Ethiopian Orthodox books — the gallery
+placeholders, the Open Graph image) is original artwork drawn in-repo as
+SVG.
 
 ## Known limitations
 

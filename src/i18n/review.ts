@@ -69,6 +69,7 @@ export const AM_NEEDS_REVIEW: readonly string[] = [
   'giving.gofundme.heading',
   'giving.gofundme.body',
   'giving.gofundme.linkText',
+  'giving.gofundme.imageAlt',
   'giving.zelle.heading',
   'giving.zelle.body',
   'giving.paypal.heading',

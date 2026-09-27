@@ -80,6 +80,7 @@ describe('real (fictional) English values on Amharic pages', () => {
       paypalUrl: 'https://www.paypal.com/donate/?hosted_button_id=TEST',
       cashAppTag: '$DebreAmin123',
       mailingAddress: '123 Example Avenue, Greensboro, NC 27401',
+      gofundmeUrl: 'https://www.gofundme.com/f/help-build-our-new-church-7tjhd',
     };
     const html = await c.renderToString(GivingDetails, { props: { lang: 'am', giving } });
     expect(unmarkedLatinRuns(fragment(html))).toEqual([]);
