@@ -172,6 +172,46 @@ the same build works locally and on Pages without code changes.
 `trailingSlash: 'always'` — directory-style URLs (`/en/about/`) throughout,
 the safest shape for GitHub Pages.
 
+## Architecture map
+
+- `src/pages/` — routes. `[lang]/` holds the nine bilingual pages plus the
+  `events/[slug]` detail route; `index.astro` (root) is the `/`→`/en/`
+  redirect; `404.astro` and `robots.txt.ts` sit outside `[lang]` since
+  neither is per-locale content.
+- `src/layouts/BaseLayout.astro` — the one HTML shell: head metadata (SEO,
+  P4-02), header/nav/footer, the `TodayDate` strip, the `<main id="main">`
+  landmark every page renders into.
+- `src/components/` — one presentational `.astro` component per page
+  section (e.g. `ContactDetails`, `CalendarView`, `GalleryGrid`), each
+  taking plain props so it can be unit-tested without its page's data
+  loading.
+- `src/data/` — `site.ts` (the real-world fact config, `siteConfig`),
+  `placeholder.ts` (the `TBD —` convention), `links.ts` (`tel:`/`mailto:`/
+  `cash.app` URL builders).
+- `src/i18n/` — `en.json`/`am.json` (UI strings), `index.ts` (`t()`),
+  `paths.ts` (base-aware URL helpers, `absoluteUrl`), `nav.ts`, `review.ts`
+  (`AM_NEEDS_REVIEW`).
+- `src/lib/ecal/` — the Ethiopian↔Gregorian calendar core (pure TS, no
+  dependencies, no `astro:content`).
+- `src/lib/feasts/` — fixed and movable feasts/fasts built on `ecal`.
+- `src/lib/events.ts`, `src/lib/gallery.ts` — pure helpers for their
+  content collections (sort/filter/map), importable directly in tests.
+- `src/content/` — `about/` (markdown), `events/` (markdown), `gallery/`
+  (YAML); each collection's zod schema lives in `src/content/schemas.ts`,
+  wired up in `content.config.ts`. One file = one item; a `_`-prefixed
+  filename is a template, never published.
+- `src/styles/` — `tokens.ts` (the palette + contrast pairs, single source
+  of truth) and `global.css` (uses only those tokens).
+- `src/scripts/today.ts` — the one piece of client-side JavaScript.
+- `scripts/` (repo root) — dev-time generators whose output is committed:
+  `generate-gallery-placeholders.mjs`, `generate-og-image.mjs`. Neither
+  runs during `npm run build`.
+- `docs/research/` — the sourcing record: what was verified, against what,
+  and how confident it is, for calendar dates, feasts and About-page facts.
+- `tests/` mirrors this structure; `tests/helpers/pages.ts` renders all 28
+  page types (both locales) once per test file, shared by the a11y,
+  structure, mixed-language and SEO suites.
+
 ## Snapshot
 
 - **Phase:** 4 (Hardening) — in progress; Phases 1–3 complete.
@@ -269,38 +309,74 @@ the safest shape for GitHub Pages.
   `sitemap-index.xml` (18 localised URLs, `xhtml:link` alternates,
   excluding the redirect and 404), and `src/pages/robots.txt.ts` points at
   it, both base-path aware. Normalised the Amharic spelling of "schedule"
-  to መርሐ ግብር throughout.
-- **Remaining:** Phase 4 — README/maintenance/audit (P4-03), final sweep
-  (P4-04).
-- **Build/test status:** `npm test` passes (1302/1302); `astro check`
+  to መርሐ ግብር throughout. README polish (P4-03): the README is now the
+  definitive volunteer/maintainer guide — step-by-step sections for adding
+  an event, a gallery photo and a clergy photo, a consolidated Placeholder
+  checklist (every path from `placeholderFields(siteConfig)`), a "what
+  still needs parish review" section naming all four `*_AM_NEEDS_REVIEW`
+  lists plus the medium-confidence feasts and the research-candidate
+  feasts, Maintenance (the `FASIKA_TABLE` 2038 horizon, the 1900–2100
+  calendar range, dependency updates) and Troubleshooting sections, and a
+  re-checked, per-advisory `npm audit` table. `tests/readme.test.ts` keeps
+  it synchronised: required headings, every placeholder path, every
+  `*_AM_NEEDS_REVIEW` export name, every `npm run` script and every
+  `src/`/`public/`/`docs/`/`scripts/`/`.github/` path it names for real.
+  **All four phases complete.**
+- **Remaining:** P4-04, the final verification sweep.
+- **Build/test status:** `npm test` passes (1376/1376); `astro check`
   clean; `npm run build` emits 20 pages (incl. `404.html`, `robots.txt`,
   `sitemap-index.xml`) with the shipped (empty) events collection and the
   six shipped gallery placeholders; verified under `BASE_PATH` `''` and
   `/debre-amin`; `npm ci` in sync.
-- **Open risks:**
-  - Base-path link correctness on GitHub Pages.
-  - Amharic authenticity — every Amharic string needs parish review;
-    `CONFIG_AM_NEEDS_REVIEW` and the i18n `AM_NEEDS_REVIEW` list both feed
-    that checklist.
-  - Every fact in `SiteConfig` is a placeholder — the parish must supply
-    real contact info, service times, clergy names and giving details
-    before launch (`placeholderFields(siteConfig)` enumerates them all).
-  - The saint's annual feasts (Tahsas 24, Nehase 24 high confidence;
-    Ginbot 12, Megabit 24 thinly sourced) need parish confirmation before
-    Phase 2 relies on them — see `docs/research/about-claims.md`.
-  - Calendar correctness — the conversion core is RESEARCHER-verified
-    (`docs/research/ecal-reference.md`) and oracle-tested over 1900–2100;
-    fixed feasts are verified (`docs/research/feasts.md`). Tsome Nebiyat's
-    end in ዘመነ ዮሐንስ is medium confidence and needs parish confirmation;
-    its length (43/44 days) must not be displayed. Movable feasts are
-    verified for EC 2016–2030 only; the table must be extended (with
-    sources) before EC 2031 (Sep 2038). Tsome Hawariat's Hamle 4 end is
-    medium confidence (one parish lists Hamle 5); its length must not be
-    displayed either.
-  - **Astro dependency security:** staying on Astro 5.x (`^5.18.2`)
-    despite `npm audit` advisories fixed only in 7.x. Astro 6+ requires
-    Node ≥22.12, breaking the Node 20+ requirement, and the advisories
-    target SSR/middleware, untrusted-input rendering and image processing —
-    surfaces a static, repo-authored site does not have. Mitigation: no
-    SSR/adapters/user-supplied images; re-check `npm audit` in Phase 4.
+- **`npm audit` (re-checked P4-03; already latest 5.x — `npm view astro@5
+  version` tops out at 5.18.2, which is what's installed):**
+  | Package | Severity | Summary | Applies to this site? |
+  |---|---|---|---|
+  | astro (+ esbuild) | critical (+moderate) | Multiple XSS/RCE/SSRF/authz advisories, fixed only in Astro 7 | No — every vector needs SSR/server islands, `client:*`/view-transition directives, or `astro:assets` image processing; this site is `output: 'static'`, no adapter, no client directives, no Astro image pipeline. Astro 7 also needs Node ≥22.12 (we support ≥20.3). esbuild's advisory is Windows-dev-server-only; CI is Ubuntu. |
+  | sharp | high | `libvips`/`libheif` memory-safety CVEs | No — sharp runs only offline, by hand, via `npm run gallery:placeholders` / `npm run og:image`, never during `npm run build`, and only on images this repo authors itself. |
+  | @vitest/mocker | moderate | Path traversal via a mocker redirect, fixed in vitest 5 | No — dev/test-only; never in `dist/`. All mocks in this repo are first-party test code. Upgrading now would risk breaking every test's use of Astro 5's Container API. |
+
+  Total: 5 vulnerabilities (1 low, 2 moderate, 1 high, 1 critical) — same
+  count as every prior check; no upgrade taken. Full per-advisory reasoning
+  is also in the README's Known limitations section.
+- **Open risks (each with its mitigation):**
+  - **Base-path link correctness on GitHub Pages.** Mitigation: every
+    internal link, asset path, canonical/hreflang/OG URL and the sitemap/
+    `robots.txt` go through `src/i18n/paths.ts` helpers, tested under both
+    `BASE_PATH ''` and `/debre-amin` in every relevant test file and in
+    real `npm run build` runs (see each phase's TESTER evidence).
+  - **Amharic authenticity.** Mitigation: every Amharic string is either
+    genuine Ethiopic (enforced by tests) or explicitly flagged in one of
+    four review lists (`AM_NEEDS_REVIEW`, `CONFIG_AM_NEEDS_REVIEW`,
+    `ECAL_AM_NEEDS_REVIEW`, `GALLERY_AM_NEEDS_REVIEW`) plus
+    `amReviewPending` on the About content — all four are now listed by
+    name in the README's "What still needs parish review".
+  - **Every fact in `SiteConfig` is a placeholder.** Mitigation: the
+    parish must supply real contact info, service times, clergy names,
+    giving details and parish history before launch;
+    `placeholderFields(siteConfig)` enumerates them all, and the README's
+    Placeholder checklist is kept in sync with that function by
+    `tests/readme.test.ts` (a mutation-tested guarantee, not just a
+    convention).
+  - **The saint's annual feasts.** Tahsas 24 and Nehase 24 are high
+    confidence and shipped; Ginbot 12 and Megabit 24 are single-sourced
+    and deliberately not shipped. Mitigation: named in
+    `docs/research/about-claims.md` and in the README.
+  - **Calendar correctness.** The conversion core is RESEARCHER-verified
+    (`docs/research/ecal-reference.md`) and oracle-tested over the full
+    supported range, 1900–2100; fixed feasts are verified
+    (`docs/research/feasts.md`). Tsome Nebiyat's and Tsome Hawariat's end
+    dates are medium confidence and show a visible pending-confirmation
+    note; their lengths are never displayed. Mitigation: both are named in
+    the README, with their sources.
+  - **`FASIKA_TABLE`'s 2038 horizon.** Movable feasts are verified only
+    for EC 2016–2030 (Gregorian 2024–2038); outside that the Calendar page
+    shows a visible "not yet available" note rather than guessing.
+    Mitigation: the README's Maintenance section explains exactly how and
+    when to extend the table, with the same verification standard used to
+    build it.
+  - **Astro dependency security.** See the `npm audit` table above;
+    mitigation is unchanged (no SSR/adapters/user-supplied images/image
+    pipeline), now with a fuller per-advisory record in both this file and
+    the README.
 - **MVP confidence:** high.
