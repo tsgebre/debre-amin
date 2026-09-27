@@ -1,0 +1,94 @@
+---
+// Original geometry: a plus-shaped cross body with small lattice piercings
+// at the crossing (evoking the fenestrated boss of an Ethiopian processional
+// cross) and a ring terminal — a "looped end" — at each of the four arm
+// tips. Built from a polygon, circular arcs and diamonds; not traced from
+// any existing artwork.
+interface Props {
+  size?: number;
+  class?: string;
+}
+
+const { size = 32, class: className } = Astro.props;
+
+const CENTER = 50;
+const ARM_HALF_WIDTH = 7;
+const ARM_TIP_DISTANCE = 34;
+const RING_OUTER_R = 12;
+const RING_INNER_R = 5.5;
+const HOLE_R = 2.2;
+
+function plusOutline(cx: number, cy: number, halfWidth: number, tip: number): string {
+  const near = cx - halfWidth;
+  const far = cx + halfWidth;
+  const nearY = cy - halfWidth;
+  const farY = cy + halfWidth;
+  const top = cy - tip;
+  const bottom = cy + tip;
+  const left = cx - tip;
+  const right = cx + tip;
+  const points = [
+    [near, top],
+    [far, top],
+    [far, nearY],
+    [right, nearY],
+    [right, farY],
+    [far, farY],
+    [far, bottom],
+    [near, bottom],
+    [near, farY],
+    [left, farY],
+    [left, nearY],
+    [near, nearY],
+  ];
+  return `M ${points.map(([x, y]) => `${x} ${y}`).join(' L ')} Z`;
+}
+
+function diamond(cx: number, cy: number, r: number): string {
+  return `M ${cx} ${cy - r} L ${cx + r} ${cy} L ${cx} ${cy + r} L ${cx - r} ${cy} Z`;
+}
+
+function ring(cx: number, cy: number, rOuter: number, rInner: number): string {
+  const outer = `M ${cx - rOuter} ${cy} A ${rOuter} ${rOuter} 0 1 0 ${cx + rOuter} ${cy} A ${rOuter} ${rOuter} 0 1 0 ${cx - rOuter} ${cy} Z`;
+  const inner = `M ${cx - rInner} ${cy} A ${rInner} ${rInner} 0 1 0 ${cx + rInner} ${cy} A ${rInner} ${rInner} 0 1 0 ${cx - rInner} ${cy} Z`;
+  return `${outer} ${inner}`;
+}
+
+const holeOffset = ARM_HALF_WIDTH / 2;
+const holes = [
+  [CENTER - holeOffset, CENTER - holeOffset],
+  [CENTER + holeOffset, CENTER - holeOffset],
+  [CENTER - holeOffset, CENTER + holeOffset],
+  [CENTER + holeOffset, CENTER + holeOffset],
+] as const;
+
+const bodyPath = [
+  plusOutline(CENTER, CENTER, ARM_HALF_WIDTH, ARM_TIP_DISTANCE),
+  ...holes.map(([x, y]) => diamond(x, y, HOLE_R)),
+].join(' ');
+
+const terminals = [
+  [CENTER, CENTER - ARM_TIP_DISTANCE],
+  [CENTER, CENTER + ARM_TIP_DISTANCE],
+  [CENTER - ARM_TIP_DISTANCE, CENTER],
+  [CENTER + ARM_TIP_DISTANCE, CENTER],
+] as const;
+
+const ringPaths = terminals.map(([x, y]) => ring(x, y, RING_OUTER_R, RING_INNER_R));
+
+const classes = ['cross-motif', className].filter(Boolean).join(' ');
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 100 100"
+  width={size}
+  height={size}
+  class={classes}
+  fill="currentColor"
+  aria-hidden="true"
+  focusable="false"
+>
+  <path d={bodyPath} fill-rule="evenodd" />
+  {ringPaths.map((d) => <path d={d} fill-rule="evenodd" />)}
+</svg>

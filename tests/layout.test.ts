@@ -2,6 +2,7 @@ import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import { beforeAll, describe, expect, it } from 'vitest';
 import LangIndex from '../src/pages/[lang]/index.astro';
 import RootRedirect from '../src/pages/index.astro';
+import Placeholder from '../src/components/Placeholder.astro';
 import { LOCALES, type Locale } from '../src/i18n/index';
 import { NAV } from '../src/i18n/nav';
 
@@ -53,9 +54,10 @@ describe.each(LOCALES)('[lang] home page — %s', (lang) => {
     const toggle = anchors(doc()).find((a) => a.attrs.includes('lang-toggle'))!;
     expect(attr(toggle.attrs, 'href')).toBe(`/${other}/`);
     expect(attr(toggle.attrs, 'hreflang')).toBe(other);
-    expect(attr(toggle.attrs, 'lang')).toBe(other);
-    expect(attr(toggle.attrs, 'aria-label')).toBeTruthy();
-    expect(toggle.text).toBe(lang === 'en' ? 'አማርኛ' : 'English');
+    expect(attr(toggle.attrs, 'aria-label')).toBeUndefined();
+    expect(toggle.text).toMatch(/<span class="visually-hidden"[^>]*>[^<]+: <\/span>/);
+    expect(toggle.text).toMatch(new RegExp(`<span lang="${other}"[^>]*>[^<]+</span>`));
+    expect(toggle.text).toContain(lang === 'en' ? 'አማርኛ' : 'English');
   });
 
   it('renders all nine nav links with trailing slashes and marks Home current', () => {
@@ -70,6 +72,13 @@ describe.each(LOCALES)('[lang] home page — %s', (lang) => {
     expect(navHtml).toMatch(/<nav[^>]*aria-label="[^"]+"/);
   });
 
+  it('the header cross motif SVG is hidden from assistive tech', () => {
+    const header = doc().slice(doc().indexOf('<header'), doc().indexOf('</header>'));
+    const svg = /<svg\b[^>]*>/.exec(header)![0];
+    expect(svg).toContain('aria-hidden="true"');
+    expect(svg).toContain('focusable="false"');
+  });
+
   it('has no missing-translation markers', () => {
     expect(doc()).not.toContain('⟦missing:');
   });
@@ -80,6 +89,19 @@ describe.each(LOCALES)('[lang] home page — %s', (lang) => {
 
   it('references no external CDN', () => {
     expect(doc()).not.toMatch(/googleapis|cdn\./i);
+  });
+});
+
+describe('Placeholder component', () => {
+  it('renders the notice badge and marks the content for later replacement', async () => {
+    const doc = await container.renderToString(Placeholder, {
+      props: { lang: 'en', field: 'address' },
+      slots: { default: '123 Example St' },
+    });
+    expect(doc).toContain('data-placeholder');
+    expect(doc).toContain('Placeholder — the parish will replace this');
+    expect(doc).toContain('123 Example St');
+    expect(doc).toContain('title="Replace in src/data/site.ts: address"');
   });
 });
 

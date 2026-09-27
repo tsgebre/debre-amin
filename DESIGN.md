@@ -24,6 +24,31 @@ liturgical texts.
 - No client-side framework. The language toggle is a plain `<script>` or
   pure links.
 
+## Design system
+
+- `src/styles/tokens.ts` is the single source of truth for the palette
+  (deep liturgical green, gold for decoration/backgrounds only, a darker
+  text-safe gold, red for sparing emphasis, cream page background, ink
+  body text, muted secondary text, white) and for `TEXT_PAIRS`, the
+  foreground/background combinations the CSS uses for text, each with a
+  minimum WCAG contrast ratio. `tests/tokens.test.ts` implements the
+  WCAG relative-luminance/contrast formula, checks it against reference
+  values, asserts every pair meets its ratio, and parses `global.css` to
+  confirm every `--color-*` custom property matches `tokens.ts`.
+- `global.css` declares the palette as `--color-*` custom properties in
+  `:root` and uses only those (no hex outside that block); mobile-first
+  header/nav/footer, no JS, no hamburger, nav becomes a single row at
+  ≥960px, 44px tap targets, ~70ch content width, and a
+  `prefers-reduced-motion` rule.
+- `src/components/CrossMotif.astro` is an original inline SVG (plus-body
+  with small lattice piercings at the crossing, a ring terminal at each
+  arm tip), `aria-hidden`/`focusable="false"`, `fill="currentColor"`,
+  used in the header and as a Home divider. `public/favicon.svg` is a
+  simplified green/gold rendering of the same geometry.
+- `src/components/Placeholder.astro` wraps placeholder content in a
+  visible badge (`placeholder.notice`) and a `data-placeholder` marker,
+  with an optional `field` prop pointing at the `site.ts` slot to fill in.
+
 ## i18n
 
 - Locale-prefixed routes via `src/pages/[lang]/…` dynamic routes with
@@ -81,11 +106,13 @@ the safest shape for GitHub Pages.
 - **Complete:** project scaffold (Astro + TypeScript strict + vitest +
   zod), env-driven `site`/`base` config, smoke test (P1-01 passed);
   i18n core — dictionaries, `t()`, base-aware path helpers, nav map (P1-02);
-  `[lang]` routing, root redirect, `BaseLayout`, self-hosted fonts (P1-03).
-- **Remaining:** design system + motif (P1-04), full `SiteConfig` (P1-05),
-  About/Services/Contact/Clergy pages, deploy workflow; then calendar,
-  content collections, remaining pages, hardening.
-- **Build/test status:** `npm test` passes (65/65); `astro check` clean;
+  `[lang]` routing, root redirect, `BaseLayout`, self-hosted fonts (P1-03);
+  palette + contrast-tested tokens, cross motif, responsive header/nav/
+  footer, `Placeholder` component, accessible language toggle (P1-04).
+- **Remaining:** full `SiteConfig` (P1-05), About/Services/Contact/Clergy
+  pages, deploy workflow; then calendar, content collections, remaining
+  pages, hardening.
+- **Build/test status:** `npm test` passes (86/86); `astro check` clean;
   `npm run build` emits `/index.html`, `/en/index.html`, `/am/index.html`.
 - **Open risks:**
   - Base-path link correctness on GitHub Pages.

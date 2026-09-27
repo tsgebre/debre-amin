@@ -1,3 +1,15 @@
+:root {
+  --color-green: #1e4d2b;
+  --color-green-dark: #163a20;
+  --color-gold: #c9a227;
+  --color-gold-dark: #7a5e12;
+  --color-red: #9b1c1c;
+  --color-cream: #faf6ee;
+  --color-ink: #2a2a28;
+  --color-muted: #5b5850;
+  --color-white: #ffffff;
+}
+
 *,
 *::before,
 *::after {
@@ -10,6 +22,8 @@ html {
 
 body {
   margin: 0;
+  background: var(--color-cream);
+  color: var(--color-ink);
   line-height: 1.6;
   font-family:
     'Inter Variable', 'Noto Sans Ethiopic', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -19,6 +33,15 @@ body {
   font-family:
     'Noto Sans Ethiopic', 'Inter Variable', system-ui, sans-serif;
   line-height: 1.8;
+}
+
+a {
+  color: var(--color-green);
+}
+
+a:hover,
+a:active {
+  color: var(--color-green-dark);
 }
 
 img,
@@ -32,13 +55,23 @@ svg {
   outline-offset: 3px;
 }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 .skip-link {
   position: absolute;
   left: 0.5rem;
   top: 0.5rem;
   padding: 0.5rem 1rem;
-  background: #fff;
-  color: #000;
+  background: var(--color-white);
+  color: var(--color-ink);
   z-index: 100;
   transform: translateY(-200%);
 }
@@ -46,6 +79,40 @@ svg {
 .skip-link:focus,
 .skip-link:focus-visible {
   transform: none;
+}
+
+/* Header, nav and footer — mobile-first, no JS, no hamburger. */
+.site-header {
+  background: var(--color-green);
+  color: var(--color-white);
+  border-bottom: 4px solid var(--color-gold);
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+}
+
+.site-header a {
+  color: var(--color-white);
+}
+
+.site-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.site-name .cross-motif {
+  color: var(--color-gold);
+}
+
+.site-nav {
+  flex: 1 1 100%;
+  order: 3;
 }
 
 .site-nav ul {
@@ -57,6 +124,102 @@ svg {
   gap: 0.25rem 1rem;
 }
 
+.site-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  text-decoration: none;
+}
+
 .site-nav a[aria-current='page'] {
   font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: var(--color-gold);
+  text-decoration-thickness: 3px;
+}
+
+.lang-toggle {
+  order: 2;
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 0.25rem;
+  text-decoration: none;
+  border: 1px solid var(--color-gold);
+  border-radius: 0.25rem;
+}
+
+@media (min-width: 960px) {
+  .site-header {
+    flex-wrap: nowrap;
+  }
+
+  .site-nav {
+    flex: 1 1 auto;
+    order: 2;
+  }
+
+  .lang-toggle {
+    order: 3;
+    margin-left: 0;
+  }
+}
+
+main {
+  padding: 1.5rem 1rem 3rem;
+}
+
+main > * {
+  max-width: 70ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.divider {
+  display: flex;
+  justify-content: center;
+  color: var(--color-gold);
+  margin: 2rem 0;
+}
+
+.site-footer {
+  background: var(--color-green-dark);
+  color: var(--color-white);
+  padding: 1.5rem 1rem;
+  text-align: center;
+}
+
+.site-footer a {
+  color: var(--color-white);
+}
+
+/* Placeholder badge — gold background, ink text: passes 4.5:1 (see tokens.ts). */
+.placeholder {
+  display: inline;
+  border: 1px dashed var(--color-red);
+  border-radius: 0.25rem;
+  padding: 0 0.35rem;
+}
+
+.placeholder-badge {
+  display: inline-block;
+  background: var(--color-gold);
+  color: var(--color-ink);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  border-radius: 0.2rem;
+  padding: 0.05rem 0.35rem;
+  margin-right: 0.35rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

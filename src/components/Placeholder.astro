@@ -1,0 +1,15 @@
+---
+import { t, type Locale } from '../i18n/index';
+
+interface Props {
+  lang: Locale;
+  field?: string;
+}
+
+const { lang, field } = Astro.props;
+const title = field ? `Replace in src/data/site.ts: ${field}` : undefined;
+---
+
+<span class="placeholder" data-placeholder title={title}>
+  <span class="placeholder-badge">{t(lang, 'placeholder.notice')}</span><slot />
+</span>

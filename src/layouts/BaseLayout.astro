@@ -6,6 +6,7 @@ import '../styles/global.css';
 import { LOCALES, LOCALE_META, t, type Locale } from '../i18n/index';
 import { assetPath, localizedPath, samePath, switchLocalePath } from '../i18n/paths';
 import { NAV } from '../i18n/nav';
+import CrossMotif from '../components/CrossMotif.astro';
 
 interface Props {
   lang: Locale;
@@ -30,8 +31,11 @@ const currentPath = Astro.url.pathname;
   </head>
   <body>
     <a class="skip-link" href="#main">{t(lang, 'a11y.skipToContent')}</a>
-    <header>
-      <a class="site-name" href={localizedPath(lang, '')}>{siteName}</a>
+    <header class="site-header">
+      <a class="site-name" href={localizedPath(lang, '')}>
+        <CrossMotif size={28} />
+        {siteName}
+      </a>
       <nav class="site-nav" aria-label={t(lang, 'a11y.mainNav')}>
         <ul>
           {
@@ -52,16 +56,15 @@ const currentPath = Astro.url.pathname;
         class="lang-toggle"
         href={switchLocalePath(currentPath, other)}
         hreflang={LOCALE_META[other].htmlLang}
-        lang={LOCALE_META[other].htmlLang}
-        aria-label={`${t(lang, 'a11y.langToggle')}: ${LOCALE_META[other].label}`}
       >
-        {t(lang, 'lang.switchTo')}
+        <span class="visually-hidden">{t(lang, 'a11y.langToggle')}: </span>
+        <span lang={LOCALE_META[other].htmlLang}>{t(lang, 'lang.switchTo')}</span>
       </a>
     </header>
     <main id="main">
       <slot />
     </main>
-    <footer>
+    <footer class="site-footer">
       <p>{t(lang, 'footer.rights')}</p>
     </footer>
   </body>
