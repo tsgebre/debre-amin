@@ -36,13 +36,13 @@ export const AM_NEEDS_REVIEW: readonly string[] = [
 // 3. "Faithful who plan to receive Holy Communion traditionally observe a
 //    fast beforehand" (services.liturgy.body) — pre-communion fasting is a
 //    standard, well-documented Oriental Orthodox (including EOTC) practice.
-// 4. "In the Ethiopian Orthodox Tewahedo tradition, Sunday school is a time
-//    for children and youth to learn about Christian faith and the Church's
-//    heritage and language" (services.sundaySchool.body) — Sunday school as
-//    a form of Christian education for youth is a standard practice in EOTC
-//    parishes; definitional description consistent with tradition.
-// 5. "The Ethiopian Orthodox Tewahedo Church also observes times of prayer
-//    and teaching on the Word of God" (services.prayerTeaching.body) —
-//    prayer services and teaching (ስብከት) beyond the Divine Liturgy are
-//    established practices in EOTC tradition; documented in parish and
-//    denominational resources.
+// 4. "In the Ethiopian Orthodox Tewahedo tradition, Sunday school is where
+//    children and youth learn the Christian faith and the traditions of the
+//    Church" (services.sundaySchool.body) — Sunday school as a form of
+//    Christian education for youth is a standard practice in EOTC parishes;
+//    definitional description consistent with tradition.
+// 5. "Beyond the Divine Liturgy, the Ethiopian Orthodox Tewahedo Church
+//    holds prayer services and teaching grounded in the Word of God"
+//    (services.prayerTeaching.body) — prayer services and teaching (ስብከት)
+//    beyond the Divine Liturgy are established practices in EOTC tradition;
+//    documented in parish and denominational resources.
