@@ -126,12 +126,15 @@ the safest shape for GitHub Pages.
   placeholder, `placeholderFields`, honesty-guard tests (P1-05); the
   Services & Schedule page, driven by `siteConfig.services` and a new
   `Fact` component that renders any config value and auto-marks
-  placeholders (P1-06).
-- **Remaining:** About/Contact/Clergy pages, deploy workflow; then
-  calendar, content collections, remaining pages, hardening.
-- **Build/test status:** `npm test` passes (123/123); `astro check` clean;
+  placeholders (P1-06); the Contact & Location page, driven by
+  `siteConfig.contact` via a `ContactDetails` component, with `Fact`
+  extended for `tel:`/`mailto:` links (`src/data/links.ts`) that only
+  appear once real values replace the placeholders (P1-07).
+- **Remaining:** About/Clergy pages, deploy workflow; then calendar,
+  content collections, remaining pages, hardening.
+- **Build/test status:** `npm test` passes (146/146); `astro check` clean;
   `npm run build` emits `/index.html`, `/en/`, `/am/`, `/en/services/`,
-  `/am/services/`.
+  `/am/services/`, `/en/contact/`, `/am/contact/`.
 - **Open risks:**
   - Base-path link correctness on GitHub Pages.
   - Amharic authenticity — every Amharic string needs parish review;

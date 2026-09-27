@@ -16,6 +16,8 @@ export const AM_NEEDS_REVIEW: readonly string[] = [
   'services.prayerTeaching.heading',
   'services.prayerTeaching.body',
   'services.livestream.label',
+  'contact.intro',
+  'contact.map.linkText',
 ];
 
 // Status: self-reviewed by Implementer; pending independent RESEARCHER

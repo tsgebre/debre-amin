@@ -1,0 +1,70 @@
+---
+import Fact from './Fact.astro';
+import { isPlaceholder } from '../data/placeholder';
+import { telHref, mailtoHref } from '../data/links';
+import { t, type Locale } from '../i18n/index';
+import type { SiteConfig } from '../data/site';
+
+interface Props {
+  lang: Locale;
+  contact: SiteConfig['contact'];
+}
+
+const { lang, contact } = Astro.props;
+---
+
+<section>
+  <h2>{t(lang, 'contact.address.heading')}</h2>
+  <address>
+    <Fact lang={lang} value={contact.address.street} field="contact.address.street" /><br />
+    {contact.address.city}, {contact.address.state}{' '}
+    <Fact
+      lang={lang}
+      value={contact.address.postalCode}
+      field="contact.address.postalCode"
+    /><br />
+    {contact.address.country}
+  </address>
+</section>
+
+<section>
+  <h2>{t(lang, 'contact.phone.label')}</h2>
+  <p>
+    <Fact
+      lang={lang}
+      value={contact.phone}
+      field="contact.phone"
+      as="link"
+      href={isPlaceholder(contact.phone) ? undefined : telHref(contact.phone)}
+    />
+  </p>
+</section>
+
+<section>
+  <h2>{t(lang, 'contact.email.label')}</h2>
+  <p>
+    <Fact
+      lang={lang}
+      value={contact.email}
+      field="contact.email"
+      as="link"
+      href={isPlaceholder(contact.email) ? undefined : mailtoHref(contact.email)}
+    />
+  </p>
+</section>
+
+<section>
+  <h2>{t(lang, 'contact.map.heading')}</h2>
+  <p>
+    <Fact lang={lang} value={contact.mapUrl} field="contact.mapUrl" as="link">
+      {t(lang, 'contact.map.linkText')}
+    </Fact>
+  </p>
+</section>
+
+<section>
+  <h2>{t(lang, 'contact.directions.heading')}</h2>
+  <p>
+    <Fact lang={lang} value={contact.directions[lang]} field={`contact.directions.${lang}`} />
+  </p>
+</section>

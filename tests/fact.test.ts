@@ -55,4 +55,19 @@ describe('Fact — link mode', () => {
     expect(doc).not.toMatch(/<a\b/);
     expect(doc).toContain('data-placeholder');
   });
+
+  it('links to a separate href while showing the value as text', async () => {
+    // 555-01XX is a reserved fictional phone number; test data only.
+    const doc = await container.renderToString(Fact, {
+      props: {
+        lang: 'en',
+        value: '+1 (336) 555-0100',
+        field: 'contact.phone',
+        as: 'link',
+        href: 'tel:+13365550100',
+      },
+    });
+    expect(doc).toMatch(/<a\b[^>]*href="tel:\+13365550100"/);
+    expect(doc).toContain('+1 (336) 555-0100');
+  });
 });

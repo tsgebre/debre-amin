@@ -29,5 +29,12 @@
   "services.sundaySchool.body": "በኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ቤተ ክርስቲያን ትውፊት ሰንበት ትምህርት ቤት ሕፃናትና ወጣቶች የክርስትና እምነትንና የቤተ ክርስቲያኒቱን ትውፊት የሚማሩበት መርሐ ግብር ነው።",
   "services.prayerTeaching.heading": "ጸሎት እና ትምህርት",
   "services.prayerTeaching.body": "ከቅዳሴ በተጨማሪ የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ቤተ ክርስቲያን የጸሎት አገልግሎትና በቃለ እግዚአብሔር ላይ የተመሠረተ ስብከት ታካሂዳለች።",
-  "services.livestream.label": "የቀጥታ ስርጭት"
+  "services.livestream.label": "የቀጥታ ስርጭት",
+  "contact.intro": "በስልክ፣ በኢሜይል ወይም በአካል ያግኙን።",
+  "contact.address.heading": "አድራሻ",
+  "contact.phone.label": "ስልክ",
+  "contact.email.label": "ኢሜይል",
+  "contact.map.heading": "ካርታ",
+  "contact.map.linkText": "በካርታ ላይ ይክፈቱ",
+  "contact.directions.heading": "እንዴት ሊያገኙን ይችላሉ"
 }

@@ -29,5 +29,12 @@
   "services.sundaySchool.body": "In the Ethiopian Orthodox Tewahedo tradition, Sunday school (ሰንበት ትምህርት ቤት) is where children and youth learn the Christian faith and the traditions of the Church.",
   "services.prayerTeaching.heading": "Prayer & Teaching",
   "services.prayerTeaching.body": "Beyond the Divine Liturgy, the Ethiopian Orthodox Tewahedo Church holds prayer services and teaching (ስብከት) grounded in the Word of God.",
-  "services.livestream.label": "Livestream"
+  "services.livestream.label": "Livestream",
+  "contact.intro": "Reach us by phone, email or in person.",
+  "contact.address.heading": "Address",
+  "contact.phone.label": "Phone",
+  "contact.email.label": "Email",
+  "contact.map.heading": "Map",
+  "contact.map.linkText": "Open in map",
+  "contact.directions.heading": "How to find us"
 }

@@ -8,9 +8,10 @@ interface Props {
   value: string;
   field: string;
   as?: 'link';
+  href?: string;
 }
 
-const { lang, value, field, as } = Astro.props;
+const { lang, value, field, as, href } = Astro.props;
 const placeholder = isPlaceholder(value);
 ---
 
@@ -20,7 +21,7 @@ const placeholder = isPlaceholder(value);
       {t(lang, 'placeholder.tba')}
     </Placeholder>
   ) : as === 'link' ? (
-    <a href={value}>
+    <a href={href ?? value}>
       <slot>{value}</slot>
     </a>
   ) : (
