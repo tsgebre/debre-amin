@@ -43,9 +43,11 @@ interface FastRow {
   name: string;
   pending: boolean;
   fromIso: string;
-  fromText: string;
+  fromEthiopian: string;
+  fromGregorian: string;
   toIso: string;
-  toText: string;
+  toEthiopian: string;
+  toGregorian: string;
   untilFasika: boolean;
 }
 
@@ -57,9 +59,11 @@ function fastRow(o: FeastOccurrence, fasika: DatePair | undefined): FastRow {
     name: o.names[lang],
     pending: o.confidence === 'medium',
     fromIso: iso(o.start.g),
-    fromText: formatGregorian(o.start.g, lang),
+    fromEthiopian: formatEthiopian(o.start.e, lang),
+    fromGregorian: formatGregorian(o.start.g, lang),
     toIso: iso(toPair.g),
-    toText: formatGregorian(toPair.g, lang),
+    toEthiopian: formatEthiopian(toPair.e, lang),
+    toGregorian: formatGregorian(toPair.g, lang),
     untilFasika,
   };
 }
@@ -202,11 +206,15 @@ const yearsData = years.map(yearData);
                   )}
                 </td>
                 <td>
-                  <time datetime={r.fromIso}>{r.fromText}</time>
+                  <time datetime={r.fromIso}>{r.fromEthiopian}</time>
+                  <br />
+                  <time datetime={r.fromIso}>{r.fromGregorian}</time>
                 </td>
                 <td>
                   {r.untilFasika && <>{t(lang, 'calendar.untilFasika')}{' '}</>}
-                  <time datetime={r.toIso}>{r.toText}</time>
+                  <time datetime={r.toIso}>{r.toEthiopian}</time>
+                  <br />
+                  <time datetime={r.toIso}>{r.toGregorian}</time>
                 </td>
               </tr>
             ))}

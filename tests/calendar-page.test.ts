@@ -106,6 +106,37 @@ describe('CalendarView — en, [2019, 2020]', () => {
     }
   });
 
+  it('the Abiy Tsom To cell contains "until Fasika", the Fasika Ethiopian date, and "May 2, 2027"', () => {
+    const fastsTable = tables(doc).find((t) => t.includes('Fasting periods'))!;
+    const row = /<tr>\s*<td>\s*Great Lent[\s\S]*?<\/tr>/.exec(fastsTable)![0];
+    expect(row).toContain('until Fasika');
+    expect(row).toMatch(/Miyazia 24, 2019 E\.C\./);
+    expect(row).toContain('May 2, 2027');
+  });
+
+  it('the Tsome Filseta row contains Ethiopian dates (Nehase 1, 2019 E.C. and Nehase 15, 2019 E.C.) and Gregorian dates', () => {
+    const fastsTable = tables(doc).find((t) => t.includes('Fasting periods'))!;
+    const row = /<tr>\s*<td>\s*Fast of the Assumption[\s\S]*?<\/tr>/.exec(fastsTable)![0];
+    expect(row).toMatch(/Nehase 1, 2019 E\.C\./);
+    expect(row).toMatch(/Nehase 15, 2019 E\.C\./);
+    expect(row).toMatch(/August 7, 2027/);
+    expect(row).toMatch(/August 21, 2027/);
+  });
+
+  it('every fasts-table From and To cell contains exactly 2 <time> elements', () => {
+    const fastsTable = tables(doc).find((t) => t.includes('Fasting periods'))!;
+    const rows = [...fastsTable.matchAll(/<tr>[\s\S]*?<\/tr>/g)].map((m) => m[0]).filter((r) => !r.includes('<th'));
+    for (const row of rows) {
+      const cells = [...row.matchAll(/<td>[\s\S]*?<\/td>/g)].map((m) => m[0]);
+      const fromCell = cells[1];
+      const toCell = cells[2];
+      const fromTimes = (fromCell.match(/<time/g) ?? []).length;
+      const toTimes = (toCell.match(/<time/g) ?? []).length;
+      expect(fromTimes).toBe(2);
+      expect(toTimes).toBe(2);
+    }
+  });
+
   it('never shows a digit-followed-by-"days" pattern in the fasts table', () => {
     for (const t of tables(doc).filter((tb) => tb.includes('Fasting periods'))) {
       expect(stripTags(t)).not.toMatch(/\d+\s*days?/i);
