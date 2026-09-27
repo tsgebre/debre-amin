@@ -58,6 +58,12 @@ describe.each(LOCALES)('services page — %s', (lang) => {
     }
   });
 
+  it('labels each day placeholder with its language-specific config path', () => {
+    for (let i = 0; i < siteConfig.services.length; i++) {
+      expect(doc()).toContain(`title="Replace in src/data/site.ts: services.${i}.day.${lang}"`);
+    }
+  });
+
   it('has no missing-translation markers', () => {
     expect(doc()).not.toContain('⟦missing:');
   });

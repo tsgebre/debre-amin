@@ -115,7 +115,7 @@ the safest shape for GitHub Pages.
 
 ## Snapshot
 
-- **Phase:** 1 (Foundation) — complete; Phase 2 (calendar) next.
+- **Phase:** 2 (Calendar) — in progress; Phase 1 (Foundation) complete.
 - **Complete:** project scaffold (Astro + TypeScript strict + vitest +
   zod), env-driven `site`/`base` config, smoke test (P1-01 passed);
   i18n core — dictionaries, `t()`, base-aware path helpers, nav map (P1-02);
@@ -140,10 +140,16 @@ the safest shape for GitHub Pages.
   (P1-09); GitHub Pages deploy workflow (tests gate the build), base path
   resolved by `src/config/deploy.ts` (`''` → `/` for user/org sites and
   custom domains), readable `site.ts` validation errors, volunteer README
-  (P1-10).
-- **Remaining:** Phase 2 — calendar module, feasts/fasts, full Home page;
-  Phase 3 — Giving, Events, Gallery; Phase 4 — hardening.
-- **Build/test status:** `npm test` passes (218/218); `astro check` clean;
+  (P1-10); bilingual service days (P1-11); the calendar conversion core
+  `src/lib/ecal/` — pure dependency-free TS, JDN-based Ethiopian↔Gregorian
+  conversion with validation, `ethiopianTodayIn`, bilingual month names and
+  formatting, verified by an 18-row RESEARCHER-sourced reference table
+  (`docs/research/ecal-reference.md`) and an independent day-walking oracle
+  over every day of 1900–2100 (P2-01).
+- **Remaining:** Phase 2 — feast/fast data (P2-02), Calendar & Feasts page
+  (P2-03), full Home page with client-side "today" (P2-04); Phase 3 —
+  Giving, Events, Gallery; Phase 4 — hardening.
+- **Build/test status:** `npm test` passes (289/289); `astro check` clean;
   `npm run build` emits 11 pages; verified under `BASE_PATH` `''` and
   `/debre-amin`; `npm ci` in sync.
 - **Open risks:**
@@ -157,8 +163,9 @@ the safest shape for GitHub Pages.
   - The saint's annual feasts (Tahsas 24, Nehase 24 high confidence;
     Ginbot 12, Megabit 24 thinly sourced) need parish confirmation before
     Phase 2 relies on them — see `docs/research/about-claims.md`.
-  - Calendar correctness — conversion module and feast table need
-    RESEARCHER/STATISTICAL verification against reference dates before
+  - Calendar correctness — the conversion core is RESEARCHER-verified
+    (`docs/research/ecal-reference.md`) and oracle-tested over 1900–2100;
+    the feast/fast table (P2-02) still needs the same treatment before
     Phase 2 sign-off.
   - **Astro dependency security:** staying on Astro 5.x (`^5.18.2`)
     despite `npm audit` advisories fixed only in 7.x. Astro 6+ requires
