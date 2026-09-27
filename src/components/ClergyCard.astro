@@ -1,0 +1,32 @@
+---
+import Fact from './Fact.astro';
+import { isPlaceholder } from '../data/placeholder';
+import { assetPath } from '../i18n/paths';
+import { t, type Locale } from '../i18n/index';
+import type { SiteConfig } from '../data/site';
+
+interface Props {
+  lang: Locale;
+  person: SiteConfig['clergy'][number];
+  index: number;
+}
+
+const { lang, person, index } = Astro.props;
+
+const photoSrc = assetPath(person.photo ?? 'images/clergy/placeholder.svg');
+const hasRealPhoto = Boolean(person.photo);
+const hasRealName = !isPlaceholder(person.name[lang]);
+const alt = hasRealPhoto && hasRealName ? person.name[lang] : t(lang, 'clergy.photoPending');
+---
+
+<article class="clergy-card">
+  <figure>
+    <img src={photoSrc} width="240" height="240" loading="lazy" decoding="async" alt={alt} />
+  </figure>
+  <h2>
+    <Fact lang={lang} value={person.name[lang]} field={`clergy.${index}.name.${lang}`} />
+  </h2>
+  <p>
+    <Fact lang={lang} value={person.role[lang]} field={`clergy.${index}.role.${lang}`} />
+  </p>
+</article>

@@ -64,11 +64,16 @@ const serviceSchema = z.object({
   note: bilingualSchema.optional(),
 });
 
+// A real photo must be a local file under public/images/clergy/ — no
+// hotlinked URLs, no path traversal, lowercase filename, common extension.
 const clergySchema = z.object({
   id: z.string().min(1),
   name: bilingualSchema,
   role: bilingualSchema,
-  photo: z.string().min(1).optional(),
+  photo: z
+    .string()
+    .regex(/^images\/clergy\/[a-z0-9-]+\.(jpg|jpeg|png|webp)$/)
+    .optional(),
 });
 
 export const siteConfigSchema = z.object({
@@ -80,7 +85,7 @@ export const siteConfigSchema = z.object({
     directions: bilingualSchema,
   }),
   services: z.array(serviceSchema).min(1),
-  clergy: z.array(clergySchema).min(1),
+  clergy: z.array(clergySchema),
   giving: z.object({
     zelle: phOr(z.union([REAL_PHONE, REAL_EMAIL])),
     paypalUrl: urlOrPh,
@@ -139,20 +144,20 @@ const config: SiteConfig = {
     {
       id: 'clergy-1',
       name: bilingualPh('clergy.0.name'),
-      role: { en: 'TBD — e.g. Head Priest (Aleqa)', am: 'TBD — e.g. Head Priest (Aleqa)' },
+      role: { en: 'TBD — e.g. Head Priest (Aleqa)', am: 'TBD — ለምሳሌ፦ አለቃ' },
     },
     {
       id: 'clergy-2',
       name: bilingualPh('clergy.1.name'),
       role: {
         en: 'TBD — e.g. Assistant Priest (Qomos)',
-        am: 'TBD — e.g. Assistant Priest (Qomos)',
+        am: 'TBD — ለምሳሌ፦ ቆሞስ',
       },
     },
     {
       id: 'clergy-3',
       name: bilingualPh('clergy.2.name'),
-      role: { en: 'TBD — e.g. Deacon (Diyakon)', am: 'TBD — e.g. Deacon (Diyakon)' },
+      role: { en: 'TBD — e.g. Deacon (Diyakon)', am: 'TBD — ለምሳሌ፦ ዲያቆን' },
     },
   ],
   giving: {

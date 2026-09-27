@@ -84,6 +84,37 @@ describe('cashAppTag (checked through the full schema)', () => {
   });
 });
 
+describe('clergy photo (checked through the full schema)', () => {
+  function withPhoto(photo: string | undefined) {
+    return structuredClone({
+      ...siteConfig,
+      clergy: [{ ...siteConfig.clergy[0], photo }, ...siteConfig.clergy.slice(1)],
+    });
+  }
+
+  it('accepts a well-formed local filename', () => {
+    expect(() => siteConfigSchema.parse(withPhoto('images/clergy/abba-name.jpg'))).not.toThrow();
+  });
+
+  it('accepts no photo at all', () => {
+    expect(() => siteConfigSchema.parse(withPhoto(undefined))).not.toThrow();
+  });
+
+  it('rejects a hotlinked URL', () => {
+    expect(() =>
+      siteConfigSchema.parse(withPhoto('https://example.org/photo.jpg')),
+    ).toThrow();
+  });
+
+  it('rejects path traversal', () => {
+    expect(() => siteConfigSchema.parse(withPhoto('../x.jpg'))).toThrow();
+  });
+
+  it('rejects a filename with a space and an uppercase extension', () => {
+    expect(() => siteConfigSchema.parse(withPhoto('images/clergy/Fr Name.JPG'))).toThrow();
+  });
+});
+
 describe('placeholderFields', () => {
   const fields = new Set(placeholderFields(siteConfig));
 

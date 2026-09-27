@@ -210,6 +210,43 @@ thead th {
   border-bottom: 2px solid var(--color-green);
 }
 
+.clergy-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .clergy-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .clergy-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.clergy-card {
+  border: 1px solid var(--color-gold);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  text-align: center;
+}
+
+.clergy-card figure {
+  margin: 0 0 0.75rem;
+}
+
+.clergy-card img {
+  width: 100%;
+  max-width: 240px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
 .site-footer {
   background: var(--color-green-dark);
   color: var(--color-white);

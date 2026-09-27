@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ClergyList from '../../components/ClergyList.astro';
+import { LOCALES, t, type Locale } from '../../i18n/index';
+import { siteConfig } from '../../data/site';
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+---
+
+<BaseLayout lang={lang} title={t(lang, 'clergy.heading')} description={t(lang, 'clergy.intro')}>
+  <h1>{t(lang, 'clergy.heading')}</h1>
+  <p>{t(lang, 'clergy.intro')}</p>
+  <ClergyList lang={lang} clergy={siteConfig.clergy} />
+</BaseLayout>

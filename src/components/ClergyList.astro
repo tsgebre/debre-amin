@@ -1,0 +1,24 @@
+---
+import ClergyCard from './ClergyCard.astro';
+import { t, type Locale } from '../i18n/index';
+import type { SiteConfig } from '../data/site';
+
+interface Props {
+  lang: Locale;
+  clergy: SiteConfig['clergy'];
+}
+
+const { lang, clergy } = Astro.props;
+---
+
+{
+  clergy.length === 0 ? (
+    <p>{t(lang, 'clergy.empty')}</p>
+  ) : (
+    <div class="clergy-grid">
+      {clergy.map((person, i) => (
+        <ClergyCard lang={lang} person={person} index={i} />
+      ))}
+    </div>
+  )
+}

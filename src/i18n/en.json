@@ -36,5 +36,9 @@
   "contact.email.label": "Email",
   "contact.map.heading": "Map",
   "contact.map.linkText": "Open in map",
-  "contact.directions.heading": "How to find us"
+  "contact.directions.heading": "How to find us",
+  "clergy.heading": "Clergy & Leadership",
+  "clergy.intro": "Meet the clergy who serve this parish.",
+  "clergy.photoPending": "Photo to be added",
+  "clergy.empty": "Clergy information will be posted here soon."
 }

@@ -18,6 +18,9 @@ export const AM_NEEDS_REVIEW: readonly string[] = [
   'services.livestream.label',
   'contact.intro',
   'contact.map.linkText',
+  'clergy.intro',
+  'clergy.photoPending',
+  'clergy.empty',
 ];
 
 // Status: self-reviewed by Implementer; pending independent RESEARCHER

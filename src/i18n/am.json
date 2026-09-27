@@ -36,5 +36,9 @@
   "contact.email.label": "ኢሜይል",
   "contact.map.heading": "ካርታ",
   "contact.map.linkText": "በካርታ ላይ ይክፈቱ",
-  "contact.directions.heading": "እንዴት ሊያገኙን ይችላሉ"
+  "contact.directions.heading": "እንዴት ሊያገኙን ይችላሉ",
+  "clergy.heading": "ካህናት እና አመራር",
+  "clergy.intro": "ደብሩን የሚያገለግሉ ካህናትን ያግኙ።",
+  "clergy.photoPending": "ፎቶ በቅርቡ ይጨመራል",
+  "clergy.empty": "የካህናት መረጃ በቅርቡ እዚህ ይለጠፋል።"
 }

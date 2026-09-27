@@ -129,12 +129,16 @@ the safest shape for GitHub Pages.
   placeholders (P1-06); the Contact & Location page, driven by
   `siteConfig.contact` via a `ContactDetails` component, with `Fact`
   extended for `tel:`/`mailto:` links (`src/data/links.ts`) that only
-  appear once real values replace the placeholders (P1-07).
-- **Remaining:** About/Clergy pages, deploy workflow; then calendar,
-  content collections, remaining pages, hardening.
-- **Build/test status:** `npm test` passes (146/146); `astro check` clean;
+  appear once real values replace the placeholders (P1-07); the Clergy &
+  Leadership page, driven by `siteConfig.clergy` via `ClergyList`/
+  `ClergyCard`, with a local placeholder portrait SVG and a schema that
+  only accepts local `images/clergy/*` filenames for a real photo (P1-08).
+- **Remaining:** About page (with RESEARCHER pass), deploy workflow; then
+  calendar, content collections, remaining pages, hardening.
+- **Build/test status:** `npm test` passes (169/169); `astro check` clean;
   `npm run build` emits `/index.html`, `/en/`, `/am/`, `/en/services/`,
-  `/am/services/`, `/en/contact/`, `/am/contact/`.
+  `/am/services/`, `/en/contact/`, `/am/contact/`, `/en/clergy/`,
+  `/am/clergy/`.
 - **Open risks:**
   - Base-path link correctness on GitHub Pages.
   - Amharic authenticity — every Amharic string needs parish review;
