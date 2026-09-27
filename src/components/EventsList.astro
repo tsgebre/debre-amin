@@ -1,0 +1,68 @@
+---
+import { t, type Locale } from '../i18n/index';
+import { localizedPath } from '../i18n/paths';
+import { formatEthiopian, formatGregorian, toEthiopian } from '../lib/ecal';
+import { parseDateString, type EventItem } from '../lib/events';
+
+interface Props {
+  lang: Locale;
+  items: EventItem[];
+}
+
+const { lang, items } = Astro.props;
+
+function iso(s: string): string {
+  return s;
+}
+
+const rows = items.map((item) => {
+  const from = parseDateString(item.data.date);
+  const to = item.data.endDate ? parseDateString(item.data.endDate) : undefined;
+  return {
+    slug: item.slug,
+    title: item.data.title[lang],
+    summary: item.data.summary[lang],
+    typeLabel: t(lang, item.data.type === 'event' ? 'events.type.event' : 'events.type.announcement'),
+    fromIso: iso(item.data.date),
+    fromEthiopian: formatEthiopian(toEthiopian(from), lang),
+    fromGregorian: formatGregorian(from, lang),
+    toIso: item.data.endDate ? iso(item.data.endDate) : undefined,
+    toEthiopian: to ? formatEthiopian(toEthiopian(to), lang) : undefined,
+    toGregorian: to ? formatGregorian(to, lang) : undefined,
+    href: localizedPath(lang, `events/${item.slug}`),
+  };
+});
+---
+
+{
+  rows.length === 0 ? (
+    <p class="events-empty">{t(lang, 'events.empty')}</p>
+  ) : (
+    <div class="events-list">
+      {
+        rows.map((row) => (
+          <article class="event-item">
+            <h2>
+              <a href={row.href}>{row.title}</a>
+            </h2>
+            <p class="event-type-badge">{row.typeLabel}</p>
+            <p class="event-dates">
+              <time datetime={row.fromIso}>{row.fromEthiopian}</time>
+              <br />
+              <time datetime={row.fromIso}>{row.fromGregorian}</time>
+              {row.toIso && (
+                <>
+                  {' – '}
+                  <time datetime={row.toIso}>{row.toEthiopian}</time>
+                  <br />
+                  <time datetime={row.toIso}>{row.toGregorian}</time>
+                </>
+              )}
+            </p>
+            <p>{row.summary}</p>
+          </article>
+        ))
+      }
+    </div>
+  )
+}

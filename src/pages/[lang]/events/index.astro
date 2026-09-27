@@ -1,0 +1,23 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import EventsList from '../../../components/EventsList.astro';
+import { LOCALES, t, type Locale } from '../../../i18n/index';
+import { publishable, sortNewestFirst, type EventItem } from '../../../lib/events';
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+
+const entries = await getCollection('events');
+const items: EventItem[] = entries.map((e) => ({ slug: e.id, data: e.data }));
+const list = sortNewestFirst(publishable(items));
+---
+
+<BaseLayout lang={lang} title={t(lang, 'nav.events')} description={t(lang, 'events.intro')}>
+  <h1>{t(lang, 'nav.events')}</h1>
+  <p>{t(lang, 'events.intro')}</p>
+  <EventsList lang={lang} items={list} />
+</BaseLayout>

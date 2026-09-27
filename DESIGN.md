@@ -117,8 +117,19 @@ liturgical texts.
 
 ## Content collections
 
-- `src/content/events/` (markdown, zod frontmatter: title/titleAm/date/type).
-- `src/content/gallery/` (entries pointing at local SVG placeholders).
+- `src/content/about/` (markdown, zod frontmatter) — the EOTC and saint
+  sections shown on the About page (P1-09).
+- `src/content/events/` (markdown, zod frontmatter: bilingual title/summary,
+  `date`/`endDate` as plain `YYYY-MM-DD` strings validated against the real
+  Ethiopian↔Gregorian calendar core, `type: 'event' | 'announcement'`,
+  `bodyLang`, `draft`). One file = one bilingual item; a filename starting
+  with `_` (the `_TEMPLATE.md` shipped in the repo) is never published,
+  regardless of its `draft` value. `src/lib/events.ts` holds the pure
+  sort/filter/mapping helpers (no `astro:content` import, so tests import
+  it directly). Malformed frontmatter fails the build loudly
+  (`InvalidContentEntryDataError`, naming the file and field) (P3-02).
+- `src/content/gallery/` (planned, P3-03) — entries pointing at local SVG
+  placeholders.
 - Adding content = adding one file.
 
 ## Deploy
@@ -199,11 +210,17 @@ the safest shape for GitHub Pages.
   `Fact as="link"` (`cashAppHref` in `src/data/links.ts` builds the
   `cash.app/$tag` URL), the mailing address in `<address>`, no payment
   processed on the site, and no tax/deductibility claim — that's a
-  real-world fact this project doesn't have (P3-01).
-- **Remaining:** Phase 3 — Events & Announcements, Gallery; Phase 4 —
+  real-world fact this project doesn't have (P3-01); Events & Announcements
+  — the `events` content collection (see Content collections above), a
+  newest-first list page and a detail page per item in both locales,
+  dates always shown in both calendars, a friendly empty state, and the
+  latest items wired into Home via `toAnnouncementItems`. No real events
+  ship — only the template and an honest empty state (P3-02).
+- **Remaining:** Phase 3 — Gallery; Phase 4 —
   hardening.
-- **Build/test status:** `npm test` passes (792/792); `astro check` clean;
-  `npm run build` emits 15 pages; verified under `BASE_PATH` `''` and
+- **Build/test status:** `npm test` passes (830/830); `astro check` clean;
+  `npm run build` emits 17 pages with the shipped (empty) events
+  collection; verified under `BASE_PATH` `''` and
   `/debre-amin`; `npm ci` in sync.
 - **Open risks:**
   - Base-path link correctness on GitHub Pages.

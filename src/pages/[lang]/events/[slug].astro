@@ -1,0 +1,49 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import EventDetail from '../../../components/EventDetail.astro';
+import { LOCALES, type Locale } from '../../../i18n/index';
+import { parseDateString, publishable, type EventItem } from '../../../lib/events';
+
+interface PathProps {
+  entry: CollectionEntry<'events'>;
+  slug: string;
+}
+
+export async function getStaticPaths() {
+  const entries = await getCollection('events');
+  const items: (EventItem & { entry: CollectionEntry<'events'> })[] = entries.map((e) => ({
+    slug: e.id,
+    data: e.data,
+    entry: e,
+  }));
+  const published = publishable(items);
+  return LOCALES.flatMap((lang) =>
+    published.map((item) => ({
+      params: { lang, slug: item.slug },
+      props: { entry: item.entry, slug: item.slug } satisfies PathProps,
+    })),
+  );
+}
+
+const lang = Astro.params.lang as Locale;
+const { entry } = Astro.props as PathProps;
+const { data } = entry;
+const { Content } = await render(entry);
+---
+
+<BaseLayout lang={lang} title={data.title[lang]} description={data.summary[lang]}>
+  <EventDetail
+    lang={lang}
+    type={data.type}
+    title={data.title[lang]}
+    summary={data.summary[lang]}
+    date={parseDateString(data.date)}
+    endDate={data.endDate ? parseDateString(data.endDate) : undefined}
+    time={data.time}
+    location={data.location?.[lang]}
+    bodyLang={data.bodyLang}
+  >
+    <Content />
+  </EventDetail>
+</BaseLayout>

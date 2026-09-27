@@ -1,0 +1,55 @@
+---
+import { t, type Locale } from '../i18n/index';
+import { localizedPath } from '../i18n/paths';
+import { formatEthiopian, formatGregorian, toEthiopian, type GregorianDate } from '../lib/ecal';
+
+interface Props {
+  lang: Locale;
+  type: 'event' | 'announcement';
+  title: string;
+  summary: string;
+  date: GregorianDate;
+  endDate?: GregorianDate;
+  time?: string;
+  location?: string;
+  bodyLang: Locale;
+}
+
+const { lang, type, title, summary, date, endDate, time, location, bodyLang } = Astro.props;
+
+function iso(d: GregorianDate): string {
+  const pad = (n: number, w = 2) => String(n).padStart(w, '0');
+  return `${pad(d.year, 4)}-${pad(d.month)}-${pad(d.day)}`;
+}
+
+const typeLabel = t(lang, type === 'event' ? 'events.type.event' : 'events.type.announcement');
+const showLanguageNote = bodyLang !== lang;
+---
+
+<h1>{title}</h1>
+<p class="event-type-badge">{typeLabel}</p>
+<p class="event-dates">
+  <time datetime={iso(date)}>{formatEthiopian(toEthiopian(date), lang)}</time>
+  <br />
+  <time datetime={iso(date)}>{formatGregorian(date, lang)}</time>
+  {
+    endDate && (
+      <>
+        {' – '}
+        <time datetime={iso(endDate)}>{formatEthiopian(toEthiopian(endDate), lang)}</time>
+        <br />
+        <time datetime={iso(endDate)}>{formatGregorian(endDate, lang)}</time>
+      </>
+    )
+  }
+</p>
+{time && <p>{time}</p>}
+{location && <p>{location}</p>}
+<p>{summary}</p>
+{showLanguageNote && <p class="review-note">{t(lang, `events.bodyLanguageNote.${bodyLang}`)}</p>}
+<div lang={bodyLang}>
+  <slot />
+</div>
+<p>
+  <a href={localizedPath(lang, 'events')}>{t(lang, 'events.backToList')}</a>
+</p>

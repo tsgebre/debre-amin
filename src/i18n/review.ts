@@ -70,6 +70,13 @@ export const AM_NEEDS_REVIEW: readonly string[] = [
   'giving.notes.heading',
   'giving.notes.noPayment',
   'giving.notes.confirm',
+  'events.intro',
+  'events.empty',
+  'events.type.event',
+  'events.type.announcement',
+  'events.backToList',
+  'events.bodyLanguageNote.en',
+  'events.bodyLanguageNote.am',
 ];
 
 // RESEARCHER: the factual claims in calendar.intro (13 months; twelve of 30

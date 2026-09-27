@@ -91,5 +91,12 @@
   "giving.mail.heading": "By Mail",
   "giving.notes.heading": "Please note",
   "giving.notes.noPayment": "This website does not process payments; each option opens or refers to the service's own app or website.",
-  "giving.notes.confirm": "Before giving, please confirm these details with the parish."
+  "giving.notes.confirm": "Before giving, please confirm these details with the parish.",
+  "events.intro": "Upcoming events and announcements from the parish.",
+  "events.empty": "No events or announcements yet — check back soon.",
+  "events.type.event": "Event",
+  "events.type.announcement": "Announcement",
+  "events.backToList": "Back to Events & Announcements",
+  "events.bodyLanguageNote.en": "Details available in English.",
+  "events.bodyLanguageNote.am": "Details available in Amharic."
 }
