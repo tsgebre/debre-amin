@@ -115,7 +115,7 @@ the safest shape for GitHub Pages.
 
 ## Snapshot
 
-- **Phase:** 1 (Foundation).
+- **Phase:** 1 (Foundation) — complete; Phase 2 (calendar) next.
 - **Complete:** project scaffold (Astro + TypeScript strict + vitest +
   zod), env-driven `site`/`base` config, smoke test (P1-01 passed);
   i18n core — dictionaries, `t()`, base-aware path helpers, nav map (P1-02);
@@ -137,12 +137,15 @@ the safest shape for GitHub Pages.
   RESEARCHER-verified EOTC and saint sections in the `about` content
   collection (`src/content/about/*.md`, schema in `src/content/schemas.ts`),
   each with its sources; claims register in `docs/research/about-claims.md`
-  (P1-09).
-- **Remaining:** deploy workflow + starter README (P1-10); then calendar,
-  content collections for events/gallery, remaining pages, hardening.
-- **Build/test status:** `npm test` passes (204/204); `astro check` clean;
-  `npm run build` emits 11 pages: `/`, and `/en/` + `/am/` for home,
-  services, contact, clergy and about.
+  (P1-09); GitHub Pages deploy workflow (tests gate the build), base path
+  resolved by `src/config/deploy.ts` (`''` → `/` for user/org sites and
+  custom domains), readable `site.ts` validation errors, volunteer README
+  (P1-10).
+- **Remaining:** Phase 2 — calendar module, feasts/fasts, full Home page;
+  Phase 3 — Giving, Events, Gallery; Phase 4 — hardening.
+- **Build/test status:** `npm test` passes (218/218); `astro check` clean;
+  `npm run build` emits 11 pages; verified under `BASE_PATH` `''` and
+  `/debre-amin`; `npm ci` in sync.
 - **Open risks:**
   - Base-path link correctness on GitHub Pages.
   - Amharic authenticity — every Amharic string needs parish review;

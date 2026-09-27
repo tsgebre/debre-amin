@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   emailOrPh,
+  parseSiteConfig,
   phoneOrPh,
   placeholderFields,
   siteConfig,
@@ -25,6 +26,25 @@ function leaves(value: unknown, path: string[] = []): { path: string; value: str
 describe('siteConfig', () => {
   it('parses at module load without throwing', () => {
     expect(() => siteConfigSchema.parse(siteConfig)).not.toThrow();
+  });
+});
+
+describe('parseSiteConfig error message', () => {
+  it('names the field and every accepted form when a value is wrong', () => {
+    const bad = structuredClone({
+      ...siteConfig,
+      contact: { ...siteConfig.contact, phone: '555-1234' },
+    });
+    let message = '';
+    try {
+      parseSiteConfig(bad);
+    } catch (e) {
+      message = (e as Error).message;
+    }
+    expect(message).toContain('src/data/site.ts has invalid values:');
+    expect(message).toContain('contact.phone:');
+    expect(message).toContain('TBD —');
+    expect(message).toContain('+1 followed by 10 digits');
   });
 });
 

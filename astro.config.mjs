@@ -1,10 +1,13 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import { resolveDeployEnv } from './src/config/deploy.ts';
+
+const { site, base } = resolveDeployEnv(process.env);
 
 // https://astro.build/config
 export default defineConfig({
-  site: process.env.SITE_URL ?? 'https://example.github.io',
-  base: process.env.BASE_PATH ?? '/',
+  site,
+  base,
   output: 'static',
   trailingSlash: 'always',
 });

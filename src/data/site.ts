@@ -5,8 +5,17 @@ import { isPlaceholder, ph, PLACEHOLDER_PREFIX } from './placeholder';
 // placeholder always passes; a real value must be well-formed, so a typo
 // in a phone number or URL fails the build instead of shipping quietly.
 
-const placeholderSchema = z.string().refine(isPlaceholder, {
-  message: `placeholder strings must start with the "${PLACEHOLDER_PREFIX}" marker`,
+// `fatal` makes a union fall through to the real-value branch, so a wrong
+// value reports the real format ("+1 followed by 10 digits") instead of
+// only the placeholder rule.
+const placeholderSchema = z.string().superRefine((v, ctx) => {
+  if (!isPlaceholder(v)) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: `placeholder strings must start with the "${PLACEHOLDER_PREFIX}" marker`,
+      fatal: true,
+    });
+  }
 });
 
 function phOr<T extends z.ZodTypeAny>(real: T) {
@@ -175,7 +184,30 @@ const config: SiteConfig = {
   },
 };
 
-export const siteConfig: SiteConfig = siteConfigSchema.parse(config);
+// A build error a volunteer can act on: each bad field's path and expected format.
+export function formatConfigError(error: z.ZodError): string {
+  const lines = error.issues.map((issue) => {
+    const where = issue.path.join('.') || '(root)';
+    const messages =
+      issue.code === 'invalid_union'
+        ? issue.unionErrors.flatMap((e) => e.issues.map((i) => i.message))
+        : [issue.message];
+    return `  - ${where}: ${[...new Set(messages)].join('; OR ')}`;
+  });
+  return [
+    'src/data/site.ts has invalid values:',
+    ...lines,
+    `(Any of these may instead be a placeholder starting with "${PLACEHOLDER_PREFIX}".)`,
+  ].join('\n');
+}
+
+export function parseSiteConfig(input: unknown): SiteConfig {
+  const result = siteConfigSchema.safeParse(input);
+  if (!result.success) throw new Error(formatConfigError(result.error));
+  return result.data;
+}
+
+export const siteConfig: SiteConfig = parseSiteConfig(config);
 
 export function placeholderFields(value: unknown, path: string[] = []): string[] {
   if (typeof value === 'string') {
