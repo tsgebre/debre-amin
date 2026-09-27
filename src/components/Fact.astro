@@ -1,0 +1,29 @@
+---
+import Placeholder from './Placeholder.astro';
+import { isPlaceholder } from '../data/placeholder';
+import { t, type Locale } from '../i18n/index';
+
+interface Props {
+  lang: Locale;
+  value: string;
+  field: string;
+  as?: 'link';
+}
+
+const { lang, value, field, as } = Astro.props;
+const placeholder = isPlaceholder(value);
+---
+
+{
+  placeholder ? (
+    <Placeholder lang={lang} field={field}>
+      {t(lang, 'placeholder.tba')}
+    </Placeholder>
+  ) : as === 'link' ? (
+    <a href={value}>
+      <slot>{value}</slot>
+    </a>
+  ) : (
+    <slot>{value}</slot>
+  )
+}

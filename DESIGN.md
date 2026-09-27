@@ -123,11 +123,15 @@ the safest shape for GitHub Pages.
   palette + contrast-tested tokens, cross motif, responsive header/nav/
   footer, `Placeholder` component, accessible language toggle (P1-04);
   the full `SiteConfig` — every real-world fact slot as a validated
-  placeholder, `placeholderFields`, honesty-guard tests (P1-05).
-- **Remaining:** About/Services/Contact/Clergy pages, deploy workflow;
-  then calendar, content collections, remaining pages, hardening.
-- **Build/test status:** `npm test` passes (103/103); `astro check` clean;
-  `npm run build` emits `/index.html`, `/en/index.html`, `/am/index.html`.
+  placeholder, `placeholderFields`, honesty-guard tests (P1-05); the
+  Services & Schedule page, driven by `siteConfig.services` and a new
+  `Fact` component that renders any config value and auto-marks
+  placeholders (P1-06).
+- **Remaining:** About/Contact/Clergy pages, deploy workflow; then
+  calendar, content collections, remaining pages, hardening.
+- **Build/test status:** `npm test` passes (123/123); `astro check` clean;
+  `npm run build` emits `/index.html`, `/en/`, `/am/`, `/en/services/`,
+  `/am/services/`.
 - **Open risks:**
   - Base-path link correctness on GitHub Pages.
   - Amharic authenticity — every Amharic string needs parish review;

@@ -15,5 +15,19 @@
   "a11y.langToggle": "Change language",
   "lang.switchTo": "አማርኛ",
   "footer.rights": "All rights reserved.",
-  "placeholder.notice": "Placeholder — the parish will replace this."
+  "placeholder.notice": "Placeholder — the parish will replace this.",
+  "placeholder.tba": "To be announced",
+  "services.intro": "Our regular schedule of worship and teaching.",
+  "services.table.caption": "Weekly schedule of services",
+  "services.table.service": "Service",
+  "services.table.day": "Day",
+  "services.table.time": "Time",
+  "services.table.scrollLabel": "Scroll to see the full schedule",
+  "services.liturgy.heading": "Divine Liturgy",
+  "services.liturgy.body": "The Divine Liturgy of the Ethiopian Orthodox Tewahedo Church is celebrated in Ge'ez, the Church's ancient liturgical language, with readings and hymns often also given in Amharic. Faithful who plan to receive Holy Communion traditionally observe a fast beforehand.",
+  "services.sundaySchool.heading": "Sunday School",
+  "services.sundaySchool.body": "Sunday school (ሰንበት ትምህርት ቤት) serves children and youth, teaching the faith alongside the Church's language and traditions.",
+  "services.prayerTeaching.heading": "Prayer & Teaching",
+  "services.prayerTeaching.body": "Throughout the week, the parish also gathers for prayer and teaching, open to all who wish to grow in the faith.",
+  "services.livestream.label": "Livestream"
 }

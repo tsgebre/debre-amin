@@ -15,5 +15,19 @@
   "a11y.langToggle": "ቋንቋ ይቀይሩ",
   "lang.switchTo": "English",
   "footer.rights": "መብቱ በሕግ የተጠበቀ ነው።",
-  "placeholder.notice": "ጊዜያዊ ይዘት — ደብሩ ይተካዋል።"
+  "placeholder.notice": "ጊዜያዊ ይዘት — ደብሩ ይተካዋል።",
+  "placeholder.tba": "ወደፊት ይገለጻል",
+  "services.intro": "የአምልኮና የትምህርት ሳምንታዊ መርሃ ግብራችን።",
+  "services.table.caption": "ሳምንታዊ የአገልግሎት መርሃ ግብር",
+  "services.table.service": "አገልግሎት",
+  "services.table.day": "ቀን",
+  "services.table.time": "ጊዜ",
+  "services.table.scrollLabel": "ሙሉውን መርሃ ግብር ለማየት ይሸብልሉ",
+  "services.liturgy.heading": "ቅዳሴ",
+  "services.liturgy.body": "የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ቤተ ክርስቲያን ቅዳሴ በግእዝ፣ በቤተ ክርስቲያኒቱ ጥንታዊ የአምልኮ ቋንቋ ይከናወናል፤ ንባባትና መዝሙራትም አብዛኛውን ጊዜ በአማርኛ ይቀርባሉ። ቁርባን ለመቀበል የሚያስቡ ምእመናን በተለምዶ ከዚያ በፊት ይጾማሉ።",
+  "services.sundaySchool.heading": "ሰንበት ትምህርት ቤት",
+  "services.sundaySchool.body": "ሰንበት ትምህርት ቤት ለሕፃናትና ለወጣቶች የሚሰጥ ሲሆን፣ ከቤተ ክርስቲያኒቱ ቋንቋና ትውፊት ጋር እምነትን ያስተምራል።",
+  "services.prayerTeaching.heading": "ጸሎት እና ትምህርት",
+  "services.prayerTeaching.body": "በሳምንቱ ውስጥ ምእመናኑ ለጸሎትና ለትምህርት አብረው ይሰበሰባሉ፤ በእምነት ለማደግ የሚፈልጉ ሁሉ እንኳን ደህና መጡ።",
+  "services.livestream.label": "የቀጥታ ስርጭት"
 }
