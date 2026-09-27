@@ -52,6 +52,12 @@ expression with the real value, in quotes.
 Every real-world fact about the parish is in **one file**:
 `src/data/site.ts`, near the bottom, inside `const config = { … }`.
 
+Two values are already real, not placeholders, because the parish provided
+them: `giving.gofundmeUrl` (the "Help Build Our New Church" GoFundMe
+campaign, shown as the Building Fund section of the Giving page) and
+`social.facebookUrl` (the Facebook link in the footer — currently a share
+link; replace it with the parish page's own URL when confirmed).
+
 The file checks every value you enter. If a value has the wrong format, the
 build stops and tells you exactly which field is wrong and what it expects.
 For example, a phone number without the country code and a web link that
@@ -404,7 +410,8 @@ built for the root of the domain.
   - `ECAL_AM_NEEDS_REVIEW` in `src/lib/ecal/names.ts` — Ethiopian month-name
     spelling variants and date-formatting conventions.
   - `GALLERY_AM_NEEDS_REVIEW` in `src/content/schemas.ts` — the Amharic
-    captions on the six placeholder gallery images.
+    captions on the six placeholder gallery images and the two real
+    photographs (the processional cross and the icon of the saint).
 - **The Amharic About page text.** `src/content/about/eotc.am.md` and
   `saint.am.md` each start with `amReviewPending: true`; change it to
   `false` once the parish has read them (see **The About page texts**
@@ -496,6 +503,24 @@ and how confident it is — see `docs/research/`.
     change in the other.
 
 ---
+
+## Image credits
+
+Two real photographs ship with the site, both freely licensed from
+Wikimedia Commons. Their licenses (CC BY-SA) **require** the visible credit
+lines that appear under them on the Home, About, and Gallery pages — keep
+the credits if you move or reuse the images:
+
+- **Ethiopian processional cross, 15th century** — photo: Walters Art
+  Museum, via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Ethiopian_-_Processional_Cross_-_Walters_542894_-_Side_A.jpg),
+  CC BY-SA 3.0. Used on Home, About (EOTC section) and in the Gallery.
+- **Icon of Saint Tekle Haymanot** (Ethiopian church, Jerusalem) — photo:
+  Maor X, via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Icon_of_Saint_Tekle_Haymanot_of_Ethiopia.jpg),
+  CC BY-SA 4.0. Used on About (saint section) and in the Gallery.
+
+Everything else visual (the cross motif, the Aksumite header frieze, the
+gallery placeholders, the Open Graph image) is original artwork drawn
+in-repo as SVG.
 
 ## Known limitations
 

@@ -3,6 +3,14 @@ title: "የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ቤተ ክርስቲ�
 lang: am
 section: eotc
 order: 1
+image:
+  src: images/gallery/ethiopian-processional-cross.jpg
+  width: 800
+  height: 1143
+  alt: "የ15ኛው መቶ ክፍለ ዘመን የነሐስ የኢትዮጵያ መስቀል፣ የተጠላለፉ ክቦች ያሉት"
+  caption: "የኢትዮጵያ መስቀል፣ 15ኛው መቶ ክፍለ ዘመን (ዋልተርስ የሥነ ጥበብ ሙዚየም)"
+  credit: "ፎቶ፦ Walters Art Museum፣ በWikimedia Commons (CC BY-SA 3.0)"
+  creditUrl: "https://commons.wikimedia.org/wiki/File:Ethiopian_-_Processional_Cross_-_Walters_542894_-_Side_A.jpg"
 sources:
   - title: "The Ethiopian Orthodox Tewahedo Church – Pre-Christian and early Christian history (official site)"
     url: "https://www.ethiopianorthodox.org/english/ethiopian/prechristian.html"

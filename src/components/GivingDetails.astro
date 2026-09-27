@@ -19,6 +19,16 @@ const enFor = (value: string) => (lang !== 'en' && !isPlaceholder(value) ? 'en' 
 ---
 
 <section>
+  <h2><MixedText lang={lang} text={t(lang, 'giving.gofundme.heading')} /></h2>
+  <p><MixedText lang={lang} text={t(lang, 'giving.gofundme.body')} /></p>
+  <p>
+    <Fact lang={lang} value={giving.gofundmeUrl} field="giving.gofundmeUrl" as="link">
+      <MixedText lang={lang} text={t(lang, 'giving.gofundme.linkText')} />
+    </Fact>
+  </p>
+</section>
+
+<section>
   <h2><MixedText lang={lang} text={t(lang, 'giving.zelle.heading')} /></h2>
   <p><MixedText lang={lang} text={t(lang, 'giving.zelle.body')} /></p>
   <p lang={enFor(giving.zelle)}>

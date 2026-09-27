@@ -38,10 +38,10 @@ describe.each(LOCALES)('giving page — %s', (lang) => {
     expect(doc().match(/<h1\b/g)).toHaveLength(1);
   });
 
-  it('has 4 giving method sections, each with an <h2>', () => {
+  it('has 5 giving method sections, each with an <h2>', () => {
     const main = doc().slice(doc().indexOf('<main'), doc().indexOf('</main>'));
-    // Notes is its own <h2>, so 4 method headings + 1 notes heading = 5 total <h2>s.
-    expect(main.match(/<h2\b/g)).toHaveLength(5);
+    // Notes is its own <h2>, so 5 method headings + 1 notes heading = 6 total <h2>s.
+    expect(main.match(/<h2\b/g)).toHaveLength(6);
   });
 
   it('marks Zelle, PayPal, Cash App and mailing address as placeholders with the right field', () => {
@@ -51,9 +51,10 @@ describe.each(LOCALES)('giving page — %s', (lang) => {
     expect((doc().match(/data-placeholder/g) ?? []).length).toBe(4);
   });
 
-  it('has no <a> inside <main> for any placeholder value', () => {
+  it('the only <a> inside <main> is the real GoFundMe campaign link', () => {
     const main = doc().slice(doc().indexOf('<main'), doc().indexOf('</main>'));
-    expect(main).not.toMatch(/<a\b/);
+    const hrefs = [...main.matchAll(/<a\b[^>]*href="([^"]*)"/g)].map((m) => m[1]);
+    expect(hrefs).toEqual(['https://www.gofundme.com/f/help-build-our-new-church-7tjhd']);
   });
 
   it('has no <form>, <input> or <iframe>', () => {

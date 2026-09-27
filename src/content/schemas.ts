@@ -2,11 +2,35 @@ import { z } from 'zod';
 import { isValidGregorianDate } from '../lib/ecal';
 
 // Plain zod (no `astro:content`) so vitest can import it directly.
+// An illustration for an About section: a local file only, with required
+// dimensions (no layout shift) and a visible credit, since the two shipped
+// photographs are CC BY-SA and attribution is a license condition.
+const aboutImageSchema = z
+  .object({
+    src: z
+      .string()
+      .regex(
+        /^images\/[a-z0-9/-]+\.(jpg|jpeg|png|webp|svg)$/,
+        'image must be a local file under images/, lowercase, no path traversal',
+      ),
+    width: z.number().int().positive(),
+    height: z.number().int().positive(),
+    alt: z.string().min(1),
+    caption: z.string().min(1).optional(),
+    credit: z.string().min(1),
+    creditUrl: z
+      .string()
+      .url()
+      .refine((u) => u.startsWith('https://'), { message: 'credit URL must be https://' }),
+  })
+  .strict();
+
 export const aboutSchema = z.object({
   title: z.string().min(1),
   lang: z.enum(['en', 'am']),
   section: z.enum(['eotc', 'saint']),
   order: z.number(),
+  image: aboutImageSchema.optional(),
   sources: z
     .array(
       z.object({
@@ -101,4 +125,6 @@ export const GALLERY_AM_NEEDS_REVIEW: readonly string[] = [
   'placeholder-4',
   'placeholder-5',
   'placeholder-6',
+  'processional-cross',
+  'saint-icon',
 ];

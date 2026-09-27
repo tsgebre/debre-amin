@@ -3,6 +3,14 @@ title: "The Ethiopian Orthodox Tewahedo Church"
 lang: en
 section: eotc
 order: 1
+image:
+  src: images/gallery/ethiopian-processional-cross.jpg
+  width: 800
+  height: 1143
+  alt: "A bronze Ethiopian processional cross from the 15th century, with interlocking openwork circles"
+  caption: "An Ethiopian processional cross, 15th century (Walters Art Museum)"
+  credit: "Photo: Walters Art Museum, via Wikimedia Commons (CC BY-SA 3.0)"
+  creditUrl: "https://commons.wikimedia.org/wiki/File:Ethiopian_-_Processional_Cross_-_Walters_542894_-_Side_A.jpg"
 sources:
   - title: "The Ethiopian Orthodox Tewahedo Church – Pre-Christian and early Christian history (official site)"
     url: "https://www.ethiopianorthodox.org/english/ethiopian/prechristian.html"

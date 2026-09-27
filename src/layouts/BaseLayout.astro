@@ -7,8 +7,11 @@ import { LOCALES, LOCALE_META, t, type Locale } from '../i18n/index';
 import { absoluteUrl, assetPath, localizedPath, samePath, switchLocalePath } from '../i18n/paths';
 import { NAV } from '../i18n/nav';
 import { DEFAULT_SITE } from '../config/deploy';
+import AksumFrieze from '../components/AksumFrieze.astro';
 import CrossMotif from '../components/CrossMotif.astro';
+import Fact from '../components/Fact.astro';
 import TodayDate from '../components/TodayDate.astro';
+import { siteConfig } from '../data/site';
 
 interface Props {
   lang: Locale;
@@ -108,6 +111,9 @@ const ogLocale: Record<Locale, string> = { en: 'en_US', am: 'am_ET' };
         )
       }
     </header>
+    <div class="aksum-band">
+      <AksumFrieze />
+    </div>
     <div class="today-strip">
       <TodayDate lang={lang} />
     </div>
@@ -115,6 +121,11 @@ const ogLocale: Record<Locale, string> = { en: 'en_US', am: 'am_ET' };
       <slot />
     </main>
     <footer class="site-footer">
+      <p>
+        <Fact lang={lang} value={siteConfig.social.facebookUrl} field="social.facebookUrl" as="link">
+          {t(lang, 'footer.facebook')}
+        </Fact>
+      </p>
       <p>{t(lang, 'footer.rights')}</p>
     </footer>
   </body>

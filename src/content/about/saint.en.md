@@ -3,6 +3,14 @@ title: "Saint Abune Tekle Haymanot"
 lang: en
 section: saint
 order: 2
+image:
+  src: images/gallery/abune-teklehaymanot-icon.jpg
+  width: 800
+  height: 1281
+  alt: "Icon of Saint Tekle Haymanot, shown with six wings, at the Ethiopian church in Jerusalem"
+  caption: "An icon of Abune Tekle Haymanot at the Ethiopian church in Jerusalem"
+  credit: "Photo: Maor X, via Wikimedia Commons (CC BY-SA 4.0)"
+  creditUrl: "https://commons.wikimedia.org/wiki/File:Icon_of_Saint_Tekle_Haymanot_of_Ethiopia.jpg"
 sources:
   - title: "Takla-Haymanot (D), Taddesse Tamrat – Dictionary of African Christian Biography"
     url: "https://dacb.org/stories/ethiopia/takla2-haymanot/"

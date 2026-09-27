@@ -116,6 +116,10 @@ export const siteConfigSchema = z.object({
     paypalUrl: urlOrPh,
     cashAppTag: cashAppTagOrPh,
     mailingAddress: phOr(z.string().min(1)),
+    gofundmeUrl: urlOrPh,
+  }),
+  social: z.object({
+    facebookUrl: urlOrPh,
   }),
   livestreamUrl: urlOrPh,
   parish: z.object({
@@ -195,6 +199,13 @@ const config: SiteConfig = {
     paypalUrl: ph('giving.paypalUrl'),
     cashAppTag: ph('giving.cashAppTag'),
     mailingAddress: ph('giving.mailingAddress'),
+    // Real value, parish-provided: the "Help Build Our New Church" campaign.
+    gofundmeUrl: 'https://www.gofundme.com/f/help-build-our-new-church-7tjhd',
+  },
+  social: {
+    // Real value, parish-provided (a share link to the parish's Facebook
+    // presence; replace with the page's own URL once the parish confirms it).
+    facebookUrl: 'https://www.facebook.com/share/p/1AAcb8pa6H/',
   },
   livestreamUrl: ph('livestreamUrl'),
   parish: {

@@ -91,7 +91,10 @@ describe('README contains no invented real-world domain', () => {
   // Curated TLD list, not a general hostname regex: a broad regex also
   // matches things like "Node.js" or "site.ts", which are not domains.
   const DOMAIN = /\b[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)*\.(org|com|net|io|edu|gov|us)\b/gi;
-  const ALLOWED = /^([a-z0-9-]+\.)*(example\.(org|com)|(?:[a-z0-9-]+\.)?github\.io)$/i;
+  // commons.wikimedia.org is not invented: the Image credits section links
+  // the two CC BY-SA photographs to their real Wikimedia Commons file pages.
+  const ALLOWED =
+    /^([a-z0-9-]+\.)*(example\.(org|com)|(?:[a-z0-9-]+\.)?github\.io|commons\.wikimedia\.org)$/i;
 
   const found = [...new Set([...README.matchAll(DOMAIN)].map((m) => m[0]))];
 

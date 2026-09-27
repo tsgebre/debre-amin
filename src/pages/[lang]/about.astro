@@ -28,6 +28,7 @@ const sections = await Promise.all(
     title: entry.data.title,
     sources: entry.data.sources,
     amReviewPending: entry.data.amReviewPending,
+    image: entry.data.image,
     Content: (await render(entry)).Content,
   })),
 );

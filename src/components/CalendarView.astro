@@ -20,6 +20,32 @@ interface Props {
 
 const { lang, years } = Astro.props;
 
+// The Ethiopian Orthodox Tewahedo Church references behind the feast and
+// fast dates shown on this page — the public subset of the full research
+// register in docs/research/feasts.md.
+const CALENDAR_SOURCES = [
+  {
+    title: 'Feasts of Abune Tekle Haymanot – Mahibere Kidusan (EOTC Sunday School Department)',
+    url: 'https://eotcmk.org/e/feasts-of-abune-tekle-haimanot/',
+  },
+  {
+    title: 'The Fast of the Apostles – Mahibere Kidusan (EOTC Sunday School Department)',
+    url: 'https://eotcmk.org/e/the-fast-of-the-apostles-3/',
+  },
+  {
+    title: 'The Order of the Calendar – Ethiopian Orthodox Tewahedo Church (Mahibere Afro)',
+    url: 'https://www.eotc-ma.com/beliefs-and-origins-order-of-calend',
+  },
+  {
+    title: 'Worship in the Ethiopian Orthodox Tewahedo Church (official site)',
+    url: 'https://www.ethiopianorthodox.org/english/ethiopian/worship.html',
+  },
+  {
+    title: 'Fasting and abstinence in the Ethiopian Orthodox Tewahedo Church – Wikipedia',
+    url: 'https://en.wikipedia.org/wiki/Fasting_and_abstinence_in_the_Ethiopian_Orthodox_Tewahedo_Church',
+  },
+];
+
 function iso(d: { year: number; month: number; day: number }): string {
   const pad = (n: number, w = 2) => String(n).padStart(w, '0');
   return `${pad(d.year, 4)}-${pad(d.month)}-${pad(d.day)}`;
@@ -290,3 +316,18 @@ const yearsData = years.map(yearData);
     </section>
   ))
 }
+
+<details class="sources">
+  <summary>{t(lang, 'about.sources')}</summary>
+  <ul>
+    {
+      CALENDAR_SOURCES.map((s) => (
+        <li>
+          <a href={s.url} lang={lang === 'en' ? undefined : 'en'}>
+            {s.title}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</details>

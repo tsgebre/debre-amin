@@ -1,11 +1,12 @@
 ---
 import { t, type Locale } from '../i18n/index';
-import { localizedPath } from '../i18n/paths';
+import { assetPath, localizedPath } from '../i18n/paths';
 import { formatEthiopian, formatGregorian, toEthiopian, type GregorianDate } from '../lib/ecal';
 import { currentObservances, feastsForYear, nextFeast, type FeastOccurrence } from '../lib/feasts';
 import { siteConfig } from '../data/site';
 import Fact from './Fact.astro';
 import CrossMotif from './CrossMotif.astro';
+import MixedText from './MixedText.astro';
 
 export interface AnnouncementItem {
   title: string;
@@ -60,6 +61,23 @@ const shownAnnouncements = announcements.slice(0, 3);
 <h1>{t(lang, 'site.name')}</h1>
 <p>{t(lang, 'site.tagline')}</p>
 <div class="divider"><CrossMotif size={24} /></div>
+<figure class="home-hero">
+  <img
+    src={assetPath('images/gallery/ethiopian-processional-cross.jpg')}
+    alt={t(lang, 'home.hero.alt')}
+    width="800"
+    height="1143"
+    decoding="async"
+  />
+  <figcaption>
+    <span><MixedText lang={lang} text={t(lang, 'home.hero.caption')} /></span>
+    <span class="image-credit">
+      <a href="https://commons.wikimedia.org/wiki/File:Ethiopian_-_Processional_Cross_-_Walters_542894_-_Side_A.jpg">
+        <MixedText lang={lang} text={t(lang, 'home.hero.credit')} />
+      </a>
+    </span>
+  </figcaption>
+</figure>
 <p>{t(lang, 'home.welcome')}</p>
 
 <div class="home-grid">

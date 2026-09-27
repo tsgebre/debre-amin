@@ -228,6 +228,10 @@ describe('content honesty', () => {
         'clergy.0.id',
         'clergy.1.id',
         'clergy.2.id',
+        // Parish-provided real links (2026-09): the "Help Build Our New
+        // Church" GoFundMe campaign and the parish's Facebook share link.
+        'giving.gofundmeUrl',
+        'social.facebookUrl',
       ].sort(),
     );
   });
